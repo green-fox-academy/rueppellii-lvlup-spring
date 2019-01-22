@@ -10,22 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
 public class MainController {
-  String successMessage = "{\n" +
-      "  \"badges\": [\n" +
-      "    {\n" +
-      "      \"name\": \"Process improver\",\n" +
-      "      \"level\": \"2\"\n" +
-      "    },\n" +
-      "    {\n" +
-      "      \"name\": \"English speaker\",\n" +
-      "      \"level\": \"1\"\n" +
-      "    },\n" +
-      "    {\n" +
-      "      \"name\": \"Feedback giver\",\n" +
-      "      \"level\": \"1\"\n" +
-      "    }\n" +
-      "  ]\n" +
-      "}";
+  String successMessage = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
+      "\"English speaker\", \"level\": \"1\" }, { \"name\": \"Feedback giver\", \"level\": \"1\" } ] }";
 
   @GetMapping("/badges")
   public ResponseEntity<String> showBadges(@RequestHeader() HttpHeaders header,
