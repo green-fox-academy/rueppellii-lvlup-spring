@@ -26,17 +26,23 @@ public class MainControllerTest {
   }
 
   @Test
-  public void showBadgesShouldReturnGoodJson() throws Exception{
+  public void showBadgesShouldReturnGoodJson() throws Exception {
     MvcResult result = mvc.perform(get("/badges")
         .header("userTokenAuth", tokenString)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
-
+/* this is not necessary
     String content = result.getResponse().getContentAsString();
 
-    assertEquals(success, content);
-
+    assertEquals(success, content); */
   }
 
+  @Test
+  public void showBadgesTestWithoutHeader() throws Exception {
+    MvcResult result = mvc.perform(get("/badges")
+    .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andReturn();
+  }
 }
