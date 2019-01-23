@@ -5,10 +5,9 @@ import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -25,23 +24,30 @@ public class MainControllerTest {
     this.mvc = standaloneSetup(new MainController()).build();
   }
 
+  //is everything ok? (should test the response json too)
   @Test
-  public void showBadgesShouldReturnGoodJson() throws Exception {
-    MvcResult result = mvc.perform(get("/badges")
+  public void showBadgesTestWithCorrectHeader() throws Exception {
+    mvc.perform(get("/badges")
         .header("userTokenAuth", tokenString)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
+        .andExpect(content().string(success))
         .andReturn();
-/* this is not necessary
-    String content = result.getResponse().getContentAsString();
-
-    assertEquals(success, content); */
   }
 
+    // check the mediatype
   @Test
-  public void showBadgesTestWithoutHeader() throws Exception {
-    MvcResult result = mvc.perform(get("/badges")
-    .contentType(MediaType.APPLICATION_JSON))
+  public void showBadgesTestMediaTypeIsCorrect() throws Exception {
+    mvc.perform(get("/badges")
+      .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+      .andExpect(status().isUnauthorized());
+  }
+
+ //check if the token is there
+  @Test
+  public void showBadgesTestWithoutToken() throws Exception {
+    mvc.perform(get("/badges")
+      .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isUnauthorized())
         .andReturn();
   }
