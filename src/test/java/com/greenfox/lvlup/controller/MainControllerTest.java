@@ -28,8 +28,7 @@ public class MainControllerTest {
   private WebApplicationContext wac;
   private MockMvc mockMvc;
 
-  String toTest = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
-  //BadgeDTO toTest = new BadgeDTO("2.3", "Badge inserter", "general");
+  BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Badge inserter", "general");
   String token = "hkalj253";
 
   @Before
@@ -39,11 +38,12 @@ public class MainControllerTest {
 
   @Test
   public void addBadgeValidRequestReturns201Created() throws Exception {
+    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
 
     this.mockMvc.perform(post("/admin/add")
         .header("userTokenAuth", token)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(toTest))
+        .content(validBadgeDtoInJson))
         .andDo(print())
         .andExpect(status().isCreated())
         .andExpect(content()
@@ -52,17 +52,38 @@ public class MainControllerTest {
 
   }
 
+  @Test
+  public void invalidNameErrorReturns404NotFound() throws Exception {
+    String invalidBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"\", \"tag\": \"general\", \"levels\": \"[]\"}");
 
-/*  @Test
-  public void invalidNameError() throws Exception {
-    String jsonTaskWithBlankName = String.format("{\"name\": \"\",\"description\": \"Description\"}");
 
-    this.mockMvc.perform(post("task")
+    this.mockMvc.perform(post("/admin/add")
+        .header("userTokenAuth", token)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(jsonTaskWithBlankName))
+        .content(invalidBadgeDtoInJson))
         .andDo(print())
-        .andExpect(status().isBadRequest())
-        .andExpect(content().json("{\"errors\":[\"Task name must not be blank!\"],\"errorMessage\":\"Validation failed. 1 error(s)\"}"));
+        .andExpect(status().isNotFound())
+        .andExpect(content().json("{\n" +
+            "    \"errorMessage\": \"Please provide all fields: 1 error(s)\",\n" +
+            "    \"errors\": [\n" +
+            "        \"Badge name must not be blank!\"\n" +
+            "    ]\n" +
+            "}"));
+  }
 
-  }*/
+  @Test
+  public void addBadgeNotContainingTokenReturns404NotFound() throws Exception {
+    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
+
+    this.mockMvc.perform(post("/admin/add")
+        .header("userTokenAuth","")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(validBadgeDtoInJson))
+        .andDo(print())
+        .andExpect(status().isNotFound())
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(content().string("\"error\": \"Please provide all fields\""));
+
+  }
 }
