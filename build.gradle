@@ -27,11 +27,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.sonarsource.sonarqube', name: 'sonar-plugin-api', version: '7.5'
 }
