@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,16 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MainControllerTest {
 
   @Autowired
-  private WebApplicationContext wac;
   private MockMvc mockMvc;
 
   BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Badge inserter", "general");
   String token = "hkalj253";
-
-  @Before
-  public void setup() {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-  }
 
   @Test
   public void addBadgeValidRequestReturns201Created() throws Exception {
@@ -49,7 +45,6 @@ public class MainControllerTest {
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
         .andExpect(content().string("\"message\": \"Success\""));
-
   }
 
   @Test
@@ -76,7 +71,7 @@ public class MainControllerTest {
     String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
 
     this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth","")
+        .header("userTokenAuth", "")
         .contentType(MediaType.APPLICATION_JSON)
         .content(validBadgeDtoInJson))
         .andDo(print())

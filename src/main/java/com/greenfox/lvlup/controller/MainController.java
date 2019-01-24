@@ -3,7 +3,7 @@ package com.greenfox.lvlup.controller;
 import com.greenfox.lvlup.model.BadgeDTO;
 //import org.json.JSONObject;
 import com.greenfox.lvlup.model.ValidationError;
-import com.greenfox.lvlup.model.ValidationErrorBuilder;
+import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 public class MainController {
-  @PostMapping(value= "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+   @PostMapping(value= "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity <String>addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
                                     @RequestHeader(value = "Content-Type") HttpHeaders header,
                                     @RequestHeader(value = "userTokenAuth", required = false, defaultValue = "") String token) {
@@ -27,7 +27,6 @@ public class MainController {
     } else return new ResponseEntity<>("\"message\": \"Success\"", HttpStatus.CREATED);
 
   }
-
 
   @ExceptionHandler
   @ResponseStatus(value = HttpStatus.NOT_FOUND)

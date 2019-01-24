@@ -1,5 +1,6 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.service;
 
+import com.greenfox.lvlup.model.ValidationError;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
