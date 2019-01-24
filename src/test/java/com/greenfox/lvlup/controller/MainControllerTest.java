@@ -24,18 +24,15 @@ public class MainControllerTest {
     this.mvc = standaloneSetup(new MainController()).build();
   }
 
-  //is everything ok? (should test the response json too)
   @Test
   public void showBadgesTestWithCorrectHeader() throws Exception {
     mvc.perform(get("/badges")
         .header("userTokenAuth", tokenString)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(content().string(success))
-        .andReturn();
+        .andExpect(content().string(success));
   }
 
-    // check the mediatype
   @Test
   public void showBadgesTestMediaTypeIsCorrect() throws Exception {
     mvc.perform(get("/badges")
@@ -43,12 +40,10 @@ public class MainControllerTest {
       .andExpect(status().isUnauthorized());
   }
 
- //check if the token is there
   @Test
   public void showBadgesTestWithoutToken() throws Exception {
     mvc.perform(get("/badges")
       .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isUnauthorized())
-        .andReturn();
+        .andExpect(status().isUnauthorized());
   }
 }
