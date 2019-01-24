@@ -1,7 +1,6 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.BadgeDTO;
-//import org.json.JSONObject;
 import com.greenfox.lvlup.model.ValidationError;
 import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.HttpHeaders;
