@@ -1,6 +1,6 @@
 package com.greenfox.lvlup;
 
-import com.greenfox.lvlup.Controllers.MainController;
+import com.greenfox.lvlup.controller.MainController;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

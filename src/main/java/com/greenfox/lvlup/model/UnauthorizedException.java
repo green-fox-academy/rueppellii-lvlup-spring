@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.Models;
+package com.greenfox.lvlup.model;
 
 public class UnauthorizedException extends Exception {
 

@@ -1,6 +1,4 @@
-package com.greenfox.lvlup.Models;
-
-import org.springframework.http.HttpStatus;
+package com.greenfox.lvlup.model;
 
 public class ErrorMessage {
 

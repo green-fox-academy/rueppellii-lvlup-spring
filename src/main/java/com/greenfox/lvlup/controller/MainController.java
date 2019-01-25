@@ -1,14 +1,12 @@
-package com.greenfox.lvlup.Controllers;
+package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.Models.ErrorMessage;
-import com.greenfox.lvlup.Models.UnauthorizedException;
+import com.greenfox.lvlup.model.ErrorMessage;
+import com.greenfox.lvlup.model.UnauthorizedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RestControllerAdvice
@@ -43,6 +41,4 @@ public class MainController {
   public ErrorMessage unauthorizedHandler() {
     return new ErrorMessage("unauthorized");
   }
-
-
 }
