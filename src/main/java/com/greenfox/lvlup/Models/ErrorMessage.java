@@ -5,14 +5,9 @@ import org.springframework.http.HttpStatus;
 public class ErrorMessage {
 
   private String error;
-  private HttpStatus status;
 
-  public ErrorMessage() {
-  }
-
-  public ErrorMessage(String error, HttpStatus status) {
+  public ErrorMessage(String error) {
     this.error = error;
-    this.status = status;
   }
 
   public String getError() {
@@ -21,13 +16,5 @@ public class ErrorMessage {
 
   public void setError(String error) {
     this.error = error;
-  }
-
-  public HttpStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(HttpStatus status) {
-    this.status = status;
   }
 }

@@ -1,15 +1,17 @@
 package com.greenfox.lvlup.Controllers;
 
-import com.greenfox.lvlup.Models.DefaultExceptionHandler;
 import com.greenfox.lvlup.Models.ErrorMessage;
+import com.greenfox.lvlup.Models.UnauthorizedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import javax.validation.Valid;
+
+@RestController
+@RestControllerAdvice
 public class MainController {
 
   private String sucessful = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
@@ -26,45 +28,21 @@ public class MainController {
     return sucessful;
   }
 
-  /*@GetMapping("/pitches")
-  public ResponseEntity<String> getPitches(@RequestHeader HttpHeaders headers,
-                                           @RequestHeader(value = "userTokenAuth", required = false) String token) throws HTTPException {
-
-    if (headers != null && headers.getContentType().equals(MediaType.APPLICATION_JSON) && token != null && !token.equals("")) {
-      return new ResponseEntity<>(sucessful, HttpStatus.OK);
-    } else return new ResponseEntity<>("Error: Unauthorized", HttpStatus.UNAUTHORIZED);
-    }*/
-
-  /*@GetMapping("/pitches")
-  public HttpStatus getPitches(@RequestHeader HttpHeaders headers,
-                               @RequestHeader(value = "userTokenAuth", required = false) String token) throws HTTPException {
-    if (headers != null && headers.getContentType().equals(MediaType.APPLICATION_JSON) && token != null && !token.equals("")) {
-      return HttpStatus.OK;
-    } else {
-      return HttpStatus.UNAUTHORIZED;
-    }
-  }*/
-
-  /*@GetMapping("/pitches")
-  public ResponseEntity<String> getPitches(@RequestHeader HttpHeaders headers,
-                                     @RequestHeader(value = "userTokenAuth") String token) throws Exception {
-    if (headers != null && headers.getContentType().equals(MediaType.APPLICATION_JSON) && token != null && !token.equals("")) {
-      return new ResponseEntity(sucessful, HttpStatus.OK);
-    } else throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
-  }*/
 
   @GetMapping("/pitches")
   public ResponseEntity getPitches(@RequestHeader HttpHeaders headers,
-                                   @RequestHeader(value = "userTokenAuth") String token) throws Exception {
-    ErrorMessage message = new ErrorMessage("Unauthorized", HttpStatus.UNAUTHORIZED);
+                                   @RequestHeader(value = "userTokenAuth", required = false) String token) throws UnauthorizedException {
     if (headers != null && headers.getContentType().equals(MediaType.APPLICATION_JSON) && token != null && !token.equals("")) {
       return new ResponseEntity(sucessful, HttpStatus.OK);
-    } else throw new DefaultExceptionHandler(message);
+    } else throw new UnauthorizedException();
   }
 
-  /*@ExceptionHandler
-  @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-  public DefaultExceptionHandler error(MethodArgumentNotValidException exception) {
-    return
-  }*/
+  @ResponseBody
+  @ExceptionHandler(UnauthorizedException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ErrorMessage unauthorizedHandler() {
+    return new ErrorMessage("unauthorized");
+  }
+
+
 }
