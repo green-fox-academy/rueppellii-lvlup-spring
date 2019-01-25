@@ -13,7 +13,7 @@ public class MainController {
 
   @GetMapping("/badges")
   public ResponseEntity<?> showBadges(@RequestHeader() HttpHeaders header,
-                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
+                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws CustomException {
     if (header != null
         && header.getContentType().equals(MediaType.APPLICATION_JSON)
         && token != null
