@@ -1,6 +1,10 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.*;
+import com.greenfox.lvlup.model.AuthError;
+import com.greenfox.lvlup.model.ValidationError;
+import com.greenfox.lvlup.model.Badge;
+import com.greenfox.lvlup.model.SuccessfulQuery;
 import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RestControllerAdvice
 public class MainController {
 
   private String sucessful = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
@@ -29,7 +33,6 @@ public class MainController {
     return sucessful;
   }
 
-
   @GetMapping("/pitches")
   public ResponseEntity getPitches(@RequestHeader HttpHeaders headers,
                                    @RequestHeader(value = "userTokenAuth", required = false) String token) throws UnauthorizedException {
@@ -37,12 +40,17 @@ public class MainController {
       return new ResponseEntity(sucessful, HttpStatus.OK);
     } else throw new UnauthorizedException();
   }
-
-  @ResponseBody
-  @ExceptionHandler(UnauthorizedException.class)
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorMessage unauthorizedHandler() {
-    return new ErrorMessage("unauthorized");
+  
+    @PostMapping(value = "/pitch")
+  public ResponseEntity<Object> pitchBadge(
+      @RequestHeader(value = "userTokenAuth") String token
+      , HttpServletRequest request
+      , @Valid @RequestBody(required = false) Badge badge) {
+    if (token == null || token.isEmpty())
+      return new ResponseEntity(new AuthError("Unauthorized"), HttpStatus.UNAUTHORIZED);
+    else if(request.getContentType() == null || !request.getContentType().equals("application/json"))
+      return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    else return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
   @PostMapping(value = "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -58,6 +66,7 @@ public class MainController {
     return new ResponseEntity<>("\"message\": \"Success\"", HttpStatus.CREATED);
 
   }
+  
   @ExceptionHandler
   @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public ValidationError handleException(MethodArgumentNotValidException exception) {
@@ -67,4 +76,13 @@ public class MainController {
   private ValidationError createValidationError(MethodArgumentNotValidException exception) {
     return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
   }
+  
+    @ResponseBody
+  @ExceptionHandler(UnauthorizedException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public ErrorMessage unauthorizedHandler() {
+    return new ErrorMessage("unauthorized");
+  }
+  
 }
+  
