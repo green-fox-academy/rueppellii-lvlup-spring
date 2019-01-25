@@ -1,7 +1,6 @@
 package com.greenfox.lvlup.model;
 
 public class ErrorMessage {
-
   private String error;
 
   public ErrorMessage(String error) {
