@@ -3,6 +3,7 @@ package com.greenfox.lvlup.model;
 import org.springframework.http.HttpStatus;
 
 public class CustomException extends Exception {
+
   private ErrorMessage errorMessage;
   private HttpStatus httpStatus;
 
