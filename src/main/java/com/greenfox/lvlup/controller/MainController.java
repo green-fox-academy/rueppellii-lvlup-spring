@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.controller;
 
+import com.greenfox.lvlup.model.AuthError;
 import com.greenfox.lvlup.model.ValidationError;
 import com.greenfox.lvlup.model.Badge;
 import com.greenfox.lvlup.model.SuccessfulQuery;
@@ -21,7 +22,7 @@ public class MainController {
       , @Valid @RequestBody(required = false) Badge badge
   ) {
     if (token == null || token.isEmpty())
-      return new ResponseEntity(new ValidationError("Unauthorized"), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity(new AuthError("Unauthorized"), HttpStatus.UNAUTHORIZED);
     else if(request.getContentType() == null || !request.getContentType().equals("application/json"))
       return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     else return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
