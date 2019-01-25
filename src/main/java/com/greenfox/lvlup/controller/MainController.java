@@ -1,10 +1,11 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.error.ValidationError;
+import com.greenfox.lvlup.model.ValidationError;
 import com.greenfox.lvlup.model.Badge;
-import com.greenfox.lvlup.success.SuccessfulQuery;
-import org.sonar.api.server.authentication.UnauthorizedException;
+import com.greenfox.lvlup.model.SuccessfulQuery;
+import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.*;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +27,14 @@ public class MainController {
     else return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
-/*  @ExceptionHandler
-  @ResponseStatus(value = HttpStatus.)
-  public ValidationError handleException(UnauthorizedException e) {
-    return new ValidationError("Unauthorized");
-    //do something with the validation message: error.getBindingResult()
-  }*/
+  @ExceptionHandler
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public ValidationError handleException(MethodArgumentNotValidException exception) {
+    return createValidationError(exception);
+  }
+
+  private ValidationError createValidationError(MethodArgumentNotValidException exception) {
+    return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
+  }
 
 }
