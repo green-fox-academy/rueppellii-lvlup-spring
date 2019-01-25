@@ -1,6 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.BadgeDTO;
+import com.greenfox.lvlup.model.CustomException;
 import com.greenfox.lvlup.model.ValidationError;
 import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.HttpHeaders;
@@ -14,19 +15,19 @@ import javax.validation.Valid;
 
 @RestController
 public class MainController {
-   @PostMapping(value= "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
-  public ResponseEntity <String>addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
+  @PostMapping(value = "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+  public ResponseEntity<?> addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
                                     @RequestHeader(value = "Content-Type") HttpHeaders header,
-                                    @RequestHeader(value = "userTokenAuth", required = false, defaultValue = "") String token) {
+                                    @RequestHeader(value = "userTokenAuth", required = false, defaultValue = "") String token) throws Exception {
     if (header == null || !header.getContentType().equals(MediaType.APPLICATION_JSON)
         || token == null || token.equals("")
-        || dtoToAdd == null){
-      return new ResponseEntity<>("\"error\": \"Please provide all fields\"", HttpStatus.NOT_FOUND);
+        || dtoToAdd == null) {
+      throw new CustomException("Please provide all fields", HttpStatus.NOT_FOUND);
 
-    } else return new ResponseEntity<>("\"message\": \"Success\"", HttpStatus.CREATED);
+    }
+    return new ResponseEntity<>("\"message\": \"Success\"", HttpStatus.CREATED);
 
   }
-
   @ExceptionHandler
   @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public ValidationError handleException(MethodArgumentNotValidException exception) {
@@ -36,6 +37,7 @@ public class MainController {
   private ValidationError createValidationError(MethodArgumentNotValidException exception) {
     return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
   }
+
 }
 
 
