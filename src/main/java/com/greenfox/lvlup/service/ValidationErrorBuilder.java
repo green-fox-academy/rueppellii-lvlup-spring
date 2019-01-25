@@ -13,5 +13,4 @@ public class ValidationErrorBuilder {
     }
     return error;
   }
-
 }

@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.model;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
