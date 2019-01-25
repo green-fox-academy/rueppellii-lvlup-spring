@@ -1,12 +1,10 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.CustomException;
-import org.springframework.http.*;
+import com.greenfox.lvlup.model.GeneralException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import com.greenfox.lvlup.model.*;
-import com.greenfox.lvlup.model.AuthError;
 import com.greenfox.lvlup.model.ValidationError;
 import com.greenfox.lvlup.model.Badge;
 import com.greenfox.lvlup.model.SuccessfulQuery;
@@ -20,24 +18,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-  
-  @RestController
+
+@RestController
 public class MainController {
-  private String successMessage = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
+  private String successMessage1 = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
       "\"English speaker\", \"level\": \"1\" }, { \"name\": \"Feedback giver\", \"level\": \"1\" } ] }";
 
-  @GetMapping("/badges")
-  public ResponseEntity<?> showBadges(@RequestHeader() HttpHeaders header,
-                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws CustomException {
-    if (header != null
-        && header.getContentType().equals(MediaType.APPLICATION_JSON)
-        && token != null
-        && !token.equals("")) {
-      return new ResponseEntity<>(successMessage, HttpStatus.OK);
-    } else throw new CustomException("Unauthorized", HttpStatus.UNAUTHORIZED);
-  }
-
-  private String sucessful = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
+  private String successMessage2 = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
       "\"badgeName\": \"Programming\", \"oldLevel\": 2, \"pitchedLevel\": 3, \"pitchMessage\": " +
       "\"I improved in React, Redux, basic JS, NodeJS, Express and in LowDB, pls give me more money\", " +
       "\"holders\": [ { \"name\": \"sandor.vass\", \"message\": null, \"pitchStatus\": false },... ], } ], " +
@@ -47,27 +34,34 @@ public class MainController {
       "\"holders\": [ { \"name\": \"balazs.jozsef\", \"message\": \"Yes, you are able to speak english\", " +
       "\"pitchStatus\": true },... ] }";
 
-  public String getSucessful() {
-    return sucessful;
+  @GetMapping("/badges")
+  public ResponseEntity<?> showBadges(@RequestHeader() HttpHeaders header,
+                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
+    if (header != null
+        && header.getContentType().equals(MediaType.APPLICATION_JSON)
+        && token != null
+        && !token.equals("")) {
+      return new ResponseEntity(new SuccessfulQuery(successMessage1), HttpStatus.OK);
+    } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
 
   @GetMapping("/pitches")
   public ResponseEntity getPitches(@RequestHeader HttpHeaders headers,
-                                   @RequestHeader(value = "userTokenAuth", required = false) String token) throws UnauthorizedException {
+                                   @RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
     if (headers != null && headers.getContentType().equals(MediaType.APPLICATION_JSON) && token != null && !token.equals("")) {
-      return new ResponseEntity(sucessful, HttpStatus.OK);
-    } else throw new UnauthorizedException();
+      return new ResponseEntity(new SuccessfulQuery(successMessage2), HttpStatus.OK);
+    } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
-  
-    @PostMapping(value = "/pitch")
+
+  @PostMapping(value = "/pitch")
   public ResponseEntity<Object> pitchBadge(
       @RequestHeader(value = "userTokenAuth") String token
       , HttpServletRequest request
-      , @Valid @RequestBody(required = false) Badge badge) {
+      , @Valid @RequestBody(required = false) Badge badge) throws GeneralException {
     if (token == null || token.isEmpty())
-      return new ResponseEntity(new AuthError("Unauthorized"), HttpStatus.UNAUTHORIZED);
-    else if(request.getContentType() == null || !request.getContentType().equals("application/json"))
-      return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+      throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
+    else if (request.getContentType() == null || !request.getContentType().equals(MediaType.APPLICATION_JSON))
+      throw new GeneralException("Unsupported media type", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     else return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
@@ -78,15 +72,14 @@ public class MainController {
     if (header == null || !header.getContentType().equals(MediaType.APPLICATION_JSON)
         || token == null || token.equals("")
         || dtoToAdd == null) {
-      throw new CustomException("Please provide all fields", HttpStatus.NOT_FOUND);
-
+      throw new GeneralException("Please provide all fields", HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>("\"message\": \"Success\"", HttpStatus.CREATED);
+    return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
 
   }
-  
+
   @ExceptionHandler
-  @ResponseStatus(value = HttpStatus.NOT_FOUND)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public ValidationError handleException(MethodArgumentNotValidException exception) {
     return createValidationError(exception);
   }
@@ -94,12 +87,12 @@ public class MainController {
   private ValidationError createValidationError(MethodArgumentNotValidException exception) {
     return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
   }
-  
-    @ResponseBody
-  @ExceptionHandler(UnauthorizedException.class)
+
+/*  @ResponseBody
+  @ExceptionHandler(GeneralException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ErrorMessage unauthorizedHandler() {
     return new ErrorMessage("unauthorized");
-  }
-  
+  }*/
+
 }

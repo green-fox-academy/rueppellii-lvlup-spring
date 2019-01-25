@@ -1,3 +1,5 @@
+/*
+
 package com.greenfox.lvlup.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,6 +34,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import com.greenfox.lvlup.controller.MainController;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(MainController.class)
 public class MainControllerTest {
@@ -52,21 +66,38 @@ public class MainControllerTest {
   private MockMvc mockMvc;
 
   BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Badge inserter", "general");
- 
-  
-  @Before
-  public void setup() {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(new MainController()).build();
-  }
 
+    private MockMvc mvc;
+  private String token = "12345";
+  private String sucessfulString = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
+      "\"badgeName\": \"Programming\", \"oldLevel\": 2, \"pitchedLevel\": 3, \"pitchMessage\": " +
+      "\"I improved in React, Redux, basic JS, NodeJS, Express and in LowDB, pls give me more money\", " +
+      "\"holders\": [ { \"name\": \"sandor.vass\", \"message\": null, \"pitchStatus\": false },... ], } ], " +
+      "\"pitchesToReview\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"berei.daniel\", " +
+      "\"badgeName\": \"English speaker\", \"oldLevel\": 2, \"pitchedLevel\": 3, \"pitchMessage\": " +
+      "\"I was working abroad for six years, so I can speak english very well. Pls improve my badge level to 3.\", " +
+      "\"holders\": [ { \"name\": \"balazs.jozsef\", \"message\": \"Yes, you are able to speak english\", " +
+      "\"pitchStatus\": true },... ] }";
   private MockMvc mvc;
   private String success = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
       "\"English speaker\", \"level\": \"1\" }, { \"name\": \"Feedback giver\", \"level\": \"1\" } ] }";
   private String tokenString = "6bb9q";
 
+
+  @Before
+  public void setup() {
+    this.mockMvc = MockMvcBuilders.standaloneSetup(new MainController()).build();
+  }
   @Before
   public void setup() {
     this.mvc = standaloneSetup(new MainController()).build();
+  @Before
+  public void setUp() throws Exception {
+    this.mvc = standaloneSetup(new MainController()).build();
+  }
+
+
+
   }
 
   @Test
@@ -81,131 +112,154 @@ public class MainControllerTest {
   @Test
   public void showBadgesTestMediaTypeIsCorrect() throws Exception {
     mvc.perform(get("/badges")
-      .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-      .andExpect(status().isUnauthorized());
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
   public void showBadgesTestWithoutToken() throws Exception {
     mvc.perform(get("/badges")
-      .contentType(MediaType.APPLICATION_JSON))
+        .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isUnauthorized());
-  
-  
-  
-  
-  
-  @Test
-  public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
+
+
+    @Test
+    public void pitchBadgeValidHeaderAndBodyCheckStatus () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .header("userTokenAuth", token)
+          .content(stringify(validBadge)))
+          .andExpect(status().isCreated())
+          .andReturn();
+    }
+
+    @Test
+    public void pitchBadgeValidHeaderAndBodyCheckMessage () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .header("userTokenAuth", token)
+          .content(stringify(validBadge)))
+          .andExpect(jsonPath("$.message").value("Success"))
+          .andReturn();
+    }
+
+    @Test
+    public void pitchBadgeMissingContentTypeCheckStatus () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .header("userTokenAuth", token)
+          .content(stringify(validBadge)))
+          .andExpect(status().isUnsupportedMediaType())
+          .andReturn();
+    }
+
+    @Test
+    public void pitchBadgeInvalidTokenCheckStatus () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .header("userTokenAuth", "")
+          .content(stringify(validBadge)))
+          .andExpect(status().isUnauthorized())
+          .andReturn();
+    }
+
+    @Test
+    public void pitchBadgeInvalidTokenCheckErrorMessage () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .header("userTokenAuth", "")
+          .content(stringify(validBadge)))
+          .andExpect(jsonPath("$.error").value("Unauthorized"))
+          .andReturn();
+    }
+
+    @Test
+    public void pitchBadgeInvalidRequestBody () throws Exception {
+      this.mockMvc.perform(post("/pitch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .header("userTokenAuth", token)
+          .content(stringify(inValidBadge)))
+          .andExpect(status().isBadRequest())
+          .andReturn();
+    }
+
+
+    private String stringify (Object object) throws JsonProcessingException {
+      return new ObjectMapper().writeValueAsString(object);
+    }
+
+
+    @Test
+    public void addBadgeValidRequestReturns201Created () throws Exception {
+      String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
+
+      this.mockMvc.perform(post("/admin/add")
+          .header("userTokenAuth", token)
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(validBadgeDtoInJson))
+          .andDo(print())
+          .andExpect(status().isCreated())
+          .andExpect(content()
+              .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+          .andExpect(content().string("\"message\": \"Success\""));
+    }
+
+    @Test
+    public void invalidNameErrorReturns404NotFound () throws Exception {
+      String invalidBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"\", \"tag\": \"general\", \"levels\": \"[]\"}");
+
+
+      this.mockMvc.perform(post("/admin/add")
+          .header("userTokenAuth", token)
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(invalidBadgeDtoInJson))
+          .andDo(print())
+          .andExpect(status().isNotFound())
+          .andExpect(content().json("{\n" +
+              "    \"errorMessage\": \"Please provide all fields: 1 error(s)\",\n" +
+              "    \"errors\": [\n" +
+              "        \"Badge name must not be blank!\"\n" +
+              "    ]\n" +
+              "}"));
+    }
+
+    @Test
+    public void addBadgeNotContainingTokenReturns404NotFound () throws Exception {
+      String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
+
+      this.mockMvc.perform(post("/admin/add")
+          .header("userTokenAuth", "")
+          .contentType(MediaType.APPLICATION_JSON)
+          .content(validBadgeDtoInJson))
+          .andDo(print())
+          .andExpect(status().isNotFound())
+          .andExpect(content()
+              .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+          .andExpect(content().string("\"error\": \"Please provide all fields\""));
+    }
+  }
+    @Test
+  public void getPitchesWithCorrectHeader() throws Exception {
+    mvc.perform(get("/pitches")
         .header("userTokenAuth", token)
-        .content(stringify(validBadge)))
-        .andExpect(status().isCreated())
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string(sucessfulString))
         .andReturn();
   }
 
   @Test
-  public void pitchBadgeValidHeaderAndBodyCheckMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", token)
-        .content(stringify(validBadge)))
-        .andExpect(jsonPath("$.message").value("Success"))
-        .andReturn();
+  public void getPitchesWithIncorrectMediaType() throws Exception {
+    mvc.perform(get("/pitches")
+        .contentType(MediaType.APPLICATION_ATOM_XML))
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
-  public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .header("userTokenAuth", token)
-        .content(stringify(validBadge)))
-        .andExpect(status().isUnsupportedMediaType())
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidTokenCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(validBadge)))
+  public void checkIfTokenIsProvided() throws Exception {
+    mvc.perform(get("/pitches")
+        .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isUnauthorized())
         .andReturn();
   }
-
-  @Test
-  public void pitchBadgeInvalidTokenCheckErrorMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(validBadge)))
-        .andExpect(jsonPath("$.error").value("Unauthorized"))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidRequestBody() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", token)
-        .content(stringify(inValidBadge)))
-        .andExpect(status().isBadRequest())
-        .andReturn();
-  }
-
-
-  private String stringify(Object object) throws JsonProcessingException {
-    return new ObjectMapper().writeValueAsString(object);
-  }
-
-
-  @Test
-  public void addBadgeValidRequestReturns201Created() throws Exception {
-    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-    this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth", token)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(validBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isCreated())
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"message\": \"Success\""));
-  }
-
-  @Test
-  public void invalidNameErrorReturns404NotFound() throws Exception {
-    String invalidBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-
-    this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth", token)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(invalidBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isNotFound())
-        .andExpect(content().json("{\n" +
-            "    \"errorMessage\": \"Please provide all fields: 1 error(s)\",\n" +
-            "    \"errors\": [\n" +
-            "        \"Badge name must not be blank!\"\n" +
-            "    ]\n" +
-            "}"));
-  }
-
-  @Test
-  public void addBadgeNotContainingTokenReturns404NotFound() throws Exception {
-    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-    this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth", "")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(validBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isNotFound())
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"error\": \"Please provide all fields\""));
-  }
 }
+*/
