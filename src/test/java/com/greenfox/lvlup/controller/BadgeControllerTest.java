@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-@WebMvcTest(MainController.class)
-public class MainControllerTest {
+@WebMvcTest(BadgeController.class)
+public class BadgeControllerTest {
 
   private MockMvc mvc;
   private String success = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
@@ -21,7 +21,7 @@ public class MainControllerTest {
 
   @Before
   public void setup() {
-    this.mvc = standaloneSetup(new MainController()).build();
+    this.mvc = standaloneSetup(new BadgeController()).build();
   }
 
   @Test
