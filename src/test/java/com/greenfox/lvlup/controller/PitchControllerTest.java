@@ -2,6 +2,7 @@ package com.greenfox.lvlup.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greenfox.lvlup.model.MockingElements;
 import com.greenfox.lvlup.model.PitchDTO;
 //import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
 import org.junit.Test;
@@ -25,20 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PitchController.class)
-public class PitchDTOControllerTest {
+public class PitchControllerTest {
 
-  String validToken = "token123";
-
-  PitchDTO validPitchDTO = new PitchDTO("English speaker",
-      2,
-      3,
-      "Hello World! My English is bloody gorgeous.",
-      new ArrayList<>(Arrays.asList("balazs.jozsef", "benedek.vamosi", "balazs.barna")));
-
-  PitchDTO invalidPitchDTO = new PitchDTO("English speaker",
-      2,
-      3,
-      "Hello World! My English is bloody gorgeous.");
+ MockingElements elements = new MockingElements();
 
   private String sucessfulString = "{ \"myPitches\": [ { \"timestamp\": \"2018-11-29 17:10:47\", \"username\": \"balazs.barna\", " +
       "\"badgeName\": \"Programming\", \"oldLevel\": 2, \"pitchedLevel\": 3, \"pitchMessage\": " +
@@ -57,8 +47,8 @@ public class PitchDTOControllerTest {
   public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", validToken)
-        .content(stringify(validPitchDTO)))
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getValidPitchDTO())))
         .andExpect(status().isCreated())
         .andReturn();
   }
@@ -67,8 +57,8 @@ public class PitchDTOControllerTest {
   public void pitchBadgeValidHeaderAndBodyCheckMessage() throws Exception {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", validToken)
-        .content(stringify(validPitchDTO)))
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getValidPitchDTO())))
         .andExpect(jsonPath("$.message").value("Success"))
         .andReturn();
   }
@@ -76,8 +66,8 @@ public class PitchDTOControllerTest {
   @Test
   public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
     this.mockMvc.perform(post("/pitch")
-        .header("userTokenAuth", validToken)
-        .content(stringify(invalidPitchDTO)))
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getValidPitchDTO())))
         .andExpect(status().isUnsupportedMediaType())
         .andReturn();
   }
@@ -87,7 +77,7 @@ public class PitchDTOControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
-        .content(stringify(validPitchDTO)))
+        .content(stringify(elements.getValidPitchDTO())))
         .andExpect(status().isUnauthorized())
         .andReturn();
   }
@@ -97,7 +87,7 @@ public class PitchDTOControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
-        .content(stringify(validPitchDTO)))
+        .content(stringify(elements.getValidPitchDTO())))
         .andExpect(jsonPath("$.error").value("Unauthorized"))
         .andReturn();
   }
@@ -106,8 +96,8 @@ public class PitchDTOControllerTest {
   public void pitchBadgeInvalidRequestBody() throws Exception {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", invalidPitchDTO)
-        .content(stringify(invalidPitchDTO)))
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getInvalidPitchDTO())))
         .andExpect(status().isBadRequest())
         .andReturn();
   }
@@ -122,7 +112,7 @@ public class PitchDTOControllerTest {
   @Test
   public void getPitchesWithCorrectHeader() throws Exception {
     mockMvc.perform(get("/pitches")
-        .header("userTokenAuth", validToken)
+        .header("userTokenAuth", elements.getValidToken())
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().string(sucessfulString))
