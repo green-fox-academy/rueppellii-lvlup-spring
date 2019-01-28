@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class GeneralException extends Exception {
 
+
   private ErrorMessage errorMessage;
   private HttpStatus httpStatus;
 
