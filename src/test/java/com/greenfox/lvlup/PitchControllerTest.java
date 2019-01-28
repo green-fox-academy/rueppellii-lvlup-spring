@@ -1,6 +1,6 @@
 package com.greenfox.lvlup;
 
-import com.greenfox.lvlup.controller.MainController;
+import com.greenfox.lvlup.controller.PitchController;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-@WebMvcTest(MainController.class)
-public class MainControllerTest {
+@WebMvcTest(PitchController.class)
+public class PitchControllerTest {
 
   private MockMvc mvc;
   private String token = "12345";
@@ -29,7 +29,7 @@ public class MainControllerTest {
 
   @Before
   public void setUp() throws Exception {
-    this.mvc = standaloneSetup(new MainController()).build();
+    this.mvc = standaloneSetup(new PitchController()).build();
   }
 
   @Test
