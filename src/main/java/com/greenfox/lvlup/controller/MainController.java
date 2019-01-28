@@ -88,11 +88,5 @@ public class MainController {
     return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
   }
 
-/*  @ResponseBody
-  @ExceptionHandler(GeneralException.class)
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorMessage unauthorizedHandler() {
-    return new ErrorMessage("unauthorized");
-  }*/
 
 }
