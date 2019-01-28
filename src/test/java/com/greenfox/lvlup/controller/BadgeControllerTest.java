@@ -10,12 +10,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BadgeController.class)
@@ -24,8 +24,8 @@ public class BadgeControllerTest {
   @Autowired
   public MockMvc mvc;
 
-  public UserBadgeSetDTO testBadgeSet = new UserBadgeSetDTO();
-  public String tokenString = "testToken";
+  private UserBadgeSetDTO testBadgeSet = new UserBadgeSetDTO();
+  private String tokenString = "testToken";
 
   @Test
   public void showBadgesTestWithCorrectHeader() throws Exception {
@@ -33,17 +33,15 @@ public class BadgeControllerTest {
         .header("userTokenAuth", tokenString)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(content().string(stringify(testBadgeSet)))
-        .andDo(print());
+        .andExpect(content().string(stringify(testBadgeSet)));
   }
 
   @Test
   public void showBadgesTestWithoutToken() throws Exception {
-      mvc.perform(get("/badges")
-          .contentType(MediaType.APPLICATION_JSON))
-          .andExpect(status().isUnauthorized())
-          .andExpect(jsonPath("$.error").value("Unauthorized"))
-          .andDo(print());
+    mvc.perform(get("/badges")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error").value("Unauthorized"));
   }
 
   private String stringify(Object object) throws JsonProcessingException {
