@@ -18,12 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-/*  @ResponseStatus(value = HttpStatus.NOT_FOUND)
-  public ValidationError handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
-    return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
-  }*/
-
   @ExceptionHandler(GeneralException.class)
   public ResponseEntity<?> handleAllExceptions(GeneralException e){
     return new ResponseEntity<>(e.getErrorMessage(), e.getHttpStatus());
