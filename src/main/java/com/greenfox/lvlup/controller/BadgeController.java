@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-
 @RestController
 public class BadgeController {
 
   private UserBadgeSetDTO testUserBadges = new UserBadgeSetDTO();
 
-  @GetMapping(value = "/badges", consumes = "application/json")
+  @GetMapping(value = "/badges", produces = "application/json")
   public ResponseEntity<?> showBadges(@RequestHeader() HttpHeaders header,
                                       @RequestHeader(value = "userTokenAuth", required = false) String token) throws CustomException {
     if (header != null

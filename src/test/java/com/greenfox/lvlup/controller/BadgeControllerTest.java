@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -15,9 +16,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 public class BadgeControllerTest {
 
   private MockMvc mvc;
-  private String success = "{ \"badges\": [ { \"name\": \"Process improver\", \"level\": \"2\" }, { \"name\": " +
-      "\"English speaker\", \"level\": \"1\" }, { \"name\": \"Feedback giver\", \"level\": \"1\" } ] }";
-  private String tokenString = "6bb9q";
+  private UserBadgeSetDTO testBadgeSet = new UserBadgeSetDTO();
+  private String tokenString = "testToken";
 
   @Before
   public void setup() {
@@ -30,20 +30,30 @@ public class BadgeControllerTest {
         .header("userTokenAuth", tokenString)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(content().string(success));
+        .andExpect(content().json(testBadgeSet.toString()));
   }
 
   @Test
-  public void showBadgesTestMediaTypeIsCorrect() throws Exception {
-    mvc.perform(get("/badges")
-      .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-      .andExpect(status().isUnauthorized());
+  public void showBadgesTestMediaTypeNotCorrect() throws Exception {
+    try {
+      mvc.perform(get("/badges")
+          .header("userTokenAuth", tokenString)
+          .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+          .andExpect(status().isUnauthorized())
+          .andDo(print());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   @Test
   public void showBadgesTestWithoutToken() throws Exception {
-    mvc.perform(get("/badges")
-      .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isUnauthorized());
+    try {
+      mvc.perform(get("/badges")
+          .contentType(MediaType.APPLICATION_JSON))
+          .andExpect(status().isUnauthorized());
+    } catch (Exception e) {
+      System.out.println(e.toString());
+    }
   }
 }
