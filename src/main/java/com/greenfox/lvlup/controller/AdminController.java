@@ -1,0 +1,33 @@
+package com.greenfox.lvlup.controller;
+
+import com.greenfox.lvlup.exception.DefaultExceptionHandler;
+import com.greenfox.lvlup.model.GeneralException;
+import com.greenfox.lvlup.model.SuccessfulQuery;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+@RestController
+public class AdminController {
+  @PostMapping(value = "/admin/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+  public ResponseEntity<?> addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
+                                    @RequestHeader(value = "Content-Type") HttpHeaders header,
+                                    @RequestHeader(value = "userTokenAuth", required = false, defaultValue = "") String token) throws Exception {
+    if (header == null || !header.getContentType().equals(MediaType.APPLICATION_JSON)
+        || token == null || token.equals("")
+        || dtoToAdd == null) {
+      throw new GeneralException("Please provide all fields", HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+
+  }
+
+}
+

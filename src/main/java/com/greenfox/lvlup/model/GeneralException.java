@@ -1,19 +1,19 @@
 package com.greenfox.lvlup.model;
 
-
 import org.springframework.http.HttpStatus;
 
-public class CustomException extends Exception{
+public class GeneralException extends Exception {
+
   private ErrorMessage errorMessage;
   private HttpStatus httpStatus;
 
-  public CustomException() {}
+  public GeneralException() {}
 
-  public CustomException(String error) {
+  public GeneralException(String error) {
     this.errorMessage = new ErrorMessage(error);
   }
 
-  public CustomException(String error, HttpStatus httpStatus) {
+  public GeneralException(String error, HttpStatus httpStatus) {
     this.errorMessage = new ErrorMessage(error);
     this.httpStatus = httpStatus;
   }

@@ -1,25 +1,27 @@
 package com.greenfox.lvlup.exception;
 
-import com.greenfox.lvlup.model.CustomException;
-import com.greenfox.lvlup.model.ValidationError;
+import com.greenfox.lvlup.model.GeneralException;
 import com.greenfox.lvlup.service.ValidationErrorBuilder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 
 @RestControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(CustomException.class)
-  @ResponseBody
-  public ResponseEntity<?> handleAllExceptions(CustomException e){
+  @ExceptionHandler(GeneralException.class)
+  public ResponseEntity<?> handleAllExceptions(GeneralException e) {
     return new ResponseEntity<>(e.getErrorMessage(), e.getHttpStatus());
   }
 
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    return new ResponseEntity<>(ValidationErrorBuilder.fromBindingErrors(ex.getBindingResult()), HttpStatus.BAD_REQUEST);
+
+  }
 }
