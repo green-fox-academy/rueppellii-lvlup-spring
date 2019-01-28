@@ -78,7 +78,7 @@ public class MainController {
 
   }
 
-  @ExceptionHandler
+/*  @ExceptionHandler
   @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public ValidationError handleException(MethodArgumentNotValidException exception) {
     return createValidationError(exception);
@@ -86,7 +86,7 @@ public class MainController {
 
   private ValidationError createValidationError(MethodArgumentNotValidException exception) {
     return ValidationErrorBuilder.fromBindingErrors(exception.getBindingResult());
-  }
+  }*/
 
 
 }
