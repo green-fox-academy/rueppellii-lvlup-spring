@@ -3,21 +3,21 @@ package com.greenfox.lvlup.model;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public class Badge {
-  @NotNull(message = "Badge name is required.")
+public class PitchDTO {
+  @NotNull(message = "PitchDTO name is required.")
   String badgeName;
   @NotNull(message = "Old level is required.")
   int oldLVL;
   @NotNull(message = "Pitched level is required.")
   int pitchedLVL;
-  @NotNull(message = "Pitch message is required.")
+  @NotNull(message = "PitchDTO message is required.")
   String pitchMessage;
   @NotNull(message = "Holders are required.")
   List<String> holders;
 
-  public Badge(@NotNull(message = "Badge name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
-               @NotNull(message = "Pitched level is required.") int pitchedLVL,
-               @NotNull(message = "Pitch message is required.") String pitchMessage, @NotNull(message = "Holders are required.") List<String> holders) {
+  public PitchDTO(@NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
+                  @NotNull(message = "Pitched level is required.") int pitchedLVL,
+                  @NotNull(message = "PitchDTO message is required.") String pitchMessage, @NotNull(message = "Holders are required.") List<String> holders) {
     this.badgeName = badgeName;
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
@@ -25,15 +25,15 @@ public class Badge {
     this.holders = holders;
   }
 
-  public Badge(@NotNull(message = "Badge name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
-               @NotNull(message = "Pitched level is required.") int pitchedLVL, @NotNull(message = "Pitch message is required.") String pitchMessage) {
+  public PitchDTO(@NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
+                  @NotNull(message = "Pitched level is required.") int pitchedLVL, @NotNull(message = "PitchDTO message is required.") String pitchMessage) {
     this.badgeName = badgeName;
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
     this.pitchMessage = pitchMessage;
   }
 
-  public Badge() {
+  public PitchDTO() {
   }
 
   public String getBadgeName() {

@@ -9,11 +9,11 @@ import java.util.List;
 
 @JsonSerialize
 public class BadgeDTO {
-    @NotBlank(message= "Badge version must not be blank!")
+    @NotBlank(message= "PitchDTO version must not be blank!")
     public String version;
-    @NotBlank(message= "Badge name must not be blank!")
+    @NotBlank(message= "PitchDTO name must not be blank!")
     public String name;
-    @NotBlank(message= "Badge tag must not be blank!")
+    @NotBlank(message= "PitchDTO tag must not be blank!")
     public String tag;
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     public List<String> levels;
@@ -29,7 +29,7 @@ public class BadgeDTO {
     this.levels = levels;
   }
 
-  public BadgeDTO(@NotBlank(message = "Badge version must not be blank!") String version, @NotBlank(message = "Badge name must not be blank!") String name, @NotBlank(message = "Badge tag must not be blank!") String tag) {
+  public BadgeDTO(@NotBlank(message = "PitchDTO version must not be blank!") String version, @NotBlank(message = "PitchDTO name must not be blank!") String name, @NotBlank(message = "PitchDTO tag must not be blank!") String tag) {
     this.version = version;
     this.name = name;
     this.tag = tag;
