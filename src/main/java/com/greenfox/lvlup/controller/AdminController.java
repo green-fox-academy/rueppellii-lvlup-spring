@@ -1,9 +1,7 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.exception.DefaultExceptionHandler;
-import com.greenfox.lvlup.model.GeneralException;
+import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.SuccessfulQuery;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

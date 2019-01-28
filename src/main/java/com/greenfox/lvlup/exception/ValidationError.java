@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

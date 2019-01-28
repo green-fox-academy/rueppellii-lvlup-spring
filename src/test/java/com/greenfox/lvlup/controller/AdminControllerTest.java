@@ -71,6 +71,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
               .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
           .andExpect(jsonPath("$.error").value("Please provide all fields"));
     }
+
+    @Test
+    public void addBadgeNotContainingMediatypeReturns415UnsupportedMediaType() throws Exception {
+      this.mockMvc.perform(post("/admin/add")
+          .header("userTokenAuth", token)
+          .content(stringify(validBadgeDto)))
+          .andExpect(status().isUnsupportedMediaType());
+    }
+
   }
 
 

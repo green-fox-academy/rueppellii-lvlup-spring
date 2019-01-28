@@ -1,8 +1,6 @@
 package com.greenfox.lvlup.exception;
 
 
-import com.greenfox.lvlup.model.GeneralException;
-import com.greenfox.lvlup.service.ValidationErrorBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
