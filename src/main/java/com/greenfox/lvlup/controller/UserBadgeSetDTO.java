@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class UserBadgeSetDTO {
   private ArrayList<UserBadgeDTO> badges;
 
-  private UserBadgeDTO test1 = new UserBadgeDTO("Process improver", 2);
-  private UserBadgeDTO test2 = new UserBadgeDTO("English speaker", 1);
+  private UserBadgeDTO test1 = new UserBadgeDTO("test badge 1", 2);
+  private UserBadgeDTO test2 = new UserBadgeDTO("test badge 2", 1);
 
   public UserBadgeSetDTO(ArrayList<UserBadgeDTO> listOfBadges) {
     this.badges = listOfBadges;

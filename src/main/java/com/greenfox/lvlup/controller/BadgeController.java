@@ -16,7 +16,7 @@ public class BadgeController {
 
   @GetMapping(value = "/badges", produces = "application/json")
   public ResponseEntity<?> showBadges(@RequestHeader() HttpHeaders header,
-                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
+                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
     if (header != null
         && token != null
         && !token.equals("")) {
