@@ -79,7 +79,7 @@ public class MainController {
   }
 
   @ExceptionHandler
-  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public ValidationError handleException(MethodArgumentNotValidException exception) {
     return createValidationError(exception);
   }

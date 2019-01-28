@@ -71,19 +71,6 @@ public class MainControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-
-/*  @Before
-  public void setup() {
-    this.mockMvc = MockMvcBuilders.standaloneSetup(new MainController()).build();
-  }
-  @Before
-  public void setup() {
-    this.mvc = standaloneSetup(new MainController()).build();
-  @Before
-  public void setUp() throws Exception {
-    this.mvc = standaloneSetup(new MainController()).build();
-  }*/
-
 //1. Test endpoint /badges:
 
   @Test
@@ -174,7 +161,7 @@ public class MainControllerTest {
     return new ObjectMapper().writeValueAsString(object);
   }
 
-//3. Test Post /admin/add
+  //3. Test endpoint: POST /admin/add
   @Test
   public void addBadgeValidRequestReturns201Created() throws Exception {
     String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
@@ -187,7 +174,7 @@ public class MainControllerTest {
         .andExpect(status().isCreated())
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"message\": \"Success\""));
+        .andExpect(jsonPath("$.message").value("Success"));
   }
 
   @Test
@@ -221,7 +208,7 @@ public class MainControllerTest {
         .andExpect(status().isNotFound())
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"error\": \"Please provide all fields\""));
+        .andExpect(jsonPath("$.error").value("Please provide all fields"));
   }
 
 //4. Test /pitches
