@@ -14,17 +14,15 @@ import javax.validation.Valid;
 
 @RestController
 public class AdminController {
-  @PostMapping(value = "/admin/add",
-      produces = {MediaType.APPLICATION_JSON_VALUE},
-      consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
-                                    @RequestHeader(value = "userTokenAuth", required = false, defaultValue = "") String token) throws Exception {
-    if (token == null || token.equals("")
-        || dtoToAdd == null) {
-      throw new GeneralException("Please provide all fields", HttpStatus.NOT_FOUND);
+    @PostMapping(value = "/admin/add",
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,
+                                      @RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
+        if (token == null || token.equals("")) {
+            throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
     }
-    return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
-  }
-
 }
 

@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-    public void invalidNameErrorReturns404NotFound() throws Exception {
+    public void invalidNameErrorReturns400BadRequest() throws Exception {
       this.mockMvc.perform(post("/admin/add")
           .header("userTokenAuth", token)
           .contentType(MediaType.APPLICATION_JSON)
@@ -60,16 +60,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-    public void addBadgeNotContainingTokenReturns404NotFound() throws Exception {
+    public void addBadgeNotContainingTokenValueReturns401Unauthorized() throws Exception {
       this.mockMvc.perform(post("/admin/add")
           .header("userTokenAuth", "")
           .contentType(MediaType.APPLICATION_JSON)
           .content(stringify(validBadgeDto)))
           .andDo(print())
-          .andExpect(status().isNotFound())
+          .andExpect(status().isUnauthorized())
           .andExpect(content()
               .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-          .andExpect(jsonPath("$.error").value("Please provide all fields"));
+          .andExpect(jsonPath("$.error").value("Unauthorized"));
+    }
+
+    @Test
+    public void addBadgeNotContainingTokenReturns401Unauthorized() throws Exception {
+      this.mockMvc.perform(post("/admin/add")
+              .contentType(MediaType.APPLICATION_JSON)
+              .content(stringify(validBadgeDto)))
+              .andDo(print())
+              .andExpect(status().isUnauthorized())
+              .andExpect(content()
+                      .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+              .andExpect(jsonPath("$.error").value("Unauthorized"));
     }
 
     @Test
@@ -79,10 +91,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
           .content(stringify(validBadgeDto)))
           .andExpect(status().isUnsupportedMediaType());
     }
-
   }
-
-
-
-
-
