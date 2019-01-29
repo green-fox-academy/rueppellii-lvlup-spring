@@ -1,17 +1,19 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.BadgeDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greenfox.lvlup.model.MockingElements;
+import com.greenfox.lvlup.model.PitchSetDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -19,58 +21,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PitchControllerTest {
 
   @Autowired
-  private MockMvc mockMvc;
+  MockMvc mockMvc;
 
-  BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Badge inserter", "general");
-  String token = "hkalj253";
+  String token = "testToken";
+  MockingElements mockingElements = new MockingElements();
+
+  PitchSetDTO pitchSetDTO = new PitchSetDTO();
 
   @Test
-  public void addBadgeValidRequestReturns201Created() throws Exception {
-    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-    this.mockMvc.perform(post("/admin/add")
+  public void getPitchesWithCorrectHeader() throws Exception {
+    mockMvc.perform(get("/pitches")
         .header("userTokenAuth", token)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(validBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isCreated())
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"message\": \"Success\""));
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        //.andExpect(content().json(mockingElements.getSucessful()))
+        .andExpect(content().string(stringify(pitchSetDTO)))
+        .andReturn();
   }
 
   @Test
-  public void invalidNameErrorReturns404NotFound() throws Exception {
-    String invalidBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-
-    this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth", token)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(invalidBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isNotFound())
-        .andExpect(content().json("{\n" +
-            "    \"errorMessage\": \"Please provide all fields: 1 error(s)\",\n" +
-            "    \"errors\": [\n" +
-            "        \"Badge name must not be blank!\"\n" +
-            "    ]\n" +
-            "}"));
+  public void checkIfTokenIsProvided() throws Exception {
+    mockMvc.perform(get("/pitches")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error").value("unauthorized"));
   }
 
-  @Test
-  public void addBadgeNotContainingTokenReturns404NotFound() throws Exception {
-    String validBadgeDtoInJson = String.format("{\"version\": \"2.3\",\"name\": \"Badge inserter\", \"tag\": \"general\", \"levels\": \"[]\"}");
-
-    this.mockMvc.perform(post("/admin/add")
-        .header("userTokenAuth", "")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(validBadgeDtoInJson))
-        .andDo(print())
-        .andExpect(status().isNotFound())
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(content().string("\"error\": \"Please provide all fields\""));
-
+  public static String stringify(Object object) throws JsonProcessingException {
+    return new ObjectMapper().writeValueAsString(object);
   }
 }
