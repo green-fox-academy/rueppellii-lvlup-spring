@@ -12,7 +12,7 @@ public class UserBadgeSetDTO {
     this.badges = listOfBadges;
   }
 
-  public  UserBadgeSetDTO() {
+  public UserBadgeSetDTO() {
     badges = new ArrayList<>();
     badges.add(test1);
     badges.add(test2);
