@@ -27,9 +27,15 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.sonarsource.sonarqube', name: 'sonar-plugin-api', version: '7.5'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'org.sonarsource.sonarqube', name: 'sonar-plugin-api', version: '7.5'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
 }
+
