@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.controller.dto;
+package com.greenfox.lvlup.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

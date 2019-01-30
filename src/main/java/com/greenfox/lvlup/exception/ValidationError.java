@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.exception;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;

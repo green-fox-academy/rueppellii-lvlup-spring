@@ -1,9 +1,7 @@
 package com.greenfox.lvlup.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greenfox.lvlup.model.MockingElements;
-//import com.sun.xml.internal.messaging.saaj.packaging.mime.Header;
+import com.greenfox.lvlup.model.dto.MockingElements;
+import com.greenfox.lvlup.model.dto.PitchSetDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.greenfox.lvlup.util.Converter.stringify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,10 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(PitchController.class)
 public class PitchControllerTest {
 
+
  MockingElements elements = new MockingElements();
 
   @Autowired
   private MockMvc mockMvc;
+  String token = "testToken";
+  PitchSetDTO pitchSetDTO = new PitchSetDTO();
 
   @Test
   public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
@@ -56,7 +58,16 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getValidPitchDto())))
-        .andExpect(status().isUnsupportedMediaType())
+        .andExpect(status().isUnsupportedMediaType());
+  }
+
+  @Test
+  public void getPitchesWithCorrectHeader() throws Exception {
+    mockMvc.perform(get("/pitches")
+        .header("userTokenAuth", token)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().string(stringify(pitchSetDTO)))
         .andReturn();
   }
 
@@ -130,7 +141,10 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-  private String stringify(Object object) throws JsonProcessingException {
-    return new ObjectMapper().writeValueAsString(object);
+  public void checkIfTokenIsProvided() throws Exception {
+    mockMvc.perform(get("/pitches")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error").value("unauthorized"));
   }
 }
