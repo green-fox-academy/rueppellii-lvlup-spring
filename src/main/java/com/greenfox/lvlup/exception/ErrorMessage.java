@@ -3,6 +3,8 @@ package com.greenfox.lvlup.exception;
 public class ErrorMessage {
   private String error;
 
+  public ErrorMessage() {}
+
   public ErrorMessage(String error) {
     this.error = error;
   }

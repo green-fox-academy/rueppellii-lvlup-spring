@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(HeartbeatController.class)
 public class HeartbeatControllerTest {
     String token = "TestToken123";
-    BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Test badge", "general");
-    BadgeDTO invalidBadgeDto = new BadgeDTO("2.3", "", "general");
-
-    private String stringify(Object object) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(object);
-    }
 
     @Autowired
     private MockMvc mockMvc;
