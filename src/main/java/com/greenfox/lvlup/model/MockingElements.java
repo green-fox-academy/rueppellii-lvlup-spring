@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.model;
 
-import com.greenfox.lvlup.controller.PitchDto;
+import com.greenfox.lvlup.controller.dto.PitchDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;

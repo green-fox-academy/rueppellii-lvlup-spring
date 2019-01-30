@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.controller;
 
+import com.greenfox.lvlup.controller.dto.PitchDto;
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.model.MockingElements;
 import com.greenfox.lvlup.model.SuccessfulQuery;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
