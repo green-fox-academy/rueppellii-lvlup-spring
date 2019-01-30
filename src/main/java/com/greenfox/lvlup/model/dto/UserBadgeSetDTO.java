@@ -1,4 +1,6 @@
-package com.greenfox.lvlup.controller;
+package com.greenfox.lvlup.model.dto;
+
+import com.greenfox.lvlup.model.dto.UserBadgeDTO;
 
 import java.util.ArrayList;
 
