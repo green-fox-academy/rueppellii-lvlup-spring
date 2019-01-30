@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.GeneralException;
+import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.UserBadgeSetDTO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.exception;
 
 import org.springframework.http.HttpStatus;
 
