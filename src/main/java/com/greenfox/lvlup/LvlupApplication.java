@@ -7,15 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LvlupApplication {
 
   public static void main(String[] args) {
-    String s;
-    if (1 == 1){
-      s = "1";
-    }
-    else{
-      s = "1";
-    }
-
-
     SpringApplication.run(LvlupApplication.class, args);
   }
 
