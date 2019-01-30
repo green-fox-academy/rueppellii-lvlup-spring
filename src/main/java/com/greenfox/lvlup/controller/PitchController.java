@@ -1,14 +1,17 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.exception.ErrorMessage;
+import com.greenfox.lvlup.model.dto.PitchDto;
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.model.*;
+import com.greenfox.lvlup.exception.SuccessfulQuery;
+import javax.validation.Valid;
+
+import com.greenfox.lvlup.model.dto.PitchSetDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RestControllerAdvice
 public class PitchController {
 
   private PitchSetDTO pitchSetDTO = new PitchSetDTO();
@@ -20,9 +23,14 @@ public class PitchController {
     } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
 
-  @ExceptionHandler(GeneralException.class)
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public ErrorMessage unauthorizedHandler() {
-    return new ErrorMessage("unauthorized");
+  @PostMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> addPitch(@RequestHeader(value = "userTokenAuth") String token,
+      @Valid @RequestBody PitchDto pitchDto) throws Exception {
+    if (token.isEmpty()) {
+      throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
+    }
+    return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
+
 }
+

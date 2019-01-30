@@ -1,6 +1,4 @@
-package com.greenfox.lvlup.model;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
+package com.greenfox.lvlup.model.dto;
 
 import javax.validation.constraints.NotNull;
 
