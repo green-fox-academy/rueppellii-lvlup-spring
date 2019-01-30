@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfox.lvlup.model.dto.BadgeDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.greenfox.lvlup.util.Converter.stringify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -23,10 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     String token = "TestToken123";
     BadgeDTO validBadgeDto = new BadgeDTO("2.3", "Test badge", "general");
     BadgeDTO invalidBadgeDto = new BadgeDTO("2.3", "", "general");
-
-    private String stringify(Object object) throws JsonProcessingException {
-      return new ObjectMapper().writeValueAsString(object);
-    }
 
     @Autowired
     private MockMvc mockMvc;

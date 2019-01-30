@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.exception;
 
-import com.greenfox.lvlup.exception.ValidationError;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
