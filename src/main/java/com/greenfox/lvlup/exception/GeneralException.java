@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.exception;
 
+import com.greenfox.lvlup.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
 
 public class GeneralException extends Exception {
