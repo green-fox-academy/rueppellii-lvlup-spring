@@ -41,15 +41,12 @@ public class PitchDto {
     this.holders = holders;
   }
 
-
-
   public PitchDto(int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
     this.pitchMessage = pitchMessage;
     this.holders = holders;
   }
-
 
   public PitchDto() {
   }

@@ -8,22 +8,25 @@ import java.util.Arrays;
 public class MockingElements {
 
   private String validToken = "token123";
+  private String[] holdersArray = {"balazs.jozsef", "benedek.vamosi", "balazs.barna"};
+  private String badgeName = "English speaker";
+  private String pitchMessage = "Hello World! My English is bloody gorgeous.";
 
-  private PitchDto validPitchDto = new PitchDto("English speaker",
+  private PitchDto validPitchDto = new PitchDto(badgeName,
       2,
       3,
-      "Hello World! My English is bloody gorgeous.",
-      new ArrayList<>(Arrays.asList("balazs.jozsef", "benedek.vamosi", "balazs.barna")));
+      pitchMessage,
+      new ArrayList<>(Arrays.asList(holdersArray)));
 
-  private PitchDto invalidPitchDto5 = new PitchDto("English speaker",
+  private PitchDto invalidPitchDto5 = new PitchDto(badgeName,
       2,
       3,
-      "Hello World! My English is bloody gorgeous.");
+      pitchMessage);
 
-  private PitchDto invalidPitchDto2 = new PitchDto("English speaker",
+  private PitchDto invalidPitchDto2 = new PitchDto(badgeName,
       3,
-      "Hello World! My English is bloody gorgeous.",
-      new ArrayList<>(Arrays.asList("balazs.jozsef", "benedek.vamosi", "balazs.barna")));
+      pitchMessage,
+      new ArrayList<>(Arrays.asList(holdersArray)));
 
   public PitchDto getInvalidPitchDto1() {
     return invalidPitchDto1;
@@ -36,13 +39,13 @@ public class MockingElements {
   private PitchDto invalidPitchDto1 = new PitchDto(
       2,
       3,
-      "Hello World! My English is bloody gorgeous.",
-      new ArrayList<>(Arrays.asList("balazs.jozsef", "benedek.vamosi", "balazs.barna")));
+      pitchMessage,
+      new ArrayList<>(Arrays.asList(holdersArray)));
 
-  private PitchDto emptyPitchDto5 = new PitchDto("English speaker",
+  private PitchDto emptyPitchDto5 = new PitchDto(badgeName,
       2,
       3,
-      "Hello World! My English is bloody gorgeous.",
+      pitchMessage,
       new ArrayList<>(Arrays.asList()));
 
   public PitchDto getEmptyPitchDto5() {
