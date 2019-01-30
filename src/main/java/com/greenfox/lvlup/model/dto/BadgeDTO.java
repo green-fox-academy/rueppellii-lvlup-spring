@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
