@@ -29,7 +29,7 @@ public class PitchController {
     if (token.isEmpty()) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
-    return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+    return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
 }
