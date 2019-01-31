@@ -29,13 +29,18 @@ repositories {
 dependencies {
     compile group: 'org.sonarsource.sonarqube', name: 'sonar-plugin-api', version: '7.5'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    //testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
+    compile 'com.google.apis:google-api-services-oauth2:v1-rev145-1.25.0'
+    compileOnly 'org.projectlombok:lombok'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+
 }
 
