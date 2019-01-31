@@ -28,13 +28,15 @@ public class LvlupApplication implements CommandLineRunner {
     SpringApplication.run(LvlupApplication.class, args);
   }
 
-  Badge badge = new Badge("1.0", "english", "?", new ArrayList<String>(Arrays.asList("a")), null);
+  Badge badge = new Badge("1.0", "english", "?", 3, null);
+//  Badge badge1 = new Badge("1.0", "german", "?", 2, null);
   User user1 = new User("Peter", "token", "pic", new ArrayList<Badge>(Arrays.asList(badge)));
 
   @Override
   public void run(String... args) throws Exception {
     this.repo1.save(badge);
-    this.repo.save(user1);
+//    this.repo1.save(badge1);
+   this.repo.save(user1);
   }
 }
 

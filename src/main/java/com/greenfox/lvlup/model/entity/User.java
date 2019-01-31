@@ -1,14 +1,11 @@
 package com.greenfox.lvlup.model.entity;
 
-import com.greenfox.lvlup.model.dto.BadgeDTO;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +17,9 @@ public class User {
   @NotEmpty
   private String pic;
   @ManyToMany
-  @JoinColumn(name = "badge_id")
+  @JoinTable(name = "user_badge",
+      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+      inverseJoinColumns = @JoinColumn(name = "badge_id", referencedColumnName = "badgeId"))
   private List<Badge> badges;
 
   public User(String name, String tokenAuth, String pic, List<Badge> badges) {

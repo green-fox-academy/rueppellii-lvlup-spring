@@ -1,5 +1,8 @@
 package com.greenfox.lvlup.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +12,25 @@ import java.util.List;
 public class Badge {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+
   private long badgeId;
+  @JsonIgnore
   private String version;
+
   private String name;
+  @JsonIgnore
   private String tag;
-  private ArrayList<String> levels;
-  @ManyToMany
-  @JoinColumn(name = "badge_id")
+
+  private int level;
+  @ManyToMany(mappedBy = "badges")
+  @JsonIgnore
   private List<User> users;
 
-  public Badge(String version, String name, String tag, ArrayList<String> levels, List<User> users) {
+  public Badge(String version, String name, String tag, int level, List<User> users) {
     this.version = version;
     this.name = name;
     this.tag = tag;
-    this.levels = levels;
+    this.level = level;
     this.users = users;
   }
 
@@ -69,11 +77,11 @@ public class Badge {
     this.tag = tag;
   }
 
-  public ArrayList<String> getLevels() {
-    return levels;
+  public int getLevels() {
+    return level;
   }
 
-  public void setLevels(ArrayList<String> levels) {
-    this.levels = levels;
+  public void setLevels(int level) {
+    this.level = level;
   }
 }
