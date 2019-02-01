@@ -9,10 +9,8 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2Res
 public class JwtAccessToken extends Jwt {
   String token;
 
-
   public JwtAccessToken(String token) {
     this.token = token;
   }
 }
-
 
