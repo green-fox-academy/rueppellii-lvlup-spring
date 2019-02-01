@@ -37,6 +37,7 @@ public class LvlupApplication implements CommandLineRunner {
     badgeRepository.save(badge1);
     badgeRepository.save(badge2);
     badgeRepository.save(badge3);
+
     levelRepository.save(new BadgeLevel(3,"Category 3", badge1,new User("Andi"), new User("Pisti")));
     levelRepository.save(new BadgeLevel(1,"Category 1", badge1,new User("Adél"), new User("Diana")));
     levelRepository.save(new BadgeLevel(1,"Category 1", badge2,new User("Péter"), new User("Bali")));
