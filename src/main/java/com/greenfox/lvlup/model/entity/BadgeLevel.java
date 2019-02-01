@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @Data
 @EqualsAndHashCode(exclude = "holders")
 @Entity
-@Table(name = "levels")
+@Table(name = "badgelevels")
 public class BadgeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
