@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
 public class LvlupApplication implements CommandLineRunner {
   private BadgeRepository badgeRepository;
@@ -38,11 +37,11 @@ public class LvlupApplication implements CommandLineRunner {
     badgeRepository.save(badge2);
     badgeRepository.save(badge3);
 
-    levelRepository.save(new BadgeLevel(3,"Category 3", badge1,new User("Andi"), new User("Pisti")));
-    levelRepository.save(new BadgeLevel(1,"Category 1", badge1,new User("Adél"), new User("Diana")));
-    levelRepository.save(new BadgeLevel(1,"Category 1", badge2,new User("Péter"), new User("Bali")));
-    levelRepository.save(new BadgeLevel(3,"Category 3", badge2,new User("XYZAZ"), new User("Hanna"), new User("Kriszta")));
-    levelRepository.save(new BadgeLevel(6,"Category 6", badge2,new User("Dani")));
+    levelRepository.save(new BadgeLevel("testEnglish",3,"Category 3", badge1,new User("Andi"), new User("Pisti")));
+    levelRepository.save(new BadgeLevel("testEnglish",1,"Category 1", badge1,new User("Adél"), new User("Diana")));
+    levelRepository.save(new BadgeLevel("testPresentation skills",1,"Category 1", badge2,new User("Péter"), new User("Bali")));
+    levelRepository.save(new BadgeLevel("testPresentation skills",3,"Category 3", badge2,new User("XYZAZ"), new User("Hanna"), new User("Kriszta")));
+    levelRepository.save(new BadgeLevel("testCommunication skills",6,"Category 6", badge2,new User("Dani")));
 
   }
 }

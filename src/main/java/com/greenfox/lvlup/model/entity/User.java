@@ -2,6 +2,7 @@ package com.greenfox.lvlup.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,10 +17,14 @@ public class User {
     @JsonIgnore
     private long id;
     private String name;
+    @JsonIgnore
+    private String tokenAuth;
+    @JsonIgnore
+    private String pic;
 
     @ManyToMany(mappedBy = "holders")
     @JsonIgnore
-    private Set<BadgeLevel> badgeLevels = new HashSet<>();
+    private Set<BadgeLevel> bagdes = new HashSet<>();
 
     public User() {
     }
@@ -44,11 +49,27 @@ public class User {
         this.name = name;
     }
 
-    public Set<BadgeLevel> getBadgeLevels() {
-        return badgeLevels;
+    public String getTokenAuth() {
+        return tokenAuth;
     }
 
-    public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
-        this.badgeLevels = badgeLevels;
+    public void setTokenAuth(String tokenAuth) {
+        this.tokenAuth = tokenAuth;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public Set<BadgeLevel> getBagdes() {
+        return bagdes;
+    }
+
+    public void setBagdes(Set<BadgeLevel> bagdes) {
+        this.bagdes = bagdes;
     }
 }

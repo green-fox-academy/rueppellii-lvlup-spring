@@ -18,6 +18,8 @@ public class BadgeLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private long id;
+    @JsonIgnore
+    private String name;
     private int level;
     private String description;
 
@@ -25,38 +27,27 @@ public class BadgeLevel {
     @JsonIgnore
     private Badge badge;
 
+    //@JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "badgelevel_user",
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> holders;
 
-/*    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "badgelevel_archetype",
-            joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "archetype_id", referencedColumnName = "id"))
-    private Set<Archetype> archetypes;*/
-
     public BadgeLevel() {
     }
 
-    public BadgeLevel(int level, String description, Badge badge, User... holders) {
+    public BadgeLevel(String name, int level, String description, Badge badge, User... holders) {
+        this.name = name;
         this.level = level;
         this.description = description;
         this.badge = badge;
         this.holders = Stream.of(holders).collect(Collectors.toSet());
-        this.holders.forEach(x -> x.getBadgeLevels().add(this));
+        this.holders.forEach(x -> x.getBagdes().add(this));
     }
 
-   /* public BadgeLevel(int level, String description, Badge badge, Archetype... archetypes) {
-        this.level = level;
-        this.description = description;
-        this.badge = badge;
-        this.holders = Stream.of(archetypes).collect(Collectors.toSet());
-        this.holders.forEach(y -> y.setArchetpyeBadgeLevels.add(this));
-    }*/
-
-    public BadgeLevel(int level, String description, Badge badge) {
+    public BadgeLevel(String name, int level, String description, Badge badge) {
+        this.name = name;
         this.level = level;
         this.description = description;
         this.badge = badge;
@@ -100,5 +91,13 @@ public class BadgeLevel {
 
     public void setHolders(Set<User> holders) {
         this.holders = holders;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
