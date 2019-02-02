@@ -32,5 +32,9 @@ public class PitchController {
     return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
+  @GetMapping("/")
+  public String index() {
+    return "example";
+  }
 }
 
