@@ -28,7 +28,7 @@ public class BadgeLevel {
     private Badge badge;
 
     //@JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "badgelevel_user",
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
