@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidationError {
+
   private String errorMessage;
 
   @JsonInclude(JsonInclude.Include.NON_EMPTY)

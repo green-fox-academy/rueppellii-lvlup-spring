@@ -1,4 +1,6 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.dto;
+
+import com.greenfox.lvlup.model.PitchDTO;
 
 import java.util.ArrayList;
 import java.util.List;
