@@ -26,6 +26,7 @@ public class BadgeDTO {
 
 /*
   public BadgeDTO(String version, String name, String tag, List<String> levels) {
+    this();
     this.version = version;
     this.name = name;
     this.tag = tag;
@@ -35,6 +36,7 @@ public class BadgeDTO {
 
 
   public BadgeDTO(@NotBlank(message = "Badge version must not be blank!") String version, @NotBlank(message = "Badge name must not be blank!") String name, @NotBlank(message = "Badge tag must not be blank!") String tag) {
+    this();
     this.version = version;
     this.name = name;
     this.tag = tag;
