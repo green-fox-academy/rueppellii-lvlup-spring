@@ -24,6 +24,7 @@ public class Badge {
     }
 
     public Badge(String version, String name, String tag) {
+        this();
         this.version = version;
         this.name = name;
         this.tag = tag;

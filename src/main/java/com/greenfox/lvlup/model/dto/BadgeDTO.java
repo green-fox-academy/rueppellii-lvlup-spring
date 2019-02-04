@@ -2,6 +2,7 @@ package com.greenfox.lvlup.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.greenfox.lvlup.model.entity.BadgeLevel;
 
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -16,18 +17,22 @@ public class BadgeDTO {
     @NotBlank(message= "Badge tag must not be blank!")
     public String tag;
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    public List<String> levels;
+    //public List<String> levels;
+    private List<BadgeLevel> levels;
 
   public BadgeDTO() {
     levels = new ArrayList<>();
   }
 
+/*
   public BadgeDTO(String version, String name, String tag, List<String> levels) {
     this.version = version;
     this.name = name;
     this.tag = tag;
     this.levels = levels;
   }
+*/
+
 
   public BadgeDTO(@NotBlank(message = "Badge version must not be blank!") String version, @NotBlank(message = "Badge name must not be blank!") String name, @NotBlank(message = "Badge tag must not be blank!") String tag) {
     this.version = version;
@@ -59,11 +64,12 @@ public class BadgeDTO {
     this.tag = tag;
   }
 
-  public List<String> getLevels() {
+  /*public List<String> getLevels() {
     return levels;
   }
 
   public void setLevels(List<String> levels) {
     this.levels = levels;
   }
+  */
 }
