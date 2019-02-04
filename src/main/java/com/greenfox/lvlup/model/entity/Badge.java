@@ -1,48 +1,38 @@
 package com.greenfox.lvlup.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="badges")
+@Table(name = "badges")
 public class Badge {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-
   private long badgeId;
   @JsonIgnore
   private String version;
-
   private String name;
   @JsonIgnore
   private String tag;
+  @OneToMany
+  @JoinColumn(name = "levelId")
+  private List<BadgeLevel> levels;
 
-  private int level;
-  @ManyToMany(mappedBy = "badges")
-  @JsonIgnore
-  private List<User> users;
-
-  public Badge(String version, String name, String tag, int level, List<User> users) {
+  public Badge(String version, String name, String tag, List<BadgeLevel> levels) {
     this.version = version;
     this.name = name;
     this.tag = tag;
-    this.level = level;
-    this.users = users;
+    this.levels = levels;
+  }
+
+  public Badge(String version, String name, String tag) {
+    this.version = version;
+    this.name = name;
+    this.tag = tag;
   }
 
   public Badge() {
-  }
-
-  public List<User> getUsers() {
-    return users;
-  }
-
-  public void setUsers(List<User> users) {
-    this.users = users;
   }
 
   public long getBadgeId() {
@@ -77,11 +67,11 @@ public class Badge {
     this.tag = tag;
   }
 
-  public int getLevels() {
-    return level;
+  public List<BadgeLevel> getLevels() {
+    return levels;
   }
 
-  public void setLevels(int level) {
-    this.level = level;
+  public void setLevels(List<BadgeLevel> levels) {
+    this.levels = levels;
   }
 }

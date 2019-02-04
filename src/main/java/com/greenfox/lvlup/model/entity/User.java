@@ -2,7 +2,8 @@ package com.greenfox.lvlup.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -16,17 +17,13 @@ public class User {
   private String tokenAuth;
   @NotEmpty
   private String pic;
-  @ManyToMany
-  @JoinTable(name = "user_badge",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
-      inverseJoinColumns = @JoinColumn(name = "badge_id", referencedColumnName = "badgeId"))
-  private List<Badge> badges;
+  @ManyToMany(mappedBy = "holders")
+  private Set<BadgeLevel> levels = new HashSet<>();
 
-  public User(String name, String tokenAuth, String pic, List<Badge> badges) {
+  public User(String name, String tokenAuth, String pic) {
     this.name = name;
     this.tokenAuth = tokenAuth;
     this.pic = pic;
-    this.badges = badges;
   }
 
   public User() {
@@ -64,11 +61,11 @@ public class User {
     this.pic = pic;
   }
 
-  public List<Badge> getBadges() {
-    return badges;
+  public Set<BadgeLevel> getLevels() {
+    return levels;
   }
 
-  public void setBadges(List<Badge> badges) {
-    this.badges = badges;
+  public void setLevels(Set<BadgeLevel> levels) {
+    this.levels = levels;
   }
 }
