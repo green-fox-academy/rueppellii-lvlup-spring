@@ -19,11 +19,10 @@ public class JwtUserPrinciple implements UserDetails {
 
   public JwtUserPrinciple() {}
 
-  public JwtUserPrinciple(String username, String token, Long id, String role, Collection<? extends GrantedAuthority> authorities) {
+  public JwtUserPrinciple(String username, String token, Long id, Collection<? extends GrantedAuthority> authorities) {
     this.username = username;
     this.token = token;
     this.id = id;
-    this.role = role;
     this.authorities = authorities;
   }
 
