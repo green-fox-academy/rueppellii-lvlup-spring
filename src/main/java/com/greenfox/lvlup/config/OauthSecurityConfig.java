@@ -14,11 +14,13 @@ public class OauthSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-          .antMatcher("/auth")
-          .authorizeRequests()
-//             .antMatchers("/authed")
-//             .permitAll()
-          .anyRequest()
-             .authenticated();
+                .cors()
+                .and()
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/auth")
+                .authenticated();
+
     }
 }
