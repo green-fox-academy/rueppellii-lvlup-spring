@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AuthController {
 
-    @RequestMapping("/auth")
+    @RequestMapping("/login")
     @ResponseBody
     public String something() {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        System.out.println(auth.getPrincipal());
-        return "index";
+        return "authed";
         }
 
-    @RequestMapping("/authed")
+    @RequestMapping("/")
     public String callback() {
         System.out.println("redirecting to home page");
         return "authed.html";
