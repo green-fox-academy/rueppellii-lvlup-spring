@@ -19,8 +19,6 @@ public class BadgeDTO {
     @NotBlank(message= "Badge tag must not be blank!")
     public String tag;
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    //public List<String> levels;
-   // @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
     public List<BadgeLevelDTO> levels;
 
   public BadgeDTO() {
