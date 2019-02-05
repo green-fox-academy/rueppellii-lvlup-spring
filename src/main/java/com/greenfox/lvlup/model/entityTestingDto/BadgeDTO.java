@@ -1,9 +1,11 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.entityTestingDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,8 @@ public class BadgeDTO {
     public String tag;
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     //public List<String> levels;
-    private List<BadgeLevel> levels;
+   // @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+    public List<BadgeLevelDTO> levels;
 
   public BadgeDTO() {
     levels = new ArrayList<>();
@@ -66,7 +69,15 @@ public class BadgeDTO {
     this.tag = tag;
   }
 
-  /*public List<String> getLevels() {
+    public List<BadgeLevelDTO> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<BadgeLevelDTO> levels) {
+        this.levels = levels;
+    }
+
+ /*public List<String> getLevels() {
     return levels;
   }
 
@@ -74,4 +85,6 @@ public class BadgeDTO {
     this.levels = levels;
   }
   */
+
+
 }

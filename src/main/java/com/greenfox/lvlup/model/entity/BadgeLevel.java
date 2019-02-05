@@ -16,9 +16,9 @@ import java.util.stream.Stream;
 public class BadgeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+    //@JsonIgnore
     private long id;
-    @JsonIgnore
+    //@JsonIgnore
     private String name;
     private int level;
     private String description;

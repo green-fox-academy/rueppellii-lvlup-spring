@@ -17,7 +17,7 @@ public class User {
     @JsonIgnore
     private long id;
     private String name;
-    @JsonIgnore
+    //@JsonIgnore
     private String tokenAuth;
     @JsonIgnore
     private String pic;
