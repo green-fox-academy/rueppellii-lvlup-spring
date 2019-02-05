@@ -20,7 +20,8 @@
 //        .csrf().disable()
 //        .authorizeRequests()
 //        .antMatchers("/auth")
-//        .authenticated();
+//        .authenticated()
+//        ;
 //  }
 //}
 //

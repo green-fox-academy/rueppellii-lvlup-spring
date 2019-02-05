@@ -11,14 +11,14 @@ import java.util.Base64;
 public class JwtValidator {
 
   //@Value("${SECRET}")
-  private final String SECRET = "secret";
+  private final String SECRET =  Base64.getEncoder().encodeToString("secret".getBytes());
 
   public JwtUserDTO validate(String token) {
 
     JwtUserDTO jwtUser = null;
     try {
       Claims body = Jwts.parser()
-          .setSigningKey(SECRET.getBytes("UTF-8"))
+          .setSigningKey(SECRET)
           .parseClaimsJws(token)
           .getBody();
 
