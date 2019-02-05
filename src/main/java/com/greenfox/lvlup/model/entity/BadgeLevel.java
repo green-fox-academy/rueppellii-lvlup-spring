@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,7 +21,6 @@ public class BadgeLevel {
     private String description;
 
     @ManyToOne
-    @JsonIgnore
     private Badge badge;
 
     @ManyToMany
