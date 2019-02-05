@@ -30,22 +30,6 @@ public class LvlupApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-/*
-    Badge badge1 = new Badge("3.2", "testEnglish", "TESTING");
-    Badge badge2 = new Badge("2.2", "testPresentation skills", "prezi");
-    Badge badge3 = new Badge("1.2", "testCommunication skills", "communication");
-    badgeRepository.save(badge1);
-    badgeRepository.save(badge2);
-    badgeRepository.save(badge3);
-
-    levelRepository.save(new BadgeLevel("testEnglish",3,"Category 3", badge1,new User("Andi"), new User("Pisti")));
-    levelRepository.save(new BadgeLevel("testEnglish",1,"Category 1", badge1,new User("Adél"), new User("Diana")));
-    levelRepository.save(new BadgeLevel("testPresentation skills",1,"Category 1", badge2,new User("Péter"), new User("Bali")));
-    levelRepository.save(new BadgeLevel("testPresentation skills",3,"Category 3", badge2,new User("XYZAZ"), new User("Hanna"), new User("Kriszta")));
-    levelRepository.save(new BadgeLevel("testCommunication skills",6,"Category 6", badge2,new User("Dani")));
-*/
-
-
         Badge badge1 = new Badge("3.2", "testEnglish", "TESTING");
         Badge badge2 = new Badge("2.2", "testPresentation skills", "prezi");
         Badge badge3 = new Badge("1.2", "testCommunication skills", "communication");

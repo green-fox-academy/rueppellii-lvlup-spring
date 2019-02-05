@@ -17,12 +17,12 @@ import javax.validation.Valid;
 
 @RestController
 public class AdminController {
-    private BadgeService badgeService;
+/*    private BadgeService badgeService;
 
     @Autowired
     public AdminController(BadgeService badgeService) {
         this.badgeService = badgeService;
-    }
+    }*/
 
     @PostMapping(value = "/admin/add",
             produces = {MediaType.APPLICATION_JSON_VALUE},
