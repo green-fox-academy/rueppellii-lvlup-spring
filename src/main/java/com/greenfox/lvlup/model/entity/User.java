@@ -14,16 +14,12 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private long id;
     private String name;
-    //@JsonIgnore
     private String tokenAuth;
-    @JsonIgnore
     private String pic;
 
     @ManyToMany(mappedBy = "holders")
-    @JsonIgnore
     private Set<BadgeLevel> bagdes = new HashSet<>();
 
     public User() {

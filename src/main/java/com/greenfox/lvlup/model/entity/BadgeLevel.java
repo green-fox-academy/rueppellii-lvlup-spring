@@ -16,9 +16,7 @@ import java.util.stream.Stream;
 public class BadgeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@JsonIgnore
     private long id;
-    //@JsonIgnore
     private String name;
     private int level;
     private String description;
@@ -27,7 +25,6 @@ public class BadgeLevel {
     @JsonIgnore
     private Badge badge;
 
-    //@JsonIgnore
     @ManyToMany
     @JoinTable(name = "badgelevel_user",
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),

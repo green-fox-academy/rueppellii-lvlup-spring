@@ -10,7 +10,6 @@ import java.util.List;
 public class Badge {
     @Id
     @GeneratedValue
-   // @JsonIgnore
     private Long id;
     private String version;
     private String name;

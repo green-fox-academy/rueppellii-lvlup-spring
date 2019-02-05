@@ -30,12 +30,12 @@ public class UserService {
         return userDTO;
     }
 
-    public List<UserDTO> getDTOListFromUser() {
+/*    public List<UserDTO> getDTOListFromUser() {
         List<UserDTO> userDTOS = new ArrayList<>();
         List<User> users = userRepository.findAll();
         for (User item : users) {
             userDTOS.add(getDTOfromUser(item));
         }
         return userDTOS;
-    }
+    }*/
 }
