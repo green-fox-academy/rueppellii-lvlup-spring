@@ -13,7 +13,7 @@ import java.io.IOException;
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
 
   public JwtAuthenticationTokenFilter () {
-    super("/api/rest/**");
+    super("/**");
   }
 
   @Override
@@ -23,7 +23,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
       throw new RuntimeException("JWT token is missing");
     }
 
-    String authenticationToken = header.substring(8);
+    String authenticationToken = header.substring(7);
 
     JwtAccessToken token = new JwtAccessToken(authenticationToken);
     return getAuthenticationManager().authenticate(token);
@@ -34,5 +34,4 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
     super.successfulAuthentication(request, response, chain, authResult);
     chain.doFilter(request, response);
   }
-
 }

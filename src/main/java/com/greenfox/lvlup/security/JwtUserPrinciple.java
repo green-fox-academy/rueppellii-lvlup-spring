@@ -6,8 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-
-@Getter
 @Setter
 public class JwtUserPrinciple implements UserDetails {
 
@@ -33,7 +31,7 @@ public class JwtUserPrinciple implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return this.authorities;
   }
 
   @Override
@@ -43,7 +41,7 @@ public class JwtUserPrinciple implements UserDetails {
 
   @Override
   public String getUsername() {
-    return null;
+    return this.username;
   }
 
   @Override
@@ -64,5 +62,17 @@ public class JwtUserPrinciple implements UserDetails {
   @Override
   public boolean isEnabled() {
     return false;
+  }
+
+  public String getToken() {
+    return token;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getRole() {
+    return role;
   }
 }

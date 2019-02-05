@@ -1,11 +1,8 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.security.JwtAccessToken;
 import com.greenfox.lvlup.security.JwtGenerator;
-import com.greenfox.lvlup.security.JwtUserPrinciple;
+import com.greenfox.lvlup.security.JwtUserDTO;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,7 +16,7 @@ public class AuthController {
 
   @GetMapping(value = "/auth")
   public String showIfAuthenticated() {
-    String token = jwtGenerator.generate(new JwtUserPrinciple());
+    String token = jwtGenerator.generate(new JwtUserDTO());
     return token;
   }
 }

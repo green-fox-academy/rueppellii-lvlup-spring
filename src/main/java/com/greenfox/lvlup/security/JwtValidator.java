@@ -2,33 +2,35 @@ package com.greenfox.lvlup.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Base64;
 
 @Component
 public class JwtValidator {
 
-  private String secret = "secret";
+  //@Value("${SECRET}")
+  private final String SECRET = "secret";
 
   public JwtUserDTO validate(String token) {
 
     JwtUserDTO jwtUser = null;
     try {
       Claims body = Jwts.parser()
-          .setSigningKey(secret)
+          .setSigningKey(SECRET.getBytes("UTF-8"))
           .parseClaimsJws(token)
           .getBody();
-      System.out.println(body);
 
       jwtUser = new JwtUserDTO();
 
-      jwtUser.setUsername(body.getSubject());
-      jwtUser.setId(Long.parseLong((String) body.get("userId")));
+      jwtUser.setUsername((String)body.get("username"));
+      //jwtUser.setId(Long.parseLong((String) body.get("id")));
       jwtUser.setRole((String) body.get("role"));
     }
     catch (Exception e) {
       System.out.println(e);
     }
-
     return jwtUser;
   }
 }
