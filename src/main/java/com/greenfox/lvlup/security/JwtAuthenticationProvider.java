@@ -31,11 +31,11 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     String token = jwtToken.getToken();
 
-    System.out.println(token + " token before aauthentication try");
+    System.out.println(token);
     JwtUserDTO jwtUser = validator.validate(token);
 
     if (jwtUser == null) {
-        throw new RuntimeException("JWT token is incorrect WHYYYYY");
+        throw new RuntimeException("JWT token is incorrect");
     }
 
     List<GrantedAuthority> grantedAuthorities = AuthorityUtils
