@@ -22,6 +22,8 @@ public class JwtUserPrinciple implements UserDetails {
     this.token = token;
     this.id = id;
     this.authorities = authorities;
+
+
   }
 
   @Override
@@ -46,22 +48,22 @@ public class JwtUserPrinciple implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
   }
 
   public String getToken() {
