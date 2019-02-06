@@ -10,8 +10,8 @@ import java.util.Base64;
 @Component
 public class JwtValidator {
 
-  //@Value("${SECRET}")
-  private final String SECRET =  Base64.getEncoder().encodeToString("secret".getBytes());
+  @Value("${SECRET}")
+  private String SECRET;
 
   public JwtUserDTO validate(String token) {
 
@@ -24,8 +24,8 @@ public class JwtValidator {
 
       jwtUser = new JwtUserDTO();
 
-      jwtUser.setUsername((String)body.get("username"));
-      //jwtUser.setId(Long.parseLong((String) body.get("id")));
+      jwtUser.setUsername((String) body.get("username"));
+      jwtUser.setId((Long) body.get("userId"));
       jwtUser.setRole((String) body.get("role"));
     }
     catch (Exception e) {

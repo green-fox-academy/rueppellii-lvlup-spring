@@ -14,7 +14,6 @@ public class JwtUserPrinciple implements UserDetails {
   private String username;
   private String token;
   private Long id;
-  private String role;
   private Collection<? extends GrantedAuthority> authorities;
 
   public JwtUserPrinciple() {}
