@@ -30,11 +30,10 @@ public class BadgeLevelService {
         badgeLevelDTO.level = badgeLevel.getLevel();
         badgeLevelDTO.description = badgeLevel.getDescription();
         badgeLevelDTO.holders = new HashSet<>();
-        Set<User> usersOfTheBadgeLevel = badgeLevel.getHolders();
-        for (User item : usersOfTheBadgeLevel) {
+        Set<User> usersHoldingBadgeLevel = badgeLevel.getHolders();
+        for (User item : usersHoldingBadgeLevel) {
             badgeLevelDTO.holders.add(userService.getDTOfromUser(item));
         }
         return badgeLevelDTO;
     }
-
 }

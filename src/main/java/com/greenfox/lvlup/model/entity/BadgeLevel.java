@@ -16,7 +16,6 @@ public class BadgeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
     private int level;
     private String description;
 
@@ -32,8 +31,7 @@ public class BadgeLevel {
     public BadgeLevel() {
     }
 
-    public BadgeLevel(String name, int level, String description, Badge badge, User... holders) {
-        this.name = name;
+    public BadgeLevel(int level, String description, Badge badge, User... holders) {
         this.level = level;
         this.description = description;
         this.badge = badge;
@@ -41,8 +39,7 @@ public class BadgeLevel {
         this.holders.forEach(x -> x.getBagdes().add(this));
     }
 
-    public BadgeLevel(String name, int level, String description, Badge badge) {
-        this.name = name;
+    public BadgeLevel(int level, String description, Badge badge) {
         this.level = level;
         this.description = description;
         this.badge = badge;
@@ -86,13 +83,5 @@ public class BadgeLevel {
 
     public void setHolders(Set<User> holders) {
         this.holders = holders;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
