@@ -1,0 +1,23 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1002549059589-v22h4oe9vgvvijo6pch5e122s4p6rc03.apps.googleusercontent.com
+            client-secret: Dq0rmJE17JWDqKjhCN3dbevP
+
+
+security:
+  oauth2:
+    client:
+      registered-redirect-uri: https://localhost:8080/login
+      pre-established-redirect-uri: https://localhost:8080/login
+      access-token-uri: https://www.googleapis.com/oauth2/v3/token
+      user-authorization-uri: https://accounts.google.com/o/oauth2/auth
+      token-name: oauth_token
+      authentication-scheme: query
+      client-authentication-scheme: form
+      scope: profile
+      use-current-uri: false
+
