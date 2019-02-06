@@ -14,6 +14,9 @@ public class UserBadgeDTO {
     this.level = level;
   }
 
+  public UserBadgeDTO() {
+  }
+
   public String getName() {
     return name;
   }
