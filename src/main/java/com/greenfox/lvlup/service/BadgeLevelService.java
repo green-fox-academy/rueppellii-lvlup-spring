@@ -30,7 +30,6 @@ public class BadgeLevelService {
         badgeLevelDTO.level = badgeLevel.getLevel();
         badgeLevelDTO.description = badgeLevel.getDescription();
         badgeLevelDTO.holders = new HashSet<>();
-        //ebben Userek vannak, ezt kellene UserDTO-vá alakítni!
         Set<User> usersOfTheBadgeLevel = badgeLevel.getHolders();
         for (User item : usersOfTheBadgeLevel) {
             badgeLevelDTO.holders.add(userService.getDTOfromUser(item));

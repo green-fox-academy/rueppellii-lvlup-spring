@@ -17,12 +17,6 @@ import javax.validation.Valid;
 
 @RestController
 public class AdminController {
-/*    private BadgeService badgeService;
-
-    @Autowired
-    public AdminController(BadgeService badgeService) {
-        this.badgeService = badgeService;
-    }*/
 
     @PostMapping(value = "/admin/add",
             produces = {MediaType.APPLICATION_JSON_VALUE},
@@ -32,8 +26,6 @@ public class AdminController {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         } else {
-            //Badge badgeToCreate = badgeService.getBadgefromDTO(dtoToAdd);
-            //badgeService.createBadge(badgeToCreate);
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
         }
 
