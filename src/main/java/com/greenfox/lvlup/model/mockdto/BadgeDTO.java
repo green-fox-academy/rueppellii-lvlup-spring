@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.mockdto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

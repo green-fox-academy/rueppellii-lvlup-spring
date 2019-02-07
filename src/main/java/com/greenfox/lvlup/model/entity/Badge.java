@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

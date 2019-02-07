@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.dto.BadgeDTO;
+import com.greenfox.lvlup.model.mockdto.BadgeDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.Archetype;
-import com.greenfox.lvlup.model.BadgeLevel;
-import com.greenfox.lvlup.model.dto.model.ArchetypeDTO;
+import com.greenfox.lvlup.model.entity.Archetype;
+import com.greenfox.lvlup.model.entity.BadgeLevel;
+import com.greenfox.lvlup.model.dto.ArchetypeDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,9 @@ public class ArchetypeService {
   public List<BadgeLevel> generateBadgeLevels() {
     List<BadgeLevel> levels = new ArrayList<>();
     BadgeLevel one = new BadgeLevel();
-    one.setId(25);
+    one.setId(1);
     BadgeLevel two = new BadgeLevel();
-    one.setId(32);
+    two.setId(2);
     levels.add(one);
     levels.add(two);
     return levels;

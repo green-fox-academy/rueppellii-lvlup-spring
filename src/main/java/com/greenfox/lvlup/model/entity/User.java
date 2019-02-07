@@ -1,6 +1,7 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.greenfox.lvlup.model.entity.BadgeLevel;
 import lombok.Data;
 
 import javax.persistence.*;

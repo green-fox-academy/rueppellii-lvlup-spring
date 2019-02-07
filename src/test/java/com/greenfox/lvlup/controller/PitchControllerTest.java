@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.dto.MockingElements;
-import com.greenfox.lvlup.model.dto.PitchSetDTO;
+import com.greenfox.lvlup.model.mockdto.MockingElements;
+import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

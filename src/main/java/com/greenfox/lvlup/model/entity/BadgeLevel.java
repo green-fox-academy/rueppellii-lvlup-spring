@@ -1,9 +1,6 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.greenfox.lvlup.model.Archetype;
-import com.greenfox.lvlup.model.Badge;
-import com.greenfox.lvlup.model.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

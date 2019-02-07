@@ -2,7 +2,7 @@ package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
-import com.greenfox.lvlup.model.dto.BadgeDTO;
+import com.greenfox.lvlup.model.mockdto.BadgeDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

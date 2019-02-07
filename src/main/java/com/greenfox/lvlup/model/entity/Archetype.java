@@ -1,4 +1,6 @@
-package com.greenfox.lvlup.model;
+package com.greenfox.lvlup.model.entity;
+
+import com.greenfox.lvlup.model.entity.BadgeLevel;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.repository;
 
-import com.greenfox.lvlup.model.Archetype;
+import com.greenfox.lvlup.model.entity.Archetype;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
