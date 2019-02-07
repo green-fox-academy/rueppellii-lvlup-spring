@@ -1,71 +1,74 @@
 package com.greenfox.lvlup.model.entity;
 
+import lombok.Data;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long userId;
-  @NotEmpty
-  private String name;
-  @NotEmpty
-  private String tokenAuth;
-  @NotEmpty
-  private String pic;
-  @ManyToMany(mappedBy = "holders")
-  private Set<BadgeLevel> levels = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    private String tokenAuth;
+    private String pic;
 
-  public User(String name, String tokenAuth, String pic) {
-    this.name = name;
-    this.tokenAuth = tokenAuth;
-    this.pic = pic;
-  }
+    @ManyToMany(mappedBy = "holders")
+    private Set<BadgeLevel> bagdes = new HashSet<>();
 
-  public User() {
-  }
+    public User() {
+    }
 
-  public long getUserId() {
-    return userId;
-  }
+    public User(String name, String tokenAuth, String pic) {
+        this.name = name;
+        this.tokenAuth = tokenAuth;
+        this.pic = pic;
+    }
 
-  public void setUserId(long userId) {
-    this.userId = userId;
-  }
+    public User(String name) {
+        this.name = name;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public String getTokenAuth() {
-    return tokenAuth;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setTokenAuth(String tokenAuth) {
-    this.tokenAuth = tokenAuth;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getPic() {
-    return pic;
-  }
+    public String getTokenAuth() {
+        return tokenAuth;
+    }
 
-  public void setPic(String pic) {
-    this.pic = pic;
-  }
+    public void setTokenAuth(String tokenAuth) {
+        this.tokenAuth = tokenAuth;
+    }
 
-  public Set<BadgeLevel> getLevels() {
-    return levels;
-  }
+    public String getPic() {
+        return pic;
+    }
 
-  public void setLevels(Set<BadgeLevel> levels) {
-    this.levels = levels;
-  }
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public Set<BadgeLevel> getBagdes() {
+        return bagdes;
+    }
+
+    public void setBagdes(Set<BadgeLevel> bagdes) {
+        this.bagdes = bagdes;
+    }
 }

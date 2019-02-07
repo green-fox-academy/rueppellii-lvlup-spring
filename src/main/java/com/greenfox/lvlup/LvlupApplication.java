@@ -11,23 +11,29 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
 public class LvlupApplication implements CommandLineRunner {
-  @Autowired
   private UserRepository userRepository;
-
-  @Autowired
   private BadgeRepository badgeRepository;
+  private LevelRepository levelRepository;
+
+  Thread thread = new Thread(new Runnable() {
+    @Override
+    public void run(){
+throw new UnsupportedOperationException();
+    }
+  });
 
   @Autowired
-  private LevelRepository levelRepository;
+  public LvlupApplication(BadgeRepository badgeRepository, LevelRepository levelRepository, UserRepository userRepository) {
+    this.badgeRepository = badgeRepository;
+    this.levelRepository = levelRepository;
+    this.userRepository = userRepository;
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(LvlupApplication.class, args);
   }
-
-
 
   @Override
   public void run(String... args) throws Exception {
@@ -55,7 +61,6 @@ public class LvlupApplication implements CommandLineRunner {
     levelRepository.save(badgeLevel1);
     levelRepository.save(badgeLevel2);
     levelRepository.save(badgeLevel3);
-
   }
 }
 
