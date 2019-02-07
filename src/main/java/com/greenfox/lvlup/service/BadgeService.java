@@ -21,6 +21,14 @@ public class BadgeService {
         this.badgeRepository = badgeRepository;
         this.badgeLevelService = badgeLevelService;
     }
+    public List<BadgeDTO> getDTOListFromBadge() {
+        List<BadgeDTO> badgeDTOs = new ArrayList<>();
+        List<Badge> badges = badgeRepository.findAll();
+        for (Badge badge : badges) {
+            badgeDTOs.add(getDTOfromBadge(badge));
+        }
+        return badgeDTOs;
+    }
 
     public BadgeDTO getDTOfromBadge(Badge badge) {
         BadgeDTO badgeDTO = new BadgeDTO();
@@ -33,14 +41,5 @@ public class BadgeService {
             badgeDTO.levels.add(badgeLevelService.getDTOfromBadgeLevel(item));
         }
         return badgeDTO;
-    }
-
-    public List<BadgeDTO> getDTOListFromBadge() {
-        List<BadgeDTO> badgeDTOs = new ArrayList<>();
-        List<Badge> badges = badgeRepository.findAll();
-        for (Badge badge : badges) {
-            badgeDTOs.add(getDTOfromBadge(badge));
-        }
-        return badgeDTOs;
     }
 }
