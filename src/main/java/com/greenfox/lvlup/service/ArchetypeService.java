@@ -1,7 +1,6 @@
 package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.Archetype;
-import com.greenfox.lvlup.model.Badge;
 import com.greenfox.lvlup.model.BadgeLevel;
 import com.greenfox.lvlup.model.dto.model.ArchetypeDTO;
 import org.modelmapper.ModelMapper;
@@ -26,11 +25,11 @@ public class ArchetypeService {
   }
 
   public List<BadgeLevel> generateBadgeLevels() {
-    BadgeLevel one = new BadgeLevel();
-    one.setId(1);
-    BadgeLevel two = new BadgeLevel();
-    one.setId(2);
     List<BadgeLevel> levels = new ArrayList<>();
+    BadgeLevel one = new BadgeLevel();
+    one.setId(25);
+    BadgeLevel two = new BadgeLevel();
+    one.setId(32);
     levels.add(one);
     levels.add(two);
     return levels;

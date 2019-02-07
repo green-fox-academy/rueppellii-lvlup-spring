@@ -2,7 +2,6 @@ package com.greenfox.lvlup.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "archetypes")

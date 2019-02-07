@@ -1,12 +1,18 @@
 package com.greenfox.lvlup.model.dto.model;
 
-import com.greenfox.lvlup.model.BadgeLevel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
-import java.util.Set;
 
 public class ArchetypeDTO {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @JsonIgnore
+  private Long id;
   private String name;
   private List<BadgeLevelDTO> badgeLevels;
 
@@ -16,6 +22,14 @@ public class ArchetypeDTO {
   public ArchetypeDTO(String name, List<BadgeLevelDTO> badgeLevels) {
     this.name = name;
     this.badgeLevels = badgeLevels;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
