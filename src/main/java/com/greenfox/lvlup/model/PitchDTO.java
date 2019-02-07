@@ -1,11 +1,9 @@
 package com.greenfox.lvlup.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.greenfox.lvlup.model.dto.HolderDTO;
+import com.greenfox.lvlup.model.mockdto.HolderDTO;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PitchDTO {
