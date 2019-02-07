@@ -39,7 +39,8 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
-    compile 'org.springframework.boot:spring-boot-starter-security'
-    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.2.RELEASE'
+    //compile 'org.springframework.boot:spring-boot-starter-security'
+    //compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.2.RELEASE'
+    compileOnly 'org.projectlombok:lombok:1.18.4'
 }
 
