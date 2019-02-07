@@ -25,7 +25,7 @@ public class UserService {
 
    /* mapper.addMappings(new PropertyMap<User, UserBadgeSetDTO>() {
       protected void configure() {
-        map().getBadgesDto().add(new UserBadgeDTO());
+        map().getBadges().add(new UserBadgeDTO());
         //user.getBagdes().stream().forEach(x -> x.getBadge().getName());
       }
     });*/
@@ -41,17 +41,16 @@ public class UserService {
   /*  mapper.addMappings(new PropertyMap<User, UserBadgeSetDTO>() {
       protected void configure(){
 
-map().getBadgesDto().add(new UserBadgeDTO())
+map().getBadges().add(new UserBadgeDTO())
 user.getLevels().stream().forEach(x -> x.getBadge().getName());
       }
     });*/
   }
 
- public UserDto getUserDetailsById(long id, String token){
+ public UserDto getUserDetailsById(long id){
    User user = this.repo.findById(id).orElse(null);
    UserDto dto= mapper.map(user, UserDto.class);
-   dto.setTokenAuth(token);
-   dto.setBadgesDto(createBadgeSetDTO(id));
+   dto.setBadges(createBadgeSetDTO(id));
    return dto;
  }
 

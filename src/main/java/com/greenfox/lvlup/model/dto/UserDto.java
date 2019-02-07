@@ -7,7 +7,7 @@ public class UserDto {
    private String name;
    private String tokenAuth;
    private String pic;
-   private Set<UserBadgeDTO> badgesDto;
+   private Set<UserBadgeDTO> badges;
 
   public long getId() {
     return id;
@@ -41,11 +41,11 @@ public class UserDto {
     this.pic = pic;
   }
 
-  public Set<UserBadgeDTO> getBadgesDto() {
-    return badgesDto;
+  public Set<UserBadgeDTO> getBadges() {
+    return badges;
   }
 
-  public void setBadgesDto(Set<UserBadgeDTO> badgesDto) {
-    this.badgesDto = badgesDto;
+  public void setBadges(Set<UserBadgeDTO> badges) {
+    this.badges = badges;
   }
 }
