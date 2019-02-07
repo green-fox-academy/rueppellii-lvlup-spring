@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.entity.BadgeLevel;
-import com.greenfox.lvlup.model.entityTestingDto.BadgeDTO;
+import com.greenfox.lvlup.model.dto.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

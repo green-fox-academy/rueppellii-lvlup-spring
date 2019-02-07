@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 import com.greenfox.lvlup.model.entity.User;
-import com.greenfox.lvlup.model.entityTestingDto.UserDTO;
+import com.greenfox.lvlup.model.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service

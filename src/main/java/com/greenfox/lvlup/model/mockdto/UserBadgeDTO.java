@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.mockdto;
 
 public class UserBadgeDTO {
   private String name;

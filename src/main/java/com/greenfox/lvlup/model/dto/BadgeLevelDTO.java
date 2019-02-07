@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.entityTestingDto;
+package com.greenfox.lvlup.model.dto;
 import java.util.Set;
 
 public class BadgeLevelDTO {

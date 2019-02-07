@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.entityTestingDto.BadgeDTO;
+import com.greenfox.lvlup.model.dto.BadgeDTO;
 import com.greenfox.lvlup.service.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
