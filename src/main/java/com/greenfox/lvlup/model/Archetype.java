@@ -1,6 +1,7 @@
 package com.greenfox.lvlup.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,12 +15,12 @@ public class Archetype {
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinColumn(name = "level_id")
-  private Set<BadgeLevel> badgeLevels;
+  private List<BadgeLevel> badgeLevels;
 
   public Archetype() {
   }
 
-  public Archetype(String name, Set<BadgeLevel> badgeLevels) {
+  public Archetype(String name, List<BadgeLevel> badgeLevels) {
     this.name = name;
     this.badgeLevels = badgeLevels;
   }
@@ -40,11 +41,11 @@ public class Archetype {
     this.name = name;
   }
 
-  public Set<BadgeLevel> getBadgeLevels() {
+  public List<BadgeLevel> getBadgeLevels() {
     return badgeLevels;
   }
 
-  public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
+  public void setBadgeLevels(List<BadgeLevel> badgeLevels) {
     this.badgeLevels = badgeLevels;
   }
 }

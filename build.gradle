@@ -42,5 +42,6 @@ dependencies {
     //compile 'org.springframework.boot:spring-boot-starter-security'
     //compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.2.RELEASE'
     compileOnly 'org.projectlombok:lombok:1.18.4'
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
 }
 
