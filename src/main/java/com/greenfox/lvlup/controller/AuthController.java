@@ -1,6 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.dto.UserBadgeSetDTO;
+import com.greenfox.lvlup.security.JwtAccessToken;
 import com.greenfox.lvlup.security.JwtGenerator;
 import com.greenfox.lvlup.security.JwtUserDTO;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class AuthController {
   }
 
   @GetMapping(value = "/")
-  public String showIfAuthenticated() {
-    String token = jwtGenerator.generate(new JwtUserDTO());
+  public JwtAccessToken showIfAuthenticated() {
+    JwtAccessToken token = new JwtAccessToken(jwtGenerator.generate(new JwtUserDTO()));
     return token;
   }
 
