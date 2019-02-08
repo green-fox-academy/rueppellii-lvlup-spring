@@ -6,6 +6,7 @@ import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,40 +20,59 @@ public class UserService {
 
   ModelMapper mapper = new ModelMapper();
 
-  public Set<UserBadgeDTO> createBadgeSetDTO(long id) {
-    User user = this.repo.findById(id).get();
-    Set<UserBadgeDTO> badgeSet = new HashSet<>();
+  public UserDto getUserDetailsById(long id) {
+    User user = this.repo.findById(id).orElse(null);
+    UserDto dto = mapper.map(user, UserDto.class);
+    dto.setBadges(getUserBadgeDTOs(user));
+    //not needed
+    //mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+    return dto;
+  }
 
-   /* mapper.addMappings(new PropertyMap<User, UserBadgeSetDTO>() {
-      protected void configure() {
-        map().getBadges().add(new UserBadgeDTO());
-        //user.getBagdes().stream().forEach(x -> x.getBadge().getName());
-      }
-    });*/
+  public Set<UserBadgeDTO> getUserBadgeDTOs(User user) {
+    Set<UserBadgeDTO> badgeSet = new HashSet<>();
 
     for (BadgeLevel bl :
         user.getBagdes()) {
-      UserBadgeDTO userBadgeDTO = new UserBadgeDTO();
-      userBadgeDTO.setName(bl.getBadge().getName());
-      userBadgeDTO.setLevel(bl.getLevel());
-      badgeSet.add(userBadgeDTO);
-    }
-    return badgeSet;
-  /*  mapper.addMappings(new PropertyMap<User, UserBadgeSetDTO>() {
-      protected void configure(){
+//      not needed
+//      UserBadgeDTO userBadgeDTO = new UserBadgeDTO();
+//      userBadgeDTO.setName(bl.getBadge().getKiskutyus());
+//      userBadgeDTO.setLevel(bl.getLevel());
 
-map().getBadges().add(new UserBadgeDTO())
-user.getLevels().stream().forEach(x -> x.getBadge().getName());
-      }
-    });*/
+      //  1
+     /* mapper.addMappings(new PropertyMap<BadgeLevel, UserBadgeDTO>() {
+        protected void configure() {
+          map().setName(source.getBadge().getKiskutyus());
+        }
+      });*/
+
+      //  2
+//      mapper.addMappings(mapper -> {
+//        mapper.map(src -> src.getBillingAddress().getStreet(),
+//            Destination::setBillingStreet);
+//        mapper.map(src -> src.getBillingAddress().getCity(),
+//            Destination::setBillingCity);
+//      });
+
+      UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
+      //dto.setName(bl.getBadge().getKiskutyus());
+      badgeSet.add(dto);
+    }
+
+    return badgeSet;
   }
 
- public UserDto getUserDetailsById(long id){
-   User user = this.repo.findById(id).orElse(null);
-   UserDto dto= mapper.map(user, UserDto.class);
-   dto.setBadges(createBadgeSetDTO(id));
-   return dto;
- }
-
+  //didn't work
+/*  public Set<UserBadgeDTO> getUserBadgeDTOsExplicitly(User user) {
+    Set<UserBadgeDTO> badgeSet = new HashSet<>();
+    UserBadgeDTO dto = mapper.map(new BadgeLevel(), UserBadgeDTO.class);
+    mapper.addMappings(mapper -> {
+      mapper.map(user.getBagdes().forEach(badge. ->user.getBagdes(),
+          UserBadgeDTO::setKiskutyus);
+//      mapper.map(src -> src.getBillingAddress().getCity(),
+//          Destination::setBillingCity);
+    });
+    return badgeSet;
+  }*/
 
 }

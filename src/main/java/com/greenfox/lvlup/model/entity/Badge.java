@@ -11,7 +11,7 @@ public class Badge {
     @GeneratedValue
     private Long id;
     private String version;
-    private String name;
+    private String kiskutyus;
     private String tag;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
     private List<BadgeLevel> levels;
@@ -20,10 +20,10 @@ public class Badge {
         this.levels = new ArrayList<>();
     }
 
-    public Badge(String version, String name, String tag) {
+    public Badge(String version, String kiskutyus, String tag) {
         this();
         this.version = version;
-        this.name = name;
+        this.kiskutyus = kiskutyus;
         this.tag = tag;
     }
 
@@ -43,12 +43,12 @@ public class Badge {
         this.version = version;
     }
 
-    public String getName() {
-        return name;
+    public String getKiskutyus() {
+        return kiskutyus;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKiskutyus(String kiskutyus) {
+        this.kiskutyus = kiskutyus;
     }
 
     public String getTag() {

@@ -16,6 +16,4 @@ public class UserController {
   public Object liseUsers(@RequestParam long id, @RequestHeader String userTokenAuth) {
     return this.service.getUserDetailsById(id);
   }
-
-
 }
