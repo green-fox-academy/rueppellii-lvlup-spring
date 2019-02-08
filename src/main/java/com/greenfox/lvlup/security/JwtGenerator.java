@@ -12,19 +12,21 @@ import java.util.Date;
 @Component
 public class JwtGenerator {
 
- @Value("${SECRET}")
-  private String SECRET;
+  @Value("${SECRET}")
+  private String secret;
 
   public String generate(JwtUserDTO jwtUser) {
     Claims claims = Jwts.claims()
         .setSubject(jwtUser.getUsername());
+
+    claims.put("username", jwtUser.getUsername());
     claims.put("userId", String.valueOf(jwtUser.getId()));
     claims.put("role", jwtUser.getRole());
 
     return Jwts.builder()
         .setClaims(claims)
         .setExpiration(new Date(System.currentTimeMillis() + 500000))
-        .signWith(SignatureAlgorithm.HS512, SECRET)
+        .signWith(SignatureAlgorithm.HS512, secret)
         .compact();
   }
 }

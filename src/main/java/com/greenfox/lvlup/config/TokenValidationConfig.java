@@ -42,7 +42,7 @@ public class TokenValidationConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
         .authorizeRequests()
-        .antMatchers("/")
+        .antMatchers("/**")
         .authenticated()
         .and()
         .exceptionHandling()
