@@ -17,7 +17,7 @@ public class AuthController {
     this.jwtGenerator = jwtGenerator;
   }
 
-  @GetMapping(value = "/login")
+  @GetMapping(value = "/")
   public String showIfAuthenticated() {
     String token = jwtGenerator.generate(new JwtUserDTO());
     return token;

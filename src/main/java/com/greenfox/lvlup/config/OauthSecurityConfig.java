@@ -19,11 +19,7 @@ public class OauthSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers("/login")
-        .authenticated()
-        .and()
-        .formLogin()
-        .and()
-        .logout();
+        .antMatchers( "/login")
+        .authenticated();
   }
 }
