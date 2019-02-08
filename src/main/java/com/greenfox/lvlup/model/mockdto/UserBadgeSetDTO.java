@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.mockdto;
 
 import java.util.ArrayList;
 import java.util.HashSet;

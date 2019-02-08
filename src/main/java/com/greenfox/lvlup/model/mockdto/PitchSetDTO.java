@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.mockdto;
 
 import com.greenfox.lvlup.model.PitchDTO;
 

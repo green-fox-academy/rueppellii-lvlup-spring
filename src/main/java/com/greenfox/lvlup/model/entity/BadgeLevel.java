@@ -7,15 +7,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//@Data
-//@EqualsAndHashCode(exclude = "holders")
 @Entity
 @Table(name = "badgelevels")
 public class BadgeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
     private int level;
     private String description;
     @ManyToOne
@@ -35,7 +32,7 @@ public class BadgeLevel {
         this.description = description;
         this.badge = badge;
         this.holders = Stream.of(holders).collect(Collectors.toSet());
-        this.holders.forEach(x -> x.getBagdes().add(this));
+        this.holders.forEach(x -> x.getBadgeLevels().add(this));
     }
 
     public long getId() {
@@ -76,13 +73,5 @@ public class BadgeLevel {
 
     public void setHolders(Set<User> holders) {
         this.holders = holders;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
