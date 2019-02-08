@@ -18,7 +18,6 @@ public class BadgeLevel {
     private long id;
     private int level;
     private String description;
-
     @ManyToOne
     private Badge badge;
 
