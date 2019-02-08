@@ -36,7 +36,7 @@ public class BadgeLevel {
         this.description = description;
         this.badge = badge;
         this.holders = Stream.of(holders).collect(Collectors.toSet());
-        this.holders.forEach(x -> x.getBagdes().add(this));
+        this.holders.forEach(x -> x.getBadgeLevels().add(this));
     }
 
     public BadgeLevel(int level, String description, Badge badge) {
