@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.UserBadgeSetDTO;
 import com.greenfox.lvlup.security.JwtGenerator;
 import com.greenfox.lvlup.security.JwtUserDTO;
