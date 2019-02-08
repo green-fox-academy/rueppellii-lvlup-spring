@@ -24,7 +24,7 @@ public class AuthController {
     return token;
   }
 
-  @GetMapping(value = "/test-endpoint")
+  @GetMapping(value = "/api/test-endpoint")
   public ResponseEntity<?> showBadges() {
     return new ResponseEntity<>(new UserBadgeSetDTO(), HttpStatus.OK);
   }
