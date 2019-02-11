@@ -28,6 +28,13 @@ public class BadgeLevel {
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> holders;
 
+  @ManyToMany
+  @JoinTable(name = "badgelevel_archetype",
+      joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "archetype_id", referencedColumnName = "id"))
+  private Set<Archetype> archetypes;
+
+
     public BadgeLevel() {
     }
 
@@ -43,6 +50,14 @@ public class BadgeLevel {
         this.level = level;
         this.description = description;
         this.badge = badge;
+    }
+
+    public BadgeLevel(int level, String description, Badge badge, Archetype... archetypes) {
+        this.level = level;
+        this.description = description;
+        this.badge = badge;
+        this.archetypes = Stream.of(archetypes).collect(Collectors.toSet());
+        this.archetypes.forEach(x -> x.getBadgeLevels().add(this));
     }
 
     public long getId() {

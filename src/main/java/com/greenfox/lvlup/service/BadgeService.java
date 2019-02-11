@@ -16,7 +16,6 @@ public class BadgeService {
     private BadgeRepository badgeRepository;
     private ModelMapper modelMapper;
 
-
     @Autowired
     public BadgeService(BadgeRepository badgeRepository, ModelMapper modelMapper) {
         this.badgeRepository = badgeRepository;
