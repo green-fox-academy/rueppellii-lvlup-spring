@@ -15,6 +15,8 @@ public class Badge {
     private String tag;
     @OneToMany(mappedBy = "badge")
     private List<BadgeLevel> levels;
+    @OneToMany(mappedBy = "badge")
+    private List<Pitch> pitches;
 
     public Badge() {
         this.levels = new ArrayList<>();

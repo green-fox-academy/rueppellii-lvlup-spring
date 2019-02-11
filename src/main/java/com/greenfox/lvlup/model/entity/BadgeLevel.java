@@ -3,6 +3,7 @@ package com.greenfox.lvlup.model.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,6 +23,8 @@ public class BadgeLevel {
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> holders;
+  @OneToMany (mappedBy = "level")
+  private List<Pitch> pitches;
 
     public BadgeLevel() {
     }

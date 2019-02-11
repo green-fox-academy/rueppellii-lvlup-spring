@@ -13,13 +13,17 @@ import java.util.Set;
 
 @Service
 public class UserService {
-  @Autowired
-  UserRepository repo;
+  private UserRepository repository;
+  private ModelMapper mapper;
 
-  ModelMapper mapper = new ModelMapper();
+  @Autowired
+  public UserService(UserRepository badgeRepository, ModelMapper mapper) {
+    this.repository = badgeRepository;
+    this.mapper = mapper;
+  }
 
   public UserDto getUserDetailsById(long id) {
-    User user = this.repo.findById(id).orElse(null);
+    User user = this.repository.findById(id).orElse(null);
     UserDto dto = mapper.map(user, UserDto.class);
     dto.setBadges(getUserBadgeDTOs(user));
     return dto;

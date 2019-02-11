@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,5 +26,5 @@ public class Pitch {
   @ManyToOne
   private Badge badge;
   @OneToMany (mappedBy = "pitch")
-  private Review review;
+  private List<Review> reviews;
 }
