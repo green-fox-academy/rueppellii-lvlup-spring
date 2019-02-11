@@ -20,4 +20,9 @@ public class Review {
   private User user;
   @ManyToOne
   private Pitch pitch;
+
+  public Review(String message, boolean pitchStatus) {
+    this.message = message;
+    this.pitchStatus = pitchStatus;
+  }
 }

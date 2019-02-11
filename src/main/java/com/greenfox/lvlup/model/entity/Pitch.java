@@ -17,6 +17,7 @@ public class Pitch {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
   private Date created;
+  private int oldLevel;
   private int pitchedLevel;
   private String pitchedMessage;
   @ManyToOne
@@ -27,4 +28,15 @@ public class Pitch {
   private Badge badge;
   @OneToMany (mappedBy = "pitch")
   private List<Review> reviews;
+
+  public Pitch(Date created, int oldLevel, int pitchedLevel, String pitchedMessage, User user, BadgeLevel level, Badge badge, List<Review> reviews) {
+    this.created = created;
+    this.oldLevel = oldLevel;
+    this.pitchedLevel = pitchedLevel;
+    this.pitchedMessage = pitchedMessage;
+    this.user = user;
+    this.level = level;
+    this.badge = badge;
+    this.reviews = reviews;
+  }
 }

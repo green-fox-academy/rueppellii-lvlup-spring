@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.model.dto;
 
-public class UserDTO {
+public class UserDto {
     public String name;
 
     public String getName() {

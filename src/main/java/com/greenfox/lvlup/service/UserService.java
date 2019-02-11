@@ -23,7 +23,12 @@ public class UserService {
   }
 
   public UserDto getUserDetailsById(long id) {
-    User user = this.repository.findById(id).orElse(null);
+    User user = new User();
+    try {
+      user = this.repository.findById(id).orElse(null);
+    } catch (IllegalArgumentException ex){
+      System.out.println(ex);
+    }
     UserDto dto = mapper.map(user, UserDto.class);
     dto.setBadges(getUserBadgeDTOs(user));
     return dto;
