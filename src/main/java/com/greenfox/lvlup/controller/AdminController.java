@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 public class AdminController {
-    @PostMapping(value = "/admin/add",
+    @PostMapping(value = "/api/admin/add",
             produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addBadge(@Valid @RequestBody BadgeDTO dtoToAdd,

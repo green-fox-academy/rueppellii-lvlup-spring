@@ -16,14 +16,14 @@ public class PitchController {
 
   private PitchSetDTO pitchSetDTO = new PitchSetDTO();
 
-  @GetMapping("/pitches")
+  @GetMapping("/api/pitches")
   public ResponseEntity getPitches(@RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
     if (token != null && !token.equals("")) {
       return new ResponseEntity<>(pitchSetDTO, HttpStatus.OK);
     } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
 
-  @PostMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/api/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "userTokenAuth") String token,
       @Valid @RequestBody PitchDto pitchDto) throws Exception {
     if (token.isEmpty()) {

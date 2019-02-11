@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HeartbeatController {
-    @GetMapping(value = "/heartbeat",
+    @GetMapping(value = "/api/heartbeat",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> getHeartbeat(@RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
         if (token == null || token.equals("")) {

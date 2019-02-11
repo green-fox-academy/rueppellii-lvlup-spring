@@ -14,7 +14,7 @@ public class BadgeController {
 
   private UserBadgeSetDTO testUserBadges = new UserBadgeSetDTO();
 
-  @GetMapping(value = "/badges", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/api/badges", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> showBadges(@RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
     if (token == null || token.equals("")) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
