@@ -22,12 +22,6 @@ public class ArchetypeController {
     this.archetypeService = archetypeService;
   }
 
-  /*
-  @GetMapping("/archetypedto")
-  public ArchetypeDTO getArchetypeDTO() {
-    return archetypeService.convertArchetypeToDTO(archetypeService.generateArchetype());
-  }*/
-
  @GetMapping("/archetypes")
   public List<Archetype> getArchetypes() {
    return archetypeRepository.findAll();
