@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.model.mockdto;
 
-import java.util.ArrayList;
+import com.greenfox.lvlup.model.dto.UserBadgeDTO;
 import java.util.HashSet;
 import java.util.Set;
 

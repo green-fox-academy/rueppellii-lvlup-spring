@@ -13,7 +13,7 @@ public class Badge {
     private String version;
     private String name;
     private String tag;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+    @OneToMany(mappedBy = "badge")
     private List<BadgeLevel> levels;
 
     public Badge() {
