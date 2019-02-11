@@ -34,9 +34,9 @@ public class PitchController {
   }
 
   @PutMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> modifyPitch(@RequestHeader(value = "userTokenAuth") String token,
+  public ResponseEntity<Object> modifyPitch(@RequestHeader(value = "userTokenAuth", required = false) String token,
                                             @Valid @RequestBody PitchPutDTO pitchPutDTO) throws Exception {
-    if (token.isEmpty()) {
+    if (token.isEmpty() || token == null) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
     return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
