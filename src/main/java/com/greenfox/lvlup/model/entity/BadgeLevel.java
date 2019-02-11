@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -11,70 +9,69 @@ import java.util.stream.Stream;
 @Entity
 @Table(name = "badgelevels")
 public class BadgeLevel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private int level;
-    private String description;
-    @ManyToOne
-    private Badge badge;
-    @ManyToMany
-    @JoinTable(name = "badgelevel_user",
-            joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    private Set<User> holders;
-  @OneToMany (mappedBy = "level")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  private int level;
+  private String description;
+  @ManyToOne
+  private Badge badge;
+  @ManyToMany
+  @JoinTable(name = "badgelevel_user",
+      joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+  private Set<User> holders;
+  @OneToMany(mappedBy = "level")
   private List<Pitch> pitches;
 
-    public BadgeLevel() {
-    }
+  public BadgeLevel() {
+  }
 
-    public BadgeLevel(int level, String description, Badge badge, User... holders) {
+  public BadgeLevel(int level, String description, Badge badge, User... holders) {
+    this.level = level;
+    this.description = description;
+    this.badge = badge;
+    this.holders = Stream.of(holders).collect(Collectors.toSet());
+    this.holders.forEach(x -> x.getBadgeLevels().add(this));
+  }
 
-        this.level = level;
-        this.description = description;
-        this.badge = badge;
-        this.holders = Stream.of(holders).collect(Collectors.toSet());
-        this.holders.forEach(x -> x.getBadgeLevels().add(this));
-    }
+  public long getId() {
+    return id;
+  }
 
-    public long getId() {
-        return id;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  public int getLevel() {
+    return level;
+  }
 
-    public int getLevel() {
-        return level;
-    }
+  public void setLevel(int level) {
+    this.level = level;
+  }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public Badge getBadge() {
+    return badge;
+  }
 
-    public Badge getBadge() {
-        return badge;
-    }
+  public void setBadge(Badge badge) {
+    this.badge = badge;
+  }
 
-    public void setBadge(Badge badge) {
-        this.badge = badge;
-    }
+  public Set<User> getHolders() {
+    return holders;
+  }
 
-    public Set<User> getHolders() {
-        return holders;
-    }
-
-    public void setHolders(Set<User> holders) {
-        this.holders = holders;
-    }
+  public void setHolders(Set<User> holders) {
+    this.holders = holders;
+  }
 }

@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
 @RestController
 public class BadgeController {
   private UserBadgeSetDTO testUserBadges = new UserBadgeSetDTO();
@@ -21,8 +17,6 @@ public class BadgeController {
   public ResponseEntity<Object> showBadges(@RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
     if (token == null || token.equals("")) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
-    } else return new ResponseEntity<>(this.testUserBadges, HttpStatus.OK);
+    } return new ResponseEntity<>(testUserBadges, HttpStatus.OK);
   }
-
-
 }

@@ -17,8 +17,8 @@ public class UserService {
   private ModelMapper mapper;
 
   @Autowired
-  public UserService(UserRepository badgeRepository, ModelMapper mapper) {
-    this.repository = badgeRepository;
+  public UserService(UserRepository repository, ModelMapper mapper) {
+    this.repository = repository;
     this.mapper = mapper;
   }
 
@@ -31,8 +31,7 @@ public class UserService {
 
   public Set<UserBadgeDTO> getUserBadgeDTOs(User user) {
     Set<UserBadgeDTO> badgeSet = new HashSet<>();
-    for (BadgeLevel bl :
-        user.getBadgeLevels()) {
+    for (BadgeLevel bl : user.getBadgeLevels()) {
       UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
       badgeSet.add(dto);
     }
