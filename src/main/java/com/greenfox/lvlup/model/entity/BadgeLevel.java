@@ -27,12 +27,17 @@ public class BadgeLevel {
     }
 
     public BadgeLevel(int level, String description, Badge badge, User... holders) {
-
         this.level = level;
         this.description = description;
         this.badge = badge;
         this.holders = Stream.of(holders).collect(Collectors.toSet());
         this.holders.forEach(x -> x.getBadgeLevels().add(this));
+    }
+
+    public BadgeLevel(int level, String description, Badge badge) {
+        this.level = level;
+        this.description = description;
+        this.badge = badge;
     }
 
     public long getId() {
