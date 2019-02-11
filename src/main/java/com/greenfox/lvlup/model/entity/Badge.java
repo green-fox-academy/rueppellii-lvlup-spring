@@ -1,7 +1,10 @@
 package com.greenfox.lvlup.model.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,9 +16,14 @@ public class Badge {
     private String version;
     private String name;
     private String tag;
+    @CreationTimestamp
+    private Date dateOfCreation;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
     private List<BadgeLevel> levels;
+
+    @ManyToOne
+    private User user;
 
     public Badge() {
         this.levels = new ArrayList<>();
@@ -66,5 +74,21 @@ public class Badge {
 
     public void setLevels(List<BadgeLevel> levels) {
         this.levels = levels;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 }

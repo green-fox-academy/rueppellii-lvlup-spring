@@ -3,6 +3,7 @@ package com.greenfox.lvlup.model.entity;
 import lombok.Data;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,6 +19,9 @@ public class User {
 
     @ManyToMany(mappedBy = "holders")
     private Set<BadgeLevel> badgeLevels = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+    private List<Badge> createdBadges;
 
     public User() {
     }
@@ -64,5 +68,13 @@ public class User {
 
     public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
         this.badgeLevels = badgeLevels;
+    }
+
+    public List<Badge> getCreatedBadges() {
+        return createdBadges;
+    }
+
+    public void setCreatedBadges(List<Badge> createdBadges) {
+        this.createdBadges = createdBadges;
     }
 }
