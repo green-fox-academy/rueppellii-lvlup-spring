@@ -42,4 +42,12 @@ public class MockingElementsForPitchPutDTO {
         pitchPutDTOWithoutNewMessage.setNewStatus(newStatus);
         return pitchPutDTOWithoutNewMessage;
     }
+
+    public String getValidToken() {
+        return validToken;
+    }
+
+    public void setValidToken(String validToken) {
+        this.validToken = validToken;
+    }
 }
