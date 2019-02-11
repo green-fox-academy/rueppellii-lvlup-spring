@@ -20,7 +20,7 @@ public class User {
     @ManyToMany(mappedBy = "holders")
     private Set<BadgeLevel> badgeLevels = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Badge> createdBadges;
 
     public User() {
