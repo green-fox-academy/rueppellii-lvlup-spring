@@ -23,12 +23,10 @@ import java.util.Optional;
 @RestController
 public class AdminController {
     private BadgeService badgeService;
-    private UserService userService;
 
     @Autowired
-    public AdminController(BadgeService badgeService, UserService userService) {
+    public AdminController(BadgeService badgeService) {
         this.badgeService = badgeService;
-        this.userService = userService;
     }
 
     @PostMapping(value = "/admin/add",
@@ -39,12 +37,13 @@ public class AdminController {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         } else {
-            Badge badgeToCreate = badgeService.convertBadgeDTOToBadge(badgeDTO);
+            long userTestId = 1;
+            badgeService.createBadge(badgeDTO, userTestId);
+      /*      Badge badgeToCreate = badgeService.convertBadgeDTOToBadge(badgeDTO);
             //User Id should be extracted from token!!
             User user = userService.findUserById(1);
-            badgeService.saveBadgeIntoDatabase(badgeToCreate, user);
+            badgeService.saveBadgeIntoDatabase(badgeToCreate, user);*/
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
-
         }
     }
 }

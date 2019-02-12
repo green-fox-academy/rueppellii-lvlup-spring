@@ -38,17 +38,19 @@ public class BadgeService {
         return badgeDTOs;
     }
 
+    public void createBadge(BadgeDTO badgeDTO, long userId) throws GeneralException {
+        Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
+        //User Id should be extracted from token!!
+        User badgeCreatorUser = userService.findUserById(userId);
+        this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
+    }
+
     public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
         Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
         return badgeToCreate;
     }
 
-    public Badge findBadgeByNameAndVersion(Badge badge) {
-        Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion()).orElse(null);
-        return badgeExisting;
-    }
-
-    public void saveBadgeIntoDatabase (Badge badge, User user) throws GeneralException {
+    public void saveBadgeIntoDatabase(Badge badge, User user) throws GeneralException {
         if (findBadgeByNameAndVersion(badge) == null) {
             badge.setUser(user);
             badgeRepository.save(badge);
@@ -56,11 +58,8 @@ public class BadgeService {
             throw new GeneralException("Badge with this version already exists. Please modify version.", HttpStatus.BAD_REQUEST);
     }
 
-/*    public boolean createBadge (BadgeDTO badgeDTO, long userId) throws GeneralException {
-        Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
-        //User Id should be extracted from token!!
-        User badgeCreatorUser = userService.findUserById(userId);
-        this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
-        return true;
-    }*/
+    public Badge findBadgeByNameAndVersion(Badge badge) {
+        Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion()).orElse(null);
+        return badgeExisting;
+    }
 }

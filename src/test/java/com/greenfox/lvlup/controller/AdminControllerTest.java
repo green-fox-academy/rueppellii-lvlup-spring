@@ -28,8 +28,8 @@ public class AdminControllerTest {
     String token = "TestToken123";
     BadgeDTO validBadgeDto = new BadgeDTO("2.4", "Test badge", "general");
     BadgeDTO invalidBadgeDto = new BadgeDTO("2.3", "", "general");
-    long id = 1;
-    User testBadgeCreator = new User("TestUser creating new badge");
+    // long id = 1;
+    // User testBadgeCreator = new User("TestUser creating new badge");
     //Badge validBadge = new Badge("2.3", "Test badge", "general");*/
 
     @Autowired
@@ -37,9 +37,6 @@ public class AdminControllerTest {
 
     @MockBean
     private BadgeService badgeService;
-
-    @MockBean
-    private UserService userService;
 
     @Test
     public void addBadgeValidRequestReturns201Created() throws Exception {
@@ -60,9 +57,7 @@ public class AdminControllerTest {
 
     @Test
     public void invalidNameErrorReturns400BadRequest() throws Exception {
-        //given(badgeService.convertBadgeDTOToBadge(invalidBadgeDto)).willReturn(validBadge);
-        //given(userService.findUserById(id)).willReturn(testBadgeCreator);
-        this.mockMvc.perform(post("/admin/add")
+         this.mockMvc.perform(post("/admin/add")
                 .header("userTokenAuth", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(stringify(invalidBadgeDto)))
