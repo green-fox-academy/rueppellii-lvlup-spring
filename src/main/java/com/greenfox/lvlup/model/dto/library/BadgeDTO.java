@@ -1,7 +1,8 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.dto.library;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;

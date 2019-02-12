@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.BadgeDTO;
+import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
@@ -8,10 +8,8 @@ import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BadgeService {
@@ -37,19 +35,22 @@ public class BadgeService {
     }
 
     public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
-      if((badgeDTO.getLevels()== null) || badgeDTO.getLevels().equals("")) {
+        Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
+        return badgeToCreate;
+
+ /*     if((badgeDTO.getLevels().size()== 0) || badgeDTO.getLevels().equals("")) {
           Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
           return badgeToCreate;
       } else {
           //Badgelevels should be created too!!
            return null;
-        }
+        }*/
     }
 
-    public void createBadge (Badge badge, User user) {
-        badge.setUser(user);
-        user.setCreatedBadges((List<Badge>) badge);
+    public void createBadge (Badge badge) {
+       // badge.setUser(user);
+       // user.setCreatedBadges((List<Badge>) badge);
         badgeRepository.save(badge);
-        userRepository.save(user);
+        //userRepository.save(user);
     }
 }

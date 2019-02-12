@@ -2,11 +2,11 @@ package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
-import com.greenfox.lvlup.model.dto.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.service.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +32,8 @@ public class AdminController {
         } else {
             Badge badgeToCreate = badgeService.convertBadgeDTOToBadge(badgeDTO);
             User user = new User("testuser in order to save badge");
-            badgeService.createBadge(badgeToCreate, user);
+            badgeService.createBadge(badgeToCreate);
+            //badgeService.createBadge(badgeToCreate, user);
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
         }
 
