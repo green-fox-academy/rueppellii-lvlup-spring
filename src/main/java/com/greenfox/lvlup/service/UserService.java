@@ -30,6 +30,7 @@ public class UserService {
     for (BadgeLevel bl :
         user.getBadgeLevels()) {
       UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
+      dto.setName(bl.getBadge().getName());
       badgeSet.add(dto);
     }
     return badgeSet;
