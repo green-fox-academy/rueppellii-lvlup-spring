@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.service;
 
+import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserDto;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
@@ -7,8 +8,10 @@ import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -17,6 +20,14 @@ public class UserService {
   UserRepository repo;
 
   ModelMapper mapper = new ModelMapper();
+
+  public User findUserById(long id) throws GeneralException {
+    Optional<User> user = repo.findById(id);
+    if(user.isPresent()) {
+      return user.get();
+    }
+    throw new GeneralException("User was not found.", HttpStatus.NOT_FOUND);
+  }
 
   public UserDto getUserDetailsById(long id) {
     User user = this.repo.findById(id).orElse(null);
@@ -34,4 +45,5 @@ public class UserService {
     }
     return badgeSet;
   }
+
 }
