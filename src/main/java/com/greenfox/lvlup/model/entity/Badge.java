@@ -1,5 +1,7 @@
 package com.greenfox.lvlup.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,11 @@ public class Badge {
     private String version;
     private String name;
     private String tag;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+    @OneToMany(mappedBy = "badge")
+    @JsonIgnore
     private List<BadgeLevel> levels;
+    @OneToMany(mappedBy = "badge")
+    private List<Pitch> pitches;
 
     public Badge() {
         this.levels = new ArrayList<>();

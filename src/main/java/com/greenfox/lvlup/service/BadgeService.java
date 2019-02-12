@@ -2,14 +2,13 @@ package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.dto.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
+import com.greenfox.lvlup.repositrory.BadgeLevelRepository;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BadgeService {

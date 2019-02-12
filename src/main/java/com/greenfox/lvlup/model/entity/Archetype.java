@@ -43,7 +43,7 @@ public class Archetype {
   public void setName(String name) {
     this.name = name;
   }
-  
+
   public Set<BadgeLevel> getBadgeLevels() {
     return badgeLevels;
   }

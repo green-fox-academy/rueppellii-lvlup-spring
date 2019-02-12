@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.mockdto;
+package com.greenfox.lvlup.model.dto;
 
 public class UserBadgeDTO {
   private String name;
@@ -12,6 +12,9 @@ public class UserBadgeDTO {
   public UserBadgeDTO(String name, int level) {
     this.name = name;
     this.level = level;
+  }
+
+  public UserBadgeDTO() {
   }
 
   public String getName() {

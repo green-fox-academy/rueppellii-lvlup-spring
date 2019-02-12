@@ -36,7 +36,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchDto())))
+        .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(status().isCreated())
         .andReturn();
   }
@@ -46,7 +46,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchDto())))
+        .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.message").value("Success"))
@@ -57,7 +57,7 @@ public class PitchControllerTest {
   public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
     this.mockMvc.perform(post("/pitch")
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchDto())))
+        .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(status().isUnsupportedMediaType());
   }
 
@@ -76,7 +76,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
-        .content(stringify(elements.getValidPitchDto())))
+        .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(status().isUnauthorized())
         .andReturn();
   }
@@ -86,7 +86,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
-        .content(stringify(elements.getValidPitchDto())))
+        .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(jsonPath("$.error").value("Unauthorized"))
         .andReturn();
   }
@@ -96,7 +96,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchDto2())))
+        .content(stringify(elements.getInvalidPitchPostDTO2())))
         .andExpect(status().isBadRequest())
         .andReturn();
   }
@@ -106,7 +106,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchDto5())))
+        .content(stringify(elements.getInvalidPitchPostDTO5())))
         .andExpect(jsonPath("$.errors").value("Holders are required."))
         .andReturn();
   }
@@ -116,7 +116,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchDto2())))
+        .content(stringify(elements.getInvalidPitchPostDTO2())))
         .andExpect(jsonPath("$.errors").value("Old level is required."))
         .andReturn();
   }
@@ -126,7 +126,7 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getEmptyPitchDto5())))
+        .content(stringify(elements.getEmptyPitchPostDTO5())))
         .andExpect(jsonPath("$.errors").value("Holders are required."))
         .andReturn();
   }
@@ -136,8 +136,8 @@ public class PitchControllerTest {
     this.mockMvc.perform(post("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchDto1())))
-        .andExpect(jsonPath("$.errors").value("PitchDto name is required."))
+        .content(stringify(elements.getInvalidPitchPostDTO1())))
+        .andExpect(jsonPath("$.errors").value("PitchPostDTO name is required."))
         .andReturn();
   }
 

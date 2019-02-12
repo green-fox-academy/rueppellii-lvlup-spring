@@ -1,28 +1,26 @@
 package com.greenfox.lvlup.model.mockdto;
 
-import java.util.ArrayList;
+import com.greenfox.lvlup.model.dto.UserBadgeDTO;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserBadgeSetDTO {
-  private ArrayList<UserBadgeDTO> badges;
+  private Set<UserBadgeDTO> badges;
 
   private UserBadgeDTO test1 = new UserBadgeDTO("test badge 1", 2);
   private UserBadgeDTO test2 = new UserBadgeDTO("test badge 2", 1);
 
-  public UserBadgeSetDTO(ArrayList<UserBadgeDTO> listOfBadges) {
-    this.badges = listOfBadges;
-  }
-
   public UserBadgeSetDTO() {
-    badges = new ArrayList<>();
+    badges = new HashSet<>();
     badges.add(test1);
     badges.add(test2);
   }
 
-  public ArrayList<UserBadgeDTO> getBadges() {
+  public Set<UserBadgeDTO> getBadges() {
     return badges;
   }
 
-  public void setBadges(ArrayList<UserBadgeDTO> badgeSetDTO) {
+  public void setBadges(Set<UserBadgeDTO> badgeSetDTO) {
     this.badges = badgeSetDTO;
   }
 }
