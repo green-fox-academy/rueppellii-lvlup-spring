@@ -51,13 +51,13 @@ public class SetupInitialData implements CommandLineRunner {
         badgeRepository.save(badge2);
         badgeRepository.save(badge3);
         badgeRepository.save(badge4);
-        User user1 = new User("Horváth Anna");
-        User user2 = new User("Kiss József");
-        User user3 = new User("Antal Gábor");
-        User user4 = new User("Szabó Tibor");
-        User user5 = new User("Vass Imola");
-        User user6 = new User("Nagy Bence");
-        User user7 = new User("Takács Kata");
+        User user1 = new User("Horváth Anna","testusertoken","base64://dwabi24632gdkje8549632...");
+        User user2 = new User("Kiss József","testadmin:token","base64://dwabi24632gdkje8549632...");
+        User user3 = new User("Antal Gábor","verysecuretokendjawuidguowa76795432","base64://dwabi24632gdkje8549632...");
+        User user4 = new User("Szabó Tibor","sandor542ghd237tiguk3","base64://dwabi24632gdkje8549632...");
+        User user5 = new User("Vass Imola","verysecuretokendnj32t7853t2iugkjds","base64://dwabi24632gdkje8549632...");
+        User user6 = new User("Nagy Bence","token123","pic123");
+        User user7 = new User("Takács Kata","token321","pic321");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
@@ -87,5 +87,8 @@ public class SetupInitialData implements CommandLineRunner {
         levelRepository.save(new BadgeLevel(0, "When I have a problem, I usually let you know by expressing it clearly instead of keeping it to myself.", badge4, user2, user3, user4));
         levelRepository.save(new BadgeLevel(2, "I decribe my feelings and needs in conflict situations with most of my team mates.", badge4, archetype2));
         levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
+
+
+
     }
 }

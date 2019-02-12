@@ -19,6 +19,12 @@ public class User {
     @ManyToMany(mappedBy = "holders")
     private Set<BadgeLevel> badgeLevels = new HashSet<>();
 
+    public User(String name, String tokenAuth, String pic) {
+        this.name = name;
+        this.tokenAuth = tokenAuth;
+        this.pic = pic;
+    }
+
     public User() {
     }
 
