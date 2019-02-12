@@ -51,16 +51,16 @@ public class BadgeService {
         }*/
     }
 
-    public void createBadge(Badge badge, User user) {
-        badge.setUser(user);
-        badgeRepository.save(badge);
+    public Badge findBadgeByNameAndVersion(Badge badge) {
+        Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion()).orElse(null);
+        return badgeExisting;
+    }
+
+    public void createBadge(Badge badge, User user) throws GeneralException {
+        if (findBadgeByNameAndVersion(badge) == null) {
+            badge.setUser(user);
+            badgeRepository.save(badge);
+        } else
+            throw new GeneralException("Badge with this version is already exists. Please modify version.", HttpStatus.BAD_REQUEST);
     }
 }
-/*
-    public User findUserById(long id) throws GeneralException {
-        Optional<User> user = repo.findById(id);
-        if(user.isPresent()) {
-            return user.get();
-        }
-        throw new GeneralException("User was not found.", HttpStatus.NOT_FOUND);
-    }*/
