@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.dto.library;
 
 import java.util.Set;
 
