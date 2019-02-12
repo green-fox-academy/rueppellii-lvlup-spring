@@ -84,6 +84,7 @@ public class SetupInitialData implements CommandLineRunner {
     levelRepository.save(new BadgeLevel(0, "When I have a problem, I usually let you know by expressing it clearly instead of keeping it to myself.", badge4, user2, user3, user4));
     levelRepository.save(new BadgeLevel(2, "I decribe my feelings and needs in conflict situations with most of my team mates.", badge4, archetype2));
     levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
+
     Review review1 = new Review("Yes, you are able to speak english", true, user3);
     Review review2 = new Review("Please improve your english", false, user4);
     Review review3 = new Review(true, user4);
@@ -92,7 +93,6 @@ public class SetupInitialData implements CommandLineRunner {
     Review review6 = new Review(false, user5);
     Review review7 = new Review("Awesome person with awesome personality", true, user3);
     Review review8 = new Review("It cant be serious", false, user4);
-
     reviewRepository.save(review1);
     reviewRepository.save(review2);
     reviewRepository.save(review3);
