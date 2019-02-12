@@ -5,7 +5,7 @@ import java.util.Set;
 public class BadgeLevelDTO {
     public int level;
     public String description;
-    public Set<UserDTO> holders;
+    public Set<UserForLibraryDTO> holders;
 
     public int getLevel() {
         return level;
@@ -23,11 +23,11 @@ public class BadgeLevelDTO {
         this.description = description;
     }
 
-    public Set<UserDTO> getHolders() {
+    public Set<UserForLibraryDTO> getHolders() {
         return holders;
     }
 
-    public void setHolders(Set<UserDTO> holders) {
+    public void setHolders(Set<UserForLibraryDTO> holders) {
         this.holders = holders;
     }
 }

@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.model.dto.library;
 
-public class UserDTO {
+public class UserForLibraryDTO {
     public String name;
 
     public String getName() {

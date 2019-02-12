@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.UserBadgeDTO;
+import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserDto;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;

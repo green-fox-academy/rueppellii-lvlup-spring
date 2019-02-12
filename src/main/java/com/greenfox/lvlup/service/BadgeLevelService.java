@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.BadgeLevelForArchetypeDTO;
+import com.greenfox.lvlup.model.dto.archetype.BadgeLevelForArchetypeDTO;
 import com.greenfox.lvlup.model.entity.Archetype;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import org.modelmapper.ModelMapper;
