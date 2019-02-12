@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class User {
   private String tokenAuth;
   private String pic;
   @ManyToMany(mappedBy = "holders")
+  @JsonIgnore
   private Set<BadgeLevel> badgeLevels = new HashSet<>();
   @OneToMany (mappedBy = "user")
   private List<Pitch> pitches;

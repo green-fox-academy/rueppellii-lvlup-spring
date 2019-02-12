@@ -39,7 +39,6 @@ public class SetupInitialData implements CommandLineRunner {
   public void run(String... args) throws Exception {
     System.out.println("****************************" + dbname);
 
-
     Badge badge1 = new Badge("2.2", "Process improver", "general");
     Badge badge2 = new Badge("2.3", "English speaker", "mentor");
     Badge badge3 = new Badge("1.2", "Feedback receiver", "general");

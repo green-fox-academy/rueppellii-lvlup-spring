@@ -8,6 +8,7 @@ import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,12 +24,7 @@ public class UserService {
   }
 
   public UserDto getUserDetailsById(long id) {
-    User user = new User();
-    try {
-      user = this.repository.findById(id).orElse(null);
-    } catch (IllegalArgumentException ex){
-      System.out.println(ex);
-    }
+    User user = this.repository.findById(id).orElse(null);
     UserDto dto = mapper.map(user, UserDto.class);
     dto.setBadges(getUserBadgeDTOs(user));
     return dto;
@@ -38,6 +34,7 @@ public class UserService {
     Set<UserBadgeDTO> badgeSet = new HashSet<>();
     for (BadgeLevel bl : user.getBadgeLevels()) {
       UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
+      dto.setName(bl.getBadge().getName());
       badgeSet.add(dto);
     }
     return badgeSet;
