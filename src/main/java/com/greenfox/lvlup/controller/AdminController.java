@@ -42,9 +42,9 @@ public class AdminController {
             Badge badgeToCreate = badgeService.convertBadgeDTOToBadge(badgeDTO);
             //User Id should be extracted from token!!
             User user = userService.findUserById(1);
-            badgeService.createBadge(badgeToCreate, user);
+            badgeService.saveBadgeIntoDatabase(badgeToCreate, user);
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
-        }
 
+        }
     }
 }

@@ -19,13 +19,13 @@ import java.util.Optional;
 public class BadgeService {
     private BadgeRepository badgeRepository;
     private ModelMapper modelMapper;
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public BadgeService(BadgeRepository badgeRepository, ModelMapper modelMapper, UserRepository userRepository) {
+    public BadgeService(BadgeRepository badgeRepository, ModelMapper modelMapper, UserService userService) {
         this.badgeRepository = badgeRepository;
         this.modelMapper = modelMapper;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public List<BadgeDTO> convertBadgeToBadgeDTO() {
@@ -41,14 +41,6 @@ public class BadgeService {
     public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
         Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
         return badgeToCreate;
-
- /*     if((badgeDTO.getLevels().size()== 0) || badgeDTO.getLevels().equals("")) {
-          Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
-          return badgeToCreate;
-      } else {
-          //Badgelevels should be created too!!
-           return null;
-        }*/
     }
 
     public Badge findBadgeByNameAndVersion(Badge badge) {
@@ -56,11 +48,19 @@ public class BadgeService {
         return badgeExisting;
     }
 
-    public void createBadge(Badge badge, User user) throws GeneralException {
+    public void saveBadgeIntoDatabase (Badge badge, User user) throws GeneralException {
         if (findBadgeByNameAndVersion(badge) == null) {
             badge.setUser(user);
             badgeRepository.save(badge);
         } else
-            throw new GeneralException("Badge with this version is already exists. Please modify version.", HttpStatus.BAD_REQUEST);
+            throw new GeneralException("Badge with this version already exists. Please modify version.", HttpStatus.BAD_REQUEST);
     }
+
+/*    public boolean createBadge (BadgeDTO badgeDTO, long userId) throws GeneralException {
+        Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
+        //User Id should be extracted from token!!
+        User badgeCreatorUser = userService.findUserById(userId);
+        this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
+        return true;
+    }*/
 }
