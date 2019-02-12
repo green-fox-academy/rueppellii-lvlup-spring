@@ -17,9 +17,15 @@ public class User {
     private String pic;
 
     @ManyToMany(mappedBy = "holders")
-    private Set<BadgeLevel> bagdes = new HashSet<>();
+    private Set<BadgeLevel> badgeLevels = new HashSet<>();
 
     public User() {
+    }
+
+    public User(String name, String tokenAuth, String pic) {
+        this.name = name;
+        this.tokenAuth = tokenAuth;
+        this.pic = pic;
     }
 
     public User(String name) {
@@ -58,11 +64,11 @@ public class User {
         this.pic = pic;
     }
 
-    public Set<BadgeLevel> getBagdes() {
-        return bagdes;
+    public Set<BadgeLevel> getBadgeLevels() {
+        return badgeLevels;
     }
 
-    public void setBagdes(Set<BadgeLevel> bagdes) {
-        this.bagdes = bagdes;
+    public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
+        this.badgeLevels = badgeLevels;
     }
 }

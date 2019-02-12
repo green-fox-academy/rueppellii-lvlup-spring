@@ -2,14 +2,11 @@ package com.greenfox.lvlup.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
-@EqualsAndHashCode(exclude = "holders")
 @Entity
 @Table(name = "badgelevels")
 public class BadgeLevel {
@@ -18,15 +15,20 @@ public class BadgeLevel {
     private long id;
     private int level;
     private String description;
-
     @ManyToOne
     private Badge badge;
-
     @ManyToMany
     @JoinTable(name = "badgelevel_user",
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> holders;
+
+  @ManyToMany
+  @JoinTable(name = "badgelevel_archetype",
+      joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "archetype_id", referencedColumnName = "id"))
+  private Set<Archetype> archetypes;
+
 
     public BadgeLevel() {
     }
@@ -36,13 +38,21 @@ public class BadgeLevel {
         this.description = description;
         this.badge = badge;
         this.holders = Stream.of(holders).collect(Collectors.toSet());
-        this.holders.forEach(x -> x.getBagdes().add(this));
+        this.holders.forEach(x -> x.getBadgeLevels().add(this));
     }
 
     public BadgeLevel(int level, String description, Badge badge) {
         this.level = level;
         this.description = description;
         this.badge = badge;
+    }
+
+    public BadgeLevel(int level, String description, Badge badge, Archetype... archetypes) {
+        this.level = level;
+        this.description = description;
+        this.badge = badge;
+        this.archetypes = Stream.of(archetypes).collect(Collectors.toSet());
+        this.archetypes.forEach(x -> x.getBadgeLevels().add(this));
     }
 
     public long getId() {

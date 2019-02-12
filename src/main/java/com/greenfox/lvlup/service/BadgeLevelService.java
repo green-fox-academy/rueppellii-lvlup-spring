@@ -1,32 +1,31 @@
 package com.greenfox.lvlup.service;
 
+import com.greenfox.lvlup.model.dto.archetype.BadgeLevelForArchetypeDTO;
+import com.greenfox.lvlup.model.entity.Archetype;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
-import com.greenfox.lvlup.model.entity.User;
-import com.greenfox.lvlup.model.dto.BadgeLevelDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class BadgeLevelService {
-    private UserService userService;
 
-    @Autowired
-    public BadgeLevelService(UserService userService) {
-        this.userService = userService;
-    }
+  @Autowired
+  ModelMapper modelMapper;
 
-    public BadgeLevelDTO getDTOfromBadgeLevel(BadgeLevel badgeLevel) {
-        BadgeLevelDTO badgeLevelDTO = new BadgeLevelDTO();
-        badgeLevelDTO.level = badgeLevel.getLevel();
-        badgeLevelDTO.description = badgeLevel.getDescription();
-        badgeLevelDTO.holders = new HashSet<>();
-        Set<User> usersHoldingBadgeLevel = badgeLevel.getHolders();
-        for (User item : usersHoldingBadgeLevel) {
-            badgeLevelDTO.holders.add(userService.getDTOfromUser(item));
-        }
-        return badgeLevelDTO;
+  public List<BadgeLevelForArchetypeDTO> convertBadgeLeveltoDTOForArchetype (Archetype archetype) {
+    List<BadgeLevelForArchetypeDTO> badgeLevels = new ArrayList<>();
+    Set<BadgeLevel> badgeLevelSet = archetype.getBadgeLevels();
+    for (BadgeLevel badgeLevel : badgeLevelSet) {
+      BadgeLevelForArchetypeDTO badgeLevelForArchetypeDTO = modelMapper.map(badgeLevel, BadgeLevelForArchetypeDTO.class);
+      badgeLevelForArchetypeDTO.setName(badgeLevel.getBadge().getName());
+      badgeLevelForArchetypeDTO.setLevel(badgeLevel.getLevel());
+      badgeLevels.add(badgeLevelForArchetypeDTO);
     }
+    return badgeLevels;
+  }
 }

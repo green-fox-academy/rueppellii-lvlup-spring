@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.dto.BadgeDTO;
+import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.service.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +19,7 @@ public class LibraryTestController {
 
     @GetMapping("/library")
     public List<BadgeDTO> getAllDTOs() {
-        return badgeService.getDTOListFromBadge();
+        return badgeService.convertBadgeToBadgeDTO();
     }
-
-
 }
 
