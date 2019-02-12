@@ -19,9 +19,7 @@ public class LibraryTestController {
 
     @GetMapping("/library")
     public List<BadgeDTO> getAllDTOs() {
-        return badgeService.getDTOListFromBadge();
+        return badgeService.convertBadgeToBadgeDTO();
     }
-
-
 }
 

@@ -1,45 +1,35 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.dto.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BadgeService {
     private BadgeRepository badgeRepository;
-    private BadgeLevelService badgeLevelService;
+    private ModelMapper modelMapper;
 
 
     @Autowired
-    public BadgeService(BadgeRepository badgeRepository, BadgeLevelService badgeLevelService) {
+    public BadgeService(BadgeRepository badgeRepository, ModelMapper modelMapper) {
         this.badgeRepository = badgeRepository;
-        this.badgeLevelService = badgeLevelService;
+        this.modelMapper = modelMapper;
     }
-    public List<BadgeDTO> getDTOListFromBadge() {
+
+    public List<BadgeDTO> convertBadgeToBadgeDTO() {
         List<BadgeDTO> badgeDTOs = new ArrayList<>();
         List<Badge> badges = badgeRepository.findAll();
         for (Badge badge : badges) {
-            badgeDTOs.add(getDTOfromBadge(badge));
+            BadgeDTO badgeDTO = modelMapper.map(badge, BadgeDTO.class);
+            badgeDTOs.add(badgeDTO);
         }
         return badgeDTOs;
-    }
-
-    public BadgeDTO getDTOfromBadge(Badge badge) {
-        BadgeDTO badgeDTO = new BadgeDTO();
-        badgeDTO.version = badge.getVersion();
-        badgeDTO.name = badge.getName();
-        badgeDTO.tag = badge.getTag();
-        badgeDTO.levels = new ArrayList<>();
-        List<BadgeLevel> levels = badge.getLevels();
-        for (BadgeLevel item : levels) {
-            badgeDTO.levels.add(badgeLevelService.getDTOfromBadgeLevel(item));
-        }
-        return badgeDTO;
     }
 }
