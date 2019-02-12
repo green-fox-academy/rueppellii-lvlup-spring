@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.model.dto.user;
 
-import com.greenfox.lvlup.model.dto.UserBadgeDTO;
-
 import java.util.Set;
 
 public class UserDto {
