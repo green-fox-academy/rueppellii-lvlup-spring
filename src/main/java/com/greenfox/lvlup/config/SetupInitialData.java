@@ -43,7 +43,15 @@ public class SetupInitialData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("****************************" + dbname);
 
+        setUpBadges();
+        setUpUsers();
+        setUpArchetypes();
+        setUpBadgelevelsWithUsersAndArchetypes();
+        setUpReviews();
 
+    }
+
+    public void setUpBadges() {
         Badge badge1 = new Badge("2.2", "Process improver", "general");
         Badge badge2 = new Badge("2.3", "English speaker", "mentor");
         Badge badge3 = new Badge("1.2", "Feedback receiver", "general");
@@ -52,6 +60,9 @@ public class SetupInitialData implements CommandLineRunner {
         badgeRepository.save(badge2);
         badgeRepository.save(badge3);
         badgeRepository.save(badge4);
+    }
+
+    public void setUpUsers() {
         User user1 = new User("Horváth Anna", "testusertoken", "base64://dwabi24632gdkje8549632...");
         User user2 = new User("Kiss József", "testadmin:token", "base64://dwabi24632gdkje8549632...");
         User user3 = new User("Antal Gábor", "verysecuretokendjawuidguowa76795432", "base64://dwabi24632gdkje8549632...");
@@ -66,12 +77,18 @@ public class SetupInitialData implements CommandLineRunner {
         userRepository.save(user5);
         userRepository.save(user6);
         userRepository.save(user7);
+    }
+
+    public void setUpArchetypes() {
         Archetype archetype1 = new Archetype("Junior mentor");
         Archetype archetype2 = new Archetype("Medior mentor");
         Archetype archetype3 = new Archetype("Senior mentor");
         archetypeRepository.save(archetype1);
         archetypeRepository.save(archetype2);
         archetypeRepository.save(archetype3);
+    }
+
+    public void setUpBadgelevelsWithUsersAndArchetypes() {
         levelRepository.save(new BadgeLevel(1, "I can reliably improve processes across the organization.", badge1, user1, user2, user3, user4, user6));
         levelRepository.save(new BadgeLevel(2, "I can introduce processes that are new to the company and implement them.", badge1, archetype1));
         levelRepository.save(new BadgeLevel(3, "I can come up with brand new processes that have high impact on the company", badge1, archetype2, archetype3));
@@ -88,6 +105,9 @@ public class SetupInitialData implements CommandLineRunner {
         levelRepository.save(new BadgeLevel(0, "When I have a problem, I usually let you know by expressing it clearly instead of keeping it to myself.", badge4, user2, user3, user4));
         levelRepository.save(new BadgeLevel(2, "I decribe my feelings and needs in conflict situations with most of my team mates.", badge4, archetype2));
         levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
+    }
+
+    public void setUpReviews() {
         Review review1 = new Review("Yes, you are able to speak english", true, user3);
         Review review2 = new Review("Please improve your english", false, user4);
         Review review3 = new Review(true, user4);
@@ -104,6 +124,9 @@ public class SetupInitialData implements CommandLineRunner {
         reviewRepository.save(review6);
         reviewRepository.save(review7);
         reviewRepository.save(review8);
+    }
+
+    public void setUpPitches() {
         Pitch pitch1 = new Pitch(new Date(), 2, 3, "I was working abroad for six years, so I can speak english very well. Pls improve my badge level to 3.", user1, badge2);
         Pitch pitch2 = new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement. I can create improved definition / accountibility / documentation and communicate it to the team", user1, badge1);
         Pitch pitch3 = new Pitch(new Date(), 1, 3, "I proactively seek feedback on projects or my general work and choose how to integrate it.", user2, badge3);
@@ -116,6 +139,9 @@ public class SetupInitialData implements CommandLineRunner {
         pitchRepository.save(pitch4);
         pitchRepository.save(pitch5);
         pitchRepository.save(pitch6);
+    }
+
+    public void setUpPitchesToReviews() {
         review1.setPitch(pitch1);
         review2.setPitch(pitch1);
         review3.setPitch(pitch2);
@@ -124,5 +150,16 @@ public class SetupInitialData implements CommandLineRunner {
         review6.setPitch(pitch5);
         review7.setPitch(pitch6);
         review8.setPitch(pitch4);
+
     }
 }
+
+
+
+
+
+
+
+
+      
+
