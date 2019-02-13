@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.exception.SuccessfulQuery;
+import com.greenfox.lvlup.exception.GeneralMessage;
 import com.greenfox.lvlup.model.dto.BadgeDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +24,7 @@ public class AdminController {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         } else {
-            return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
         }
 
     }

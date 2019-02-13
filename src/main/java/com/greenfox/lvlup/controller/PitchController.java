@@ -2,7 +2,7 @@ package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.mockdto.PitchDto;
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.exception.SuccessfulQuery;
+import com.greenfox.lvlup.exception.GeneralMessage;
 import javax.validation.Valid;
 
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
@@ -29,7 +29,7 @@ public class PitchController {
     if (token.isEmpty()) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
-    return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+    return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
   }
 
 }

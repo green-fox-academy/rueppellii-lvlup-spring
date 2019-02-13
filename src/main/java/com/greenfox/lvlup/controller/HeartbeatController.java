@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.exception.SuccessfulQuery;
+import com.greenfox.lvlup.exception.GeneralMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,6 @@ public class HeartbeatController {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(new SuccessfulQuery("Ok"), HttpStatus.OK);
+        return new ResponseEntity<>(new GeneralMessage("Ok"), HttpStatus.OK);
     }
 }
