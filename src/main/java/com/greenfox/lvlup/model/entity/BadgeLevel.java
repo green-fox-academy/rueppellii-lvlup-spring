@@ -2,14 +2,11 @@ package com.greenfox.lvlup.model.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Data
-@EqualsAndHashCode(exclude = "holders")
 @Entity
 @Table(name = "badgelevels")
 public class BadgeLevel {
@@ -20,7 +17,6 @@ public class BadgeLevel {
     private String description;
     @ManyToOne
     private Badge badge;
-
     @ManyToMany
     @JoinTable(name = "badgelevel_user",
             joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),

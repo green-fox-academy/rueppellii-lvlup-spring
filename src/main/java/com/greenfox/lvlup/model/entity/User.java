@@ -22,6 +22,12 @@ public class User {
     public User() {
     }
 
+    public User(String name, String tokenAuth, String pic) {
+        this.name = name;
+        this.tokenAuth = tokenAuth;
+        this.pic = pic;
+    }
+
     public User(String name) {
         this.name = name;
     }

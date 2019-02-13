@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.dto.ArchetypeDTO;
+import com.greenfox.lvlup.model.dto.archetype.ArchetypeDTO;
 import com.greenfox.lvlup.model.entity.Archetype;
 import com.greenfox.lvlup.repositrory.ArchetypeRepository;
 import com.greenfox.lvlup.service.ArchetypeService;

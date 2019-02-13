@@ -1,20 +1,16 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.dto.archetype;
 
-public class UserBadgeDTO {
+public class BadgeLevelForArchetypeDTO {
+
   private String name;
   private int level;
 
-  public UserBadgeDTO(String name) {
-    this.name = name;
-    this.level = 1;
+  public BadgeLevelForArchetypeDTO() {
   }
 
-  public UserBadgeDTO(String name, int level) {
+  public BadgeLevelForArchetypeDTO(String name, int level) {
     this.name = name;
     this.level = level;
-  }
-
-  public UserBadgeDTO() {
   }
 
   public String getName() {

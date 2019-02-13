@@ -5,6 +5,7 @@ import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
 import javax.validation.Valid;
 
+import com.greenfox.lvlup.model.mockdto.PitchPutDTO;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,5 +33,13 @@ public class PitchController {
     return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
+  @PutMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> modifyPitch(@RequestHeader(value = "userTokenAuth", required = false) String token,
+                                            @Valid @RequestBody PitchPutDTO pitchPutDTO) throws Exception {
+    if (token.isEmpty() || token == null) {
+      throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
+    }
+    return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+  }
 }
 

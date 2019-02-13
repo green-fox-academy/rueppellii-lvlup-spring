@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.UserBadgeDTO;
-import com.greenfox.lvlup.model.dto.UserDto;
+import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
+import com.greenfox.lvlup.model.dto.user.UserDto;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.UserRepository;
@@ -30,6 +30,7 @@ public class UserService {
     for (BadgeLevel bl :
         user.getBadgeLevels()) {
       UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
+      dto.setName(bl.getBadge().getName());
       badgeSet.add(dto);
     }
     return badgeSet;
