@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Component
-@Profile(value = {"dev", "prod"})
+@Profile(value = "dev")
 public class SetupInitialData implements CommandLineRunner {
     private BadgeRepository badgeRepository;
     private BadgeLevelRepository levelRepository;
