@@ -10,48 +10,48 @@ public class MockingElements {
   private String badgeName = "English speaker";
   private String pitchMessage = "Hello World! My English is bloody gorgeous.";
 
-  private PitchDto validPitchDto = new PitchDto(badgeName,
+  private PitchPostDTO validPitchPostDTO = new PitchPostDTO(badgeName,
       2,
       3,
       pitchMessage,
       new ArrayList<>(Arrays.asList(holdersArray)));
 
-  private PitchDto invalidPitchDto5 = new PitchDto(badgeName,
+  private PitchPostDTO invalidPitchPostDTO5 = new PitchPostDTO(badgeName,
       2,
       3,
       pitchMessage);
 
-  private PitchDto invalidPitchDto2 = new PitchDto(badgeName,
+  private PitchPostDTO invalidPitchPostDTO2 = new PitchPostDTO(badgeName,
       3,
       pitchMessage,
       new ArrayList<>(Arrays.asList(holdersArray)));
 
-  public PitchDto getInvalidPitchDto1() {
-    return invalidPitchDto1;
+  public PitchPostDTO getInvalidPitchPostDTO1() {
+    return invalidPitchPostDTO1;
   }
 
-  public void setInvalidPitchDto1(PitchDto invalidPitchDto1) {
-    this.invalidPitchDto1 = invalidPitchDto1;
+  public void setInvalidPitchPostDTO1(PitchPostDTO invalidPitchPostDTO1) {
+    this.invalidPitchPostDTO1 = invalidPitchPostDTO1;
   }
 
-  private PitchDto invalidPitchDto1 = new PitchDto(
+  private PitchPostDTO invalidPitchPostDTO1 = new PitchPostDTO(
       2,
       3,
       pitchMessage,
       new ArrayList<>(Arrays.asList(holdersArray)));
 
-  private PitchDto emptyPitchDto5 = new PitchDto(badgeName,
+  private PitchPostDTO emptyPitchPostDTO5 = new PitchPostDTO(badgeName,
       2,
       3,
       pitchMessage,
       new ArrayList<>(Arrays.asList()));
 
-  public PitchDto getEmptyPitchDto5() {
-    return emptyPitchDto5;
+  public PitchPostDTO getEmptyPitchPostDTO5() {
+    return emptyPitchPostDTO5;
   }
 
-  public void setEmptyPitchDto5(PitchDto emptyPitchDto5) {
-    this.emptyPitchDto5 = emptyPitchDto5;
+  public void setEmptyPitchPostDTO5(PitchPostDTO emptyPitchPostDTO5) {
+    this.emptyPitchPostDTO5 = emptyPitchPostDTO5;
   }
 
   public String getValidToken() {
@@ -62,28 +62,28 @@ public class MockingElements {
     this.validToken = validToken;
   }
 
-  public PitchDto getValidPitchDto() {
-    return validPitchDto;
+  public PitchPostDTO getValidPitchPostDTO() {
+    return validPitchPostDTO;
   }
 
-  public void setValidPitchDto(PitchDto validPitchDto) {
-    this.validPitchDto = validPitchDto;
+  public void setValidPitchPostDTO(PitchPostDTO validPitchPostDTO) {
+    this.validPitchPostDTO = validPitchPostDTO;
   }
 
-  public PitchDto getInvalidPitchDto5() {
-    return invalidPitchDto5;
+  public PitchPostDTO getInvalidPitchPostDTO5() {
+    return invalidPitchPostDTO5;
   }
 
-  public void setInvalidPitchDto5(PitchDto invalidPitchDto5) {
-    this.invalidPitchDto5 = invalidPitchDto5;
+  public void setInvalidPitchPostDTO5(PitchPostDTO invalidPitchPostDTO5) {
+    this.invalidPitchPostDTO5 = invalidPitchPostDTO5;
   }
 
-  public PitchDto getInvalidPitchDto2() {
-    return invalidPitchDto2;
+  public PitchPostDTO getInvalidPitchPostDTO2() {
+    return invalidPitchPostDTO2;
   }
 
-  public void setInvalidPitchDto2(PitchDto invalidPitchDto2) {
-    this.invalidPitchDto2 = invalidPitchDto2;
+  public void setInvalidPitchPostDTO2(PitchPostDTO invalidPitchPostDTO2) {
+    this.invalidPitchPostDTO2 = invalidPitchPostDTO2;
   }
 
 }

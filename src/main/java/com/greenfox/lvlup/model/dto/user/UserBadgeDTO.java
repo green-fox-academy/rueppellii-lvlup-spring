@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.model.dto;
+package com.greenfox.lvlup.model.dto.user;
 
 public class UserBadgeDTO {
   private String name;
