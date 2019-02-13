@@ -18,8 +18,6 @@ public class PitchController {
 
   private PitchSetDTO pitchSetDTO = new PitchSetDTO();
 
-  //it brakes the test
-
   @Autowired
   PitchService service;
 
@@ -38,8 +36,6 @@ public class PitchController {
     }
     return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
-
-  //it brakes the test
 
   @GetMapping("/pitches-test")
   public ResponseEntity getPitchesTest(@RequestHeader(value = "userTokenAuth", required = false) String token, @RequestParam long id) throws GeneralException {
