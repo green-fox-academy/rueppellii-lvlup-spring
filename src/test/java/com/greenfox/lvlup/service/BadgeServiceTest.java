@@ -1,6 +1,7 @@
 package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.controller.AdminController;
+import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import org.junit.Test;
@@ -24,7 +25,6 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-//@WebMvcTest(AdminController.class)
 public class BadgeServiceTest {
     @InjectMocks
     private BadgeService badgeService;
@@ -39,7 +39,8 @@ public class BadgeServiceTest {
     private UserService userService;
 
     Badge validBadge = new Badge("2.3", "Test badge", "general");
-    Badge emptyBadge = new Badge();
+    Optional<Badge> empty = Optional.empty();
+    BadgeDTO testDTO = new BadgeDTO("2.3", "Test badge", "general");
     String badgeVersion = "2.3";
     String badgeVersionNotExisting = "2.4";
     String badgeName = "Test badge";
@@ -47,7 +48,6 @@ public class BadgeServiceTest {
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
     }
 
     @Test
@@ -56,8 +56,21 @@ public class BadgeServiceTest {
 
     @Test
     public void convertBadgeDTOToBadge() {
+        when(this.modelMapper.map(testDTO, Badge.class)).thenReturn(validBadge);
+        Badge result = this.modelMapper.map(testDTO, Badge.class);
+        assertEquals(result.getName(), validBadge.getName());
+        assertEquals(result.getVersion(), validBadge.getVersion());
+        assertEquals(result.getTag(), validBadge.getTag());
+        assertEquals(result.getDateOfCreation(), validBadge.getDateOfCreation());
+        assertEquals(result.getUser(), validBadge.getUser());
     }
 
+    /*
+      public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
+            Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
+            return badgeToCreate;
+        }
+    */
     @Test
     public void findBadgeByNameAndVersionWithExistingBadgeVersion() {
         when(badgeRepository.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(Optional.ofNullable(validBadge));
@@ -66,32 +79,21 @@ public class BadgeServiceTest {
         assertNotNull(badgeExisting);
         assertEquals(badgeVersion, badgeExisting.get().getVersion());
         assertEquals(badgeName, badgeExisting.get().getName());
-
     }
 
     @Test
-    public void findBadgeByNameAndVersionWithNotExistingBadgeVersion() {
-        when(badgeRepository.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(Optional.ofNullable(emptyBadge));
+    public void findBadgeByNameAndVersionWithNotExistingBadgeVersionReturnsEmptyOptional() {
+        when(badgeRepository.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(empty);
         Optional<Badge> emptyBadge = badgeRepository.findBadgeByNameAndVersion(badgeVersionNotExisting, badgeName);
 
-        assertNull(emptyBadge);
-        assertEquals("", emptyBadge.get().getVersion());
-        assertEquals("", emptyBadge.get().getName());
-
+        assertFalse(emptyBadge.isPresent());
+        assertEquals(empty, emptyBadge);
     }
-       // Badge validBadge = new Badge("2.3", "Test badge", "general");
-       // when(badgeRepository.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(java.util.Optional.of(validBadge));
 
-        /*
-        public Badge findBadgeByNameAndVersion(Badge badge) {
-            Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion()).orElse(null);
-            return badgeExisting;
 
-            //
+    // when(todoRepository.findAllByNameContainingOrDescriptionContaining(anyString(),anyString())).thenReturn(foundItems);
 
-        when(todoRepository.findAllByNameContainingOrDescriptionContaining(anyString(),anyString())).thenReturn(foundItems);
-*/
-        // innen folytatni!!
+    // innen folytatni!!
 /*        List<Todo> resultFromService = todoService.findByNameOrDescription(anyString());
 
         assertNotNull(resultFromService);
@@ -99,9 +101,10 @@ public class BadgeServiceTest {
         assertTrue(foundItems.size() == resultFromService.size());
     }
 
-    }
+    }*/
 
     @Test
     public void createBadge() {
-    }*/
+
+    }
 }
