@@ -87,5 +87,42 @@ public class SetupInitialData implements CommandLineRunner {
         levelRepository.save(new BadgeLevel(0, "When I have a problem, I usually let you know by expressing it clearly instead of keeping it to myself.", badge4, user2, user3, user4));
         levelRepository.save(new BadgeLevel(2, "I decribe my feelings and needs in conflict situations with most of my team mates.", badge4, archetype2));
         levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
+        /*Review review1 = new Review("Yes, you are able to speak english", true, user3);
+        Review review2 = new Review("Please improve your english", false, user4);
+        Review review3 = new Review(true, user4);
+        Review review4 = new Review("Ok, I think he is ready for this job", true, user2);
+        Review review5 = new Review("Surely he can do it", true, user1);
+        Review review6 = new Review(false, user5);
+        Review review7 = new Review("Awesome person with awesome personality", true, user3);
+        Review review8 = new Review("It cant be serious", false, user4);
+        reviewRepository.save(review1);
+        reviewRepository.save(review2);
+        reviewRepository.save(review3);
+        reviewRepository.save(review4);
+        reviewRepository.save(review5);
+        reviewRepository.save(review6);
+        reviewRepository.save(review7);
+        reviewRepository.save(review8);
+        Pitch pitch1 = new Pitch(new Date(), 2, 3, "I was working abroad for six years, so I can speak english very well. Pls improve my badge level to 3.", user1, badge2);
+        Pitch pitch2 = new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement. I can create improved definition / accountibility / documentation and communicate it to the team", user1, badge1);
+        Pitch pitch3 = new Pitch(new Date(), 1, 3, "I proactively seek feedback on projects or my general work and choose how to integrate it.", user2, badge3);
+        Pitch pitch4 = new Pitch(new Date(), 4, 5, "When I have a problem, I usually let you know by expressing it clearly instead of keeping to myself", user3, badge4);
+        Pitch pitch5 = new Pitch(new Date(), 2, 3, "I improved in React, Redux, basic JS, NodeJS, Express and in LowDB, pls give me more money", user4, badge1);
+        Pitch pitch6 = new Pitch(new Date(), 4, 5, "I am confident in describing my feelings and needs considering the feedback receivers feelings and suggest a constructive solution", user5, badge2);
+        pitchRepository.save(pitch1);
+        pitchRepository.save(pitch2);
+        pitchRepository.save(pitch3);
+        pitchRepository.save(pitch4);
+        pitchRepository.save(pitch5);
+        pitchRepository.save(pitch6);
+        review1.setPitch(pitch1);
+        review2.setPitch(pitch1);
+        review3.setPitch(pitch2);
+        review4.setPitch(pitch2);
+        review5.setPitch(pitch3);
+        review6.setPitch(pitch5);
+        review7.setPitch(pitch6);
+        review8.setPitch(pitch4);
+        */
     }
 }
