@@ -56,8 +56,8 @@ public class BadgeServiceTest {
 
     @Test
     public void convertBadgeDTOToBadge() {
-        when(this.modelMapper.map(testDTO, Badge.class)).thenReturn(validBadge);
         Badge result = this.modelMapper.map(testDTO, Badge.class);
+        when(this.modelMapper.map(testDTO, Badge.class)).thenReturn(validBadge);
         assertEquals(result.getName(), validBadge.getName());
         assertEquals(result.getVersion(), validBadge.getVersion());
         assertEquals(result.getTag(), validBadge.getTag());
@@ -65,12 +65,6 @@ public class BadgeServiceTest {
         assertEquals(result.getUser(), validBadge.getUser());
     }
 
-    /*
-      public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
-            Badge badgeToCreate = modelMapper.map(badgeDTO, Badge.class);
-            return badgeToCreate;
-        }
-    */
     @Test
     public void findBadgeByNameAndVersionWithExistingBadgeVersion() {
         when(badgeRepository.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(Optional.ofNullable(validBadge));
