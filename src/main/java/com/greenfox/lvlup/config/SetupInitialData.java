@@ -1,13 +1,7 @@
 package com.greenfox.lvlup.config;
 
-import com.greenfox.lvlup.model.entity.Archetype;
-import com.greenfox.lvlup.model.entity.Badge;
-import com.greenfox.lvlup.model.entity.BadgeLevel;
-import com.greenfox.lvlup.model.entity.User;
-import com.greenfox.lvlup.repositrory.ArchetypeRepository;
-import com.greenfox.lvlup.repositrory.BadgeLevelRepository;
-import com.greenfox.lvlup.repositrory.BadgeRepository;
-import com.greenfox.lvlup.repositrory.UserRepository;
+import com.greenfox.lvlup.model.entity.*;
+import com.greenfox.lvlup.repositrory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 @Component
 @Profile(value = {"dev", "prod"})
@@ -25,16 +20,22 @@ public class SetupInitialData implements CommandLineRunner {
     private BadgeLevelRepository levelRepository;
     private UserRepository userRepository;
     private ArchetypeRepository archetypeRepository;
+    private ReviewRepository reviewRepository;
+    private PitchRepository pitchRepository;
 
     @Value("${spring.datasource.url}")
     private String dbname;
 
     @Autowired
-    public SetupInitialData(ArchetypeRepository archetypeRepository, BadgeRepository badgeRepository, BadgeLevelRepository levelRepository, UserRepository userRepository) {
+    public SetupInitialData(ArchetypeRepository archetypeRepository, BadgeRepository badgeRepository,
+                            BadgeLevelRepository levelRepository, UserRepository userRepository,
+                            ReviewRepository reviewRepository, PitchRepository pitchRepository) {
         this.badgeRepository = badgeRepository;
         this.levelRepository = levelRepository;
         this.userRepository = userRepository;
         this.archetypeRepository = archetypeRepository;
+        this.reviewRepository = reviewRepository;
+        this.pitchRepository = pitchRepository;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class SetupInitialData implements CommandLineRunner {
         levelRepository.save(new BadgeLevel(0, "When I have a problem, I usually let you know by expressing it clearly instead of keeping it to myself.", badge4, user2, user3, user4));
         levelRepository.save(new BadgeLevel(2, "I decribe my feelings and needs in conflict situations with most of my team mates.", badge4, archetype2));
         levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
-        /*Review review1 = new Review("Yes, you are able to speak english", true, user3);
+        Review review1 = new Review("Yes, you are able to speak english", true, user3);
         Review review2 = new Review("Please improve your english", false, user4);
         Review review3 = new Review(true, user4);
         Review review4 = new Review("Ok, I think he is ready for this job", true, user2);
@@ -123,6 +124,5 @@ public class SetupInitialData implements CommandLineRunner {
         review6.setPitch(pitch5);
         review7.setPitch(pitch6);
         review8.setPitch(pitch4);
-        */
     }
 }
