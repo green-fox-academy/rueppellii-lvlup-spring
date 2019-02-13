@@ -1,7 +1,9 @@
 package com.greenfox.lvlup.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
   @Id
@@ -25,9 +29,6 @@ public class User {
   @JsonIgnore
   private List<Pitch> pitches;
 
-  public User() {
-  }
-
   public User(String name, String tokenAuth, String pic) {
     this.name = name;
     this.tokenAuth = tokenAuth;
@@ -36,45 +37,5 @@ public class User {
 
   public User(String name) {
     this.name = name;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getTokenAuth() {
-    return tokenAuth;
-  }
-
-  public void setTokenAuth(String tokenAuth) {
-    this.tokenAuth = tokenAuth;
-  }
-
-  public String getPic() {
-    return pic;
-  }
-
-  public void setPic(String pic) {
-    this.pic = pic;
-  }
-
-  public Set<BadgeLevel> getBadgeLevels() {
-    return badgeLevels;
-  }
-
-  public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
-    this.badgeLevels = badgeLevels;
   }
 }

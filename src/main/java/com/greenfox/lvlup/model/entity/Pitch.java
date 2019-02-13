@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "pitches")
 public class Pitch {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
