@@ -47,7 +47,7 @@ public class SetupInitialData implements CommandLineRunner {
         setUpUsers();
         setUpArchetypes();
         setUpBadgelevelsWithUsersAndArchetypes();
-        setUpReviews();
+        setUpReviewsAndPitches();
 
     }
 
@@ -107,7 +107,7 @@ public class SetupInitialData implements CommandLineRunner {
         levelRepository.save(new BadgeLevel(3, "I am confident in describing my feelings and needs considering the feedback receivers feelings and needs and suggest a constructive solution", badge4, archetype3));
     }
 
-    public void setUpReviews() {
+    public void setUpReviewsAndPitches() {
         Review review1 = new Review("Yes, you are able to speak english", true, user3);
         Review review2 = new Review("Please improve your english", false, user4);
         Review review3 = new Review(true, user4);
@@ -124,9 +124,6 @@ public class SetupInitialData implements CommandLineRunner {
         reviewRepository.save(review6);
         reviewRepository.save(review7);
         reviewRepository.save(review8);
-    }
-
-    public void setUpPitches() {
         Pitch pitch1 = new Pitch(new Date(), 2, 3, "I was working abroad for six years, so I can speak english very well. Pls improve my badge level to 3.", user1, badge2);
         Pitch pitch2 = new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement. I can create improved definition / accountibility / documentation and communicate it to the team", user1, badge1);
         Pitch pitch3 = new Pitch(new Date(), 1, 3, "I proactively seek feedback on projects or my general work and choose how to integrate it.", user2, badge3);
@@ -139,9 +136,6 @@ public class SetupInitialData implements CommandLineRunner {
         pitchRepository.save(pitch4);
         pitchRepository.save(pitch5);
         pitchRepository.save(pitch6);
-    }
-
-    public void setUpPitchesToReviews() {
         review1.setPitch(pitch1);
         review2.setPitch(pitch1);
         review3.setPitch(pitch2);
@@ -150,7 +144,6 @@ public class SetupInitialData implements CommandLineRunner {
         review6.setPitch(pitch5);
         review7.setPitch(pitch6);
         review8.setPitch(pitch4);
-
     }
 }
 
