@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.BadgeDTO;
+import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.repositrory.BadgeLevelRepository;
 import com.greenfox.lvlup.repositrory.BadgeRepository;

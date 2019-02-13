@@ -93,5 +93,4 @@ public class BadgeLevel {
   public void setHolders(Set<User> holders) {
     this.holders = holders;
   }
-
 }

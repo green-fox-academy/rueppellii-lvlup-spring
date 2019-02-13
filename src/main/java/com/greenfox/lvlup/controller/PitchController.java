@@ -4,7 +4,6 @@ import com.greenfox.lvlup.model.mockdto.PitchPostDTO;
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
 import javax.validation.Valid;
-
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import com.greenfox.lvlup.service.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,5 @@ public class PitchController {
       return new ResponseEntity<>(service.getUserPitchById(id), HttpStatus.OK);
     } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
-
 }
 

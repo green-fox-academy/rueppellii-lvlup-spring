@@ -1,6 +1,6 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.UserBadgeDTO;
+import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserDto;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;
@@ -8,7 +8,6 @@ import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.Set;
 
