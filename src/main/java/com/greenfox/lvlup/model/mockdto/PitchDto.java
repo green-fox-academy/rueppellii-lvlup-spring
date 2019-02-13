@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonSerialize
-public class PitchDto {
+public class  PitchDto {
   @NotEmpty(message = "PitchDto name is required.")
   String badgeName;
   @NotNull(message = "Old level is required.")
