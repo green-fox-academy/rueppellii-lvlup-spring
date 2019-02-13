@@ -7,19 +7,19 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @JsonSerialize
-public class  PitchDto {
-  @NotEmpty(message = "PitchDto name is required.")
+public class PitchPostDTO {
+  @NotEmpty(message = "PitchPostDTO name is required.")
   String badgeName;
   @NotNull(message = "Old level is required.")
   Integer oldLVL;
   @NotNull(message = "Pitched level is required.")
   Integer pitchedLVL;
-  @NotEmpty(message = "PitchDto message is required.")
+  @NotEmpty(message = "PitchPostDTO message is required.")
   String pitchMessage;
   @NotEmpty(message = "Holders are required.")
   List<String> holders;
 
-  public PitchDto(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
+  public PitchPostDTO(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
     this.badgeName = badgeName;
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
@@ -27,28 +27,28 @@ public class  PitchDto {
     this.holders = holders;
   }
 
-  public PitchDto(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage) {
+  public PitchPostDTO(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage) {
     this.badgeName = badgeName;
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
     this.pitchMessage = pitchMessage;
   }
 
-  public PitchDto(String badgeName, int pitchedLVL, String pitchMessage, List<String> holders) {
+  public PitchPostDTO(String badgeName, int pitchedLVL, String pitchMessage, List<String> holders) {
     this.badgeName = badgeName;
     this.pitchedLVL = pitchedLVL;
     this.pitchMessage = pitchMessage;
     this.holders = holders;
   }
 
-  public PitchDto(int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
+  public PitchPostDTO(int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;
     this.pitchMessage = pitchMessage;
     this.holders = holders;
   }
 
-  public PitchDto() {
+  public PitchPostDTO() {
   }
 
   public String getBadgeName() {
