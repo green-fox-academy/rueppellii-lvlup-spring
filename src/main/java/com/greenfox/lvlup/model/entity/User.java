@@ -22,6 +22,7 @@ public class User {
   @JsonIgnore
   private Set<BadgeLevel> badgeLevels = new HashSet<>();
   @OneToMany (mappedBy = "user")
+  @JsonIgnore
   private List<Pitch> pitches;
 
   public User() {

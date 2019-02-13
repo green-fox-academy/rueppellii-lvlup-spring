@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Data
@@ -29,14 +31,12 @@ public class Pitch {
   @OneToMany (mappedBy = "pitch")
   private List<Review> reviews;
 
-  public Pitch(Date created, int oldLevel, int pitchedLevel, String pitchedMessage, User user, BadgeLevel level, Badge badge, List<Review> reviews) {
+  public Pitch(Date created, int oldLevel, int pitchedLevel, String pitchedMessage, User user, Badge badge) {
     this.created = created;
     this.oldLevel = oldLevel;
     this.pitchedLevel = pitchedLevel;
     this.pitchedMessage = pitchedMessage;
     this.user = user;
-    this.level = level;
     this.badge = badge;
-    this.reviews = reviews;
   }
 }
