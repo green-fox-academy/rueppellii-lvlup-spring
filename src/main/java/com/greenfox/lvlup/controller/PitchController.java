@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.controller;
 
+import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.mockdto.PitchPostDTO;
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.GeneralMessage;
@@ -27,9 +28,9 @@ public class PitchController {
     } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
   }
 
-  @PostMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "/api/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "userTokenAuth") String token,
-      @Valid @RequestBody PitchPostDTO pitchPostDTO) throws Exception {
+      @Valid @RequestBody PitchDto pitchDto) throws Exception {
     if (token.isEmpty()) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
     }

@@ -1,5 +1,8 @@
 package com.greenfox.lvlup.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +11,8 @@ import java.util.stream.Stream;
 
 @Entity
 @Table(name = "badgelevels")
+@Getter
+@Setter
 public class BadgeLevel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,45 +57,5 @@ public class BadgeLevel {
     this.badge = badge;
     this.archetypes = Stream.of(archetypes).collect(Collectors.toSet());
     this.archetypes.forEach(x -> x.getBadgeLevels().add(this));
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public int getLevel() {
-    return level;
-  }
-
-  public void setLevel(int level) {
-    this.level = level;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Badge getBadge() {
-    return badge;
-  }
-
-  public void setBadge(Badge badge) {
-    this.badge = badge;
-  }
-
-  public Set<User> getHolders() {
-    return holders;
-  }
-
-  public void setHolders(Set<User> holders) {
-    this.holders = holders;
   }
 }

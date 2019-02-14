@@ -46,4 +46,29 @@ public class PitchService {
     }
     return reviewSet;
   }
+
+  public void savePitchToUser(PitchDto pitchDto) {
+    Pitch newPitch = convertPitchDtoToEntity(pitchDto);
+    repository.save(newPitch);
+    newPitch
+        .getUser()
+        .getPitches().add(newPitch);
+
+
+  }
+
+  private PitchDto convertPitchEntityToDto(Pitch pitch){
+    PitchDto pitchDto = new PitchDto();
+    mapper.map(pitch, pitchDto);
+
+    return pitchDto;
+  }
+
+  private Pitch convertPitchDtoToEntity(PitchDto pitchDto) {
+    Pitch pitch = new Pitch();
+    mapper.map(pitchDto, pitch);
+    return pitch;
+
+
+  }
 }
