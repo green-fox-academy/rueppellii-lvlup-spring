@@ -2,9 +2,12 @@ package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
+import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
+import com.greenfox.lvlup.repositrory.BadgeRepository;
 import com.greenfox.lvlup.repositrory.PitchRepository;
+import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +19,10 @@ import java.util.Set;
 
 @Service
 public class PitchService {
-  private PitchRepository repository;
   private ModelMapper mapper;
+  private PitchRepository repository;
+  private UserRepository userRepository;
+  private BadgeRepository badgeRepository;
 
   @Autowired
   public PitchService(PitchRepository repository, ModelMapper mapper) {
@@ -47,14 +52,8 @@ public class PitchService {
     return reviewSet;
   }
 
-  public void savePitchToUser(PitchDto pitchDto) {
-    Pitch newPitch = convertPitchDtoToEntity(pitchDto);
-    repository.save(newPitch);
-    newPitch
-        .getUser()
-        .getPitches().add(newPitch);
-
-
+  public void savePitch(PitchDto pitchDto) {
+    repository.save(convertPitchDtoToEntity(pitchDto));
   }
 
   private PitchDto convertPitchEntityToDto(Pitch pitch){
@@ -67,6 +66,10 @@ public class PitchService {
   private Pitch convertPitchDtoToEntity(PitchDto pitchDto) {
     Pitch pitch = new Pitch();
     mapper.map(pitchDto, pitch);
+    pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
+    pitch.setCreated(pitchDto.getTimestamp());
+    pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
+
     return pitch;
 
 

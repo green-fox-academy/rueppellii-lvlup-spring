@@ -30,10 +30,8 @@ public class PitchController {
 
   @PostMapping(value = "/api/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "userTokenAuth") String token,
-      @Valid @RequestBody PitchDto pitchDto) throws Exception {
-    if (token.isEmpty()) {
-      throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
-    }
+      @Valid @RequestBody PitchDto pitchDto) {
+    service.savePitch(pitchDto);
     return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
   }
 
