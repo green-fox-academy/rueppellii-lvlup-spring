@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 
@@ -55,7 +54,11 @@ public class BadgeServiceTest {
 
     @Test
     public void convertBadgeDTOToBadge() {
-        Badge result = this.modelMapper.map(testDTO, Badge.class);
+        Badge validBadge = new Badge("2.3", "Test badge", "general");
+        BadgeDTO testDTO = new BadgeDTO("2.3", "Test badge", "general");
+
+        Badge result = badgeService.convertBadgeDTOToBadge(testDTO);
+               // this.modelMapper.map(testDTO, Badge.class);
         when(this.modelMapper.map(testDTO, Badge.class)).thenReturn(validBadge);
         assertEquals(result.getName(), validBadge.getName());
         assertEquals(result.getVersion(), validBadge.getVersion());
