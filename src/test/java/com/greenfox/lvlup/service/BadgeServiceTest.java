@@ -1,8 +1,8 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.controller.AdminController;
 import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
+import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,14 +12,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -39,6 +39,9 @@ public class BadgeServiceTest {
     private UserService userService;
 
     Badge validBadge = new Badge("2.3", "Test badge", "general");
+    Badge validBadge2 = new Badge("1.4", "English speaker", "general");
+    Badge validBadge3 = new Badge("1.5", "Feedback giver", "mentor");
+    List<Badge> validBadgeSet = Arrays.asList(validBadge, validBadge2, validBadge3);
     Optional<Badge> empty = Optional.empty();
     BadgeDTO testDTO = new BadgeDTO("2.3", "Test badge", "general");
     String badgeVersion = "2.3";
@@ -48,10 +51,6 @@ public class BadgeServiceTest {
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-    }
-
-    @Test
-    public void convertBadgeToBadgeDTO() {
     }
 
     @Test
@@ -83,19 +82,6 @@ public class BadgeServiceTest {
         assertFalse(emptyBadge.isPresent());
         assertEquals(empty, emptyBadge);
     }
-
-
-    // when(todoRepository.findAllByNameContainingOrDescriptionContaining(anyString(),anyString())).thenReturn(foundItems);
-
-    // innen folytatni!!
-/*        List<Todo> resultFromService = todoService.findByNameOrDescription(anyString());
-
-        assertNotNull(resultFromService);
-        assertEquals(foundItems.get(1).getName(), resultFromService.get(1).getName());
-        assertTrue(foundItems.size() == resultFromService.size());
-    }
-
-    }*/
 
     @Test
     public void createBadge() {

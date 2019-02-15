@@ -40,7 +40,6 @@ public class BadgeService {
 
     public void createBadge(BadgeDTO badgeDTO, long userId) throws GeneralException {
         Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
-        //User Id should be extracted from token!!
         User badgeCreatorUser = userService.findUserById(userId);
         this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
     }

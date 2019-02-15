@@ -40,10 +40,6 @@ public class AdminControllerTest {
 
     @Test
     public void addBadgeValidRequestReturns201Created() throws Exception {
-        //given(badgeService.convertBadgeDTOToBadge(validBadgeDto)).willReturn(validBadge);
-        //given(userService.findUserById(id)).willReturn(testBadgeCreator);
-        //given(badgeService.createBadge(validBadgeDto, id)).willReturn(true);
-
         this.mockMvc.perform(post("/admin/add")
                 .header("userTokenAuth", token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +53,7 @@ public class AdminControllerTest {
 
     @Test
     public void invalidNameErrorReturns400BadRequest() throws Exception {
-         this.mockMvc.perform(post("/admin/add")
+        this.mockMvc.perform(post("/admin/add")
                 .header("userTokenAuth", token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(stringify(invalidBadgeDto)))
