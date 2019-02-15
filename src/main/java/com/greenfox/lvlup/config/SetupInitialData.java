@@ -57,7 +57,7 @@ public class SetupInitialData implements CommandLineRunner {
         generateBadgelevelsWithUsersAndArchetypes();
         generateReviews();
         generatePitches();
-        
+
         saveAll();
     }
 
