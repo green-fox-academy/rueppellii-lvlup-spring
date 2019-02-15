@@ -25,9 +25,11 @@ public class PitchService {
   private BadgeRepository badgeRepository;
 
   @Autowired
-  public PitchService(PitchRepository repository, ModelMapper mapper) {
-    this.repository = repository;
+  public PitchService(PitchRepository repository, ModelMapper mapper, UserRepository userRepository, BadgeRepository badgeRepository) {
     this.mapper = mapper;
+    this.repository = repository;
+    this.userRepository = userRepository;
+    this.badgeRepository = badgeRepository;
   }
 
   public List<PitchDto> getUserPitchById(long id) {
@@ -36,13 +38,13 @@ public class PitchService {
     for (Pitch pitch : pitchesList) {
       PitchDto dto = mapper.map(pitch, PitchDto.class);
       dto.setTimestamp(pitch.getCreated());
-      dto.setReviews(setReviews(pitch));
+      dto.setReviews(addReviewsAsSet(pitch));
       dtoList.add(dto);
     }
     return dtoList;
   }
 
-  private Set<ReviewDto> setReviews(Pitch pitch) {
+  private Set<ReviewDto> addReviewsAsSet(Pitch pitch) {
     Set<ReviewDto> reviewSet = new HashSet<>();
     for (Review review: pitch.getReviews()) {
       ReviewDto dto = mapper.map(review, ReviewDto.class);
@@ -59,7 +61,7 @@ public class PitchService {
   private PitchDto convertPitchEntityToDto(Pitch pitch){
     PitchDto pitchDto = new PitchDto();
     mapper.map(pitch, pitchDto);
-
+    // not ready!!
     return pitchDto;
   }
 
@@ -70,8 +72,18 @@ public class PitchService {
     pitch.setCreated(pitchDto.getTimestamp());
     pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
 
+    pitch.setReviews(convertSetToList(pitchDto.getReviews()));
     return pitch;
+  }
 
-
+  private List<Review> convertSetToList(Set<ReviewDto> set) {
+    List<Review> list = new ArrayList();
+    Review placeholder = new Review();
+    for (ReviewDto dto : set) {
+      mapper.map(dto, placeholder);
+      placeholder.setUser(userRepository.findUserByName(dto.getName()));
+      list.add(placeholder);
+    }
+    return list;
   }
 }

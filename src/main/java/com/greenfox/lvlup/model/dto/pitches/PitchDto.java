@@ -17,5 +17,4 @@ public class PitchDto {
   private int pitchedLevel;
   private String pitchedMessage;
   private Set<ReviewDto> reviews;
-
 }
