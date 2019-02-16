@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 public class AdminController {
@@ -39,10 +37,6 @@ public class AdminController {
         } else {
             long userTestId = 1;
             badgeService.createBadge(badgeDTO, userTestId);
-      /*      Badge badgeToCreate = badgeService.convertBadgeDTOToBadge(badgeDTO);
-            //User Id should be extracted from token!!
-            User user = userService.findUserById(1);
-            badgeService.saveBadgeIntoDatabase(badgeToCreate, user);*/
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
         }
     }
