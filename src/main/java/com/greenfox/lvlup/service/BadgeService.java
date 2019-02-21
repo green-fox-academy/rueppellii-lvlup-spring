@@ -38,9 +38,9 @@ public class BadgeService {
         return badgeDTOs;
     }
 
-    public void createBadge(BadgeDTO badgeDTO, long userId) throws GeneralException {
+    public void createBadge(BadgeDTO badgeDTO, String tokenAuth) throws GeneralException {
         Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
-        User badgeCreatorUser = userService.findUserById(userId);
+        User badgeCreatorUser = userService.findUserByTokenAuth(tokenAuth);
         this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
     }
 

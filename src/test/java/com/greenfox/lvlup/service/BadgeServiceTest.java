@@ -52,7 +52,7 @@ public class BadgeServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+/*    @Test
     public void convertBadgeDTOToBadge() {
         Badge validBadge = new Badge("2.3", "Test badge", "general");
         BadgeDTO testDTO = new BadgeDTO("2.3", "Test badge", "general");
@@ -65,7 +65,7 @@ public class BadgeServiceTest {
         assertEquals(result.getTag(), validBadge.getTag());
         assertEquals(result.getDateOfCreation(), validBadge.getDateOfCreation());
         assertEquals(result.getUser(), validBadge.getUser());
-    }
+    }*/
 
     @Test
     public void findBadgeByNameAndVersionWithExistingBadgeVersion() {

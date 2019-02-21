@@ -21,8 +21,8 @@ public class UserService {
 
   ModelMapper mapper = new ModelMapper();
 
-  public User findUserById(long id) throws GeneralException {
-    Optional<User> user = repo.findById(id);
+  public User findUserByTokenAuth(String tokenAuth) throws GeneralException {
+    Optional<User> user = repo.findByTokenAuth(tokenAuth);
     if(user.isPresent()) {
       return user.get();
     }

@@ -35,8 +35,7 @@ public class AdminController {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         } else {
-            long userTestId = 1;
-            badgeService.createBadge(badgeDTO, userTestId);
+            badgeService.createBadge(badgeDTO, token);
             return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
         }
     }
