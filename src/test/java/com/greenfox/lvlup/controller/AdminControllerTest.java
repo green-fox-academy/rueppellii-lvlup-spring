@@ -1,10 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.dto.library.BadgeDTO;
-import com.greenfox.lvlup.model.entity.Badge;
-import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.service.BadgeService;
-import com.greenfox.lvlup.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -38,10 +38,13 @@ public class BadgeService {
         return badgeDTOs;
     }
 
-    public void createBadge(BadgeDTO badgeDTO, String tokenAuth) throws GeneralException {
+    public boolean createBadge(BadgeDTO badgeDTO, String tokenAuth) throws GeneralException {
         Badge badgeToCreate = this.convertBadgeDTOToBadge(badgeDTO);
         User badgeCreatorUser = userService.findUserByTokenAuth(tokenAuth);
-        this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser);
+        if(this.saveBadgeIntoDatabase(badgeToCreate, badgeCreatorUser)!=null) {
+            return true;
+        };
+        return false;
     }
 
     public Badge convertBadgeDTOToBadge(BadgeDTO badgeDTO) {
@@ -49,16 +52,17 @@ public class BadgeService {
         return badgeToCreate;
     }
 
-    public void saveBadgeIntoDatabase(Badge badge, User user) throws GeneralException {
+    public Badge saveBadgeIntoDatabase(Badge badge, User user) throws GeneralException {
         if (findBadgeByNameAndVersion(badge) == null) {
             badge.setUser(user);
             badgeRepository.save(badge);
+            return badge;
         } else
             throw new GeneralException("Badge with this version already exists. Please modify version.", HttpStatus.BAD_REQUEST);
     }
 
     public Badge findBadgeByNameAndVersion(Badge badge) {
-        Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion()).orElse(null);
+        Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion());
         return badgeExisting;
     }
 }

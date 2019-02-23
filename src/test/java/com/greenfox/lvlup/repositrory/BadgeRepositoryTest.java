@@ -1,18 +1,14 @@
 package com.greenfox.lvlup.repositrory;
 
-import com.greenfox.lvlup.LvlupApplication;
 import com.greenfox.lvlup.model.entity.Badge;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,24 +43,24 @@ public class BadgeRepositoryTest {
     }
 
     @Test
-    public void findBadgeByNameAndVersionExistingBadge() {
-        Optional<Badge> existingBadge = badgeRepository.findBadgeByNameAndVersion("Test badge", "2.3");
-        assertTrue(existingBadge.isPresent());
-        assertEquals(validBadge1.getVersion(), existingBadge.get().getVersion());
+    public void whenFindBadgeByNameAndVersion_thenReturnBadge() {
+        Badge foundBadge = badgeRepository.findBadgeByNameAndVersion("Test badge", "2.3");
+        assertEquals(validBadge1.getVersion(), foundBadge.getVersion());
     }
 
     @Test
-    public void findBadgeByNameAndVersionNotExistingBadge() {
-        Optional<Badge> foundBadge = badgeRepository.findBadgeByNameAndVersion("Test badge", "2.4");
-        assertFalse(foundBadge.isPresent());
+    public void whenFindBadgeByNameAndVersionNotPresent_thenReturnNull() {
+        Badge notPresentBadge = badgeRepository.findBadgeByNameAndVersion("Test badge", "2.4");
+        assertNull(notPresentBadge);
     }
 
     @Test
-    public void findAllTest() {
+    public void whenFindAll_thenReturnListOfBadges() {
         List<Badge> foundBadges = badgeRepository.findAll();
         assertEquals(badges.size(), foundBadges.size());
         assertEquals(badges.get(0).getName(), foundBadges.get(0).getName());
         assertEquals(badges.get(1).getVersion(), foundBadges.get(1).getVersion());
         assertEquals(badges.get(2).getTag(), foundBadges.get(2).getTag());
+        assertFalse(foundBadges.isEmpty());
     }
 }
