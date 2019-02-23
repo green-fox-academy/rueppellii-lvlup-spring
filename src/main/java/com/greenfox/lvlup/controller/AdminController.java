@@ -37,6 +37,5 @@ public class AdminController {
         }
         badgeService.createBadge(badgeDTO, token);
         return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
-
     }
 }

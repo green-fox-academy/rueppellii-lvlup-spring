@@ -14,6 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataSource;
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,12 +53,12 @@ public class SetupInitialData implements CommandLineRunner {
         badgeRepository.save(badge2);
         badgeRepository.save(badge3);
         badgeRepository.save(badge4);
-        User user1 = new User("Horváth Anna", "token12", "userpicture");
+        User user1 = new User("Horváth Anna");
         User user2 = new User("Kiss József");
         User user3 = new User("Antal Gábor");
         User user4 = new User("Szabó Tibor");
         User user5 = new User("Vass Imola");
-        User user6 = new User("Nagy Bence");
+        User user6 = new User("Nagy Bence", "token123", "userpicture");
         User user7 = new User("Takács Kata");
         userRepository.save(user1);
         userRepository.save(user2);
