@@ -51,7 +51,7 @@ public class SetupInitialData implements CommandLineRunner {
         badgeRepository.save(badge2);
         badgeRepository.save(badge3);
         badgeRepository.save(badge4);
-        User user1 = new User("Horváth Anna");
+        User user1 = new User("Horváth Anna", "token12", "userpicture");
         User user2 = new User("Kiss József");
         User user3 = new User("Antal Gábor");
         User user4 = new User("Szabó Tibor");

@@ -34,9 +34,9 @@ public class AdminController {
                                       @RequestHeader(value = "userTokenAuth", required = false) String token) throws Exception {
         if (token == null || token.equals("")) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
-        } else {
-            badgeService.createBadge(badgeDTO, token);
-            return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
         }
+        badgeService.createBadge(badgeDTO, token);
+        return new ResponseEntity<>(new SuccessfulQuery("Success"), HttpStatus.CREATED);
+
     }
 }

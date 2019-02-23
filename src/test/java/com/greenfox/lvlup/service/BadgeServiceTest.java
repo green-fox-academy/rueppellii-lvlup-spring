@@ -48,8 +48,6 @@ public class BadgeServiceTest {
     Badge validBadge = new Badge("2.3", "Test badge", "general");
     Badge validBadge2 = new Badge("1.4", "English speaker", "general");
     Badge validBadge3 = new Badge("1.5", "Feedback giver", "mentor");
-    List<Badge> validBadgeSet = Arrays.asList(validBadge, validBadge2, validBadge3);
-    Optional<Badge> empty = Optional.empty();
     BadgeDTO testDTO = new BadgeDTO("2.3", "Test badge", "general");
 
 
@@ -72,7 +70,7 @@ public class BadgeServiceTest {
         assertEquals(result.getUser(), validBadge.getUser());
     }
 
-   @Test
+    @Test
     public void whenFindBadgeByNameAndVersionExistingBadgeVersion_thenReturnExistingBadgeVersion() {
         when(badgeRepositoryMock.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(validBadge);
         Badge testResult = badgeService.findBadgeByNameAndVersion(validBadge);
@@ -92,18 +90,14 @@ public class BadgeServiceTest {
     @Test
     public void saveBadgeIntoDatabase() throws Exception {
         when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(null);
-        validBadge2.setUser(badgeCreator);
-        doAnswer(i -> i.getArguments()[0])
-                .when(badgeRepositoryMock)
-                .save(validBadge2);
-        Badge createdBadge = badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
-        assertEquals("Test Elek", createdBadge.getUser().getName());
+       //it is the responsibility of the method to set badgeCreator as User to validBadge2
+        //so if the assertation is ok, then it went well
+        badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
+        assertEquals("Test Elek", validBadge2.getUser().getName());
     }
 
     @Test(expected = GeneralException.class)
     public void saveBadgeIntoDatabase_whenBadgeNotNull_thenThrowsException() throws Exception {
-        //when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(validBadge2);
-        // doThrow(new GeneralException()).when(badgeRepositoryMock).findBadgeByNameAndVersion(anyString(), anyString());
         when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(validBadge2);
         badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
     }
@@ -112,30 +106,16 @@ public class BadgeServiceTest {
     public void whenCreateBadge_thenReturnTrue() throws GeneralException {
         when(badgeService.convertBadgeDTOToBadge(testDTO)).thenReturn(validBadge);
         when(userServiceMock.findUserByTokenAuth(token)).thenReturn(badgeCreator);
-        when(badgeService.saveBadgeIntoDatabase(validBadge, badgeCreator)).thenReturn(validBadge);
-        assertEquals(true, badgeService.createBadge(testDTO, token));
-    }
 
-    @Ignore
-    @Test(expected = GeneralException.class)
-    public void whenCreateBadge_thenReturnUserNotExists() throws GeneralException {
-        when(badgeService.convertBadgeDTOToBadge(testDTO)).thenReturn(validBadge);
-        doThrow(new GeneralException()).when(userServiceMock.findUserByTokenAuth(badToken));
-        //when(userServiceMock.findUserByTokenAuth(token)).thenReturn(badgeCreator);
-        //when(badgeService.saveBadgeIntoDatabase(validBadge, badgeCreator)).thenReturn(validBadge);
-        //assertEquals(true, badgeService.createBadge(testDTO, token));
+        assertTrue(badgeService.createBadge(testDTO, token));
     }
 
     @Test
-    public void whenCreateBadge_thenReturnBadgeVersionExists() throws GeneralException {
+    public void whenCreateBadgeWithNotExistingUser_thenReturnFalse() throws GeneralException {
         when(badgeService.convertBadgeDTOToBadge(testDTO)).thenReturn(validBadge);
-        when(userServiceMock.findUserByTokenAuth(token)).thenReturn(badgeCreator);
-        when(badgeService.saveBadgeIntoDatabase(validBadge, badgeCreator)).thenReturn(null);
-        //doThrow(new GeneralException()).when(badgeService.saveBadgeIntoDatabase(validBadge, badgeCreator));
-        //        //        //when(mock.isOk()).thenThrow(exception);
-        boolean isCreated = badgeService.createBadge(testDTO,token);
-        //assertFalse(badgeService.createBadge(testDTO,token));
-        assertEquals(false, isCreated);
+        when(userServiceMock.findUserByTokenAuth(badToken)).thenReturn(null);
+
+        assertFalse(badgeService.createBadge(testDTO, token));
     }
 }
 
