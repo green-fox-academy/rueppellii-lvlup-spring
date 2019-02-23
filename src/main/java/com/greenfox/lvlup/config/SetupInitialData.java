@@ -14,14 +14,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.activation.DataSource;
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 @Component
-@Profile(value = {"dev", "prod"})
+@Profile(value = {"dev", "prod", "test"})
 public class SetupInitialData implements CommandLineRunner {
     private BadgeRepository badgeRepository;
     private BadgeLevelRepository levelRepository;

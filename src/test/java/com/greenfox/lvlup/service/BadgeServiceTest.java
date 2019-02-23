@@ -6,24 +6,15 @@ import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import org.modelmapper.ModelMapper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.Assert.*;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -54,8 +45,6 @@ public class BadgeServiceTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        //this is done by @InjectMocks annotation
-        // badgeService = new BadgeService(badgeRepositoryMock, modelMapperMock,userServiceMock);
     }
 
     @Test
@@ -90,7 +79,7 @@ public class BadgeServiceTest {
     @Test
     public void saveBadgeIntoDatabase() throws Exception {
         when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(null);
-       //it is the responsibility of the method to set badgeCreator as User to validBadge2
+        //it is the responsibility of the method to set badgeCreator as User to validBadge2
         //so if the assertation is ok, then it went well
         badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
         assertEquals("Test Elek", validBadge2.getUser().getName());

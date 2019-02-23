@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.greenfox.lvlup.util.Converter.stringify;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -25,9 +24,6 @@ public class AdminControllerTest {
     String token = "TestToken123";
     BadgeDTO validBadgeDto = new BadgeDTO("2.4", "Test badge", "general");
     BadgeDTO invalidBadgeDto = new BadgeDTO("2.3", "", "general");
-    // long id = 1;
-    // User testBadgeCreator = new User("TestUser creating new badge");
-    //Badge validBadge = new Badge("2.3", "Test badge", "general");*/
 
     @Autowired
     private MockMvc mockMvc;

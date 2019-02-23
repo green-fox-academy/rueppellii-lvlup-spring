@@ -2,25 +2,26 @@ package com.greenfox.lvlup.integration;
 
 import com.greenfox.lvlup.LvlupApplication;
 import com.greenfox.lvlup.model.dto.library.BadgeDTO;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 import static com.greenfox.lvlup.util.Converter.stringify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = LvlupApplication.class)
-@WebAppConfiguration
+@ActiveProfiles("test")
+@AutoConfigureMockMvc
+
+
 public class CreateBadgeIntegrationTest {
     String token = "token123";
     String invalidToken = "TestToken123";
@@ -29,14 +30,7 @@ public class CreateBadgeIntegrationTest {
     BadgeDTO invalidBadgeDto = new BadgeDTO("2.3", "", "general");
 
     @Autowired
-    private WebApplicationContext context;
-
     private MockMvc mockMvc;
-
-    @Before
-    public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
 
     @Test
     public void whenAddBadgeValidRequest_thenReturns201Created() throws Exception {
