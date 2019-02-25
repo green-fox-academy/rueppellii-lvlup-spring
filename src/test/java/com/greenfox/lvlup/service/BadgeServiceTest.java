@@ -73,15 +73,15 @@ public class BadgeServiceTest {
     public void whenFindBadgeByNameAndVersionWithNotExistingBadgeVersion_thenReturnNull() {
         when(badgeRepositoryMock.findBadgeByNameAndVersion(anyString(), anyString())).thenReturn(null);
         Badge emptyBadge = badgeService.findBadgeByNameAndVersion(validBadge);
+
         assertNull(emptyBadge);
     }
 
     @Test
     public void saveBadgeIntoDatabase() throws Exception {
         when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(null);
-        //it is the responsibility of the method to set badgeCreator as User to validBadge2
-        //so if the assertation is ok, then it went well
         badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
+
         assertEquals("Test Elek", validBadge2.getUser().getName());
     }
 
@@ -101,10 +101,9 @@ public class BadgeServiceTest {
 
     @Test
     public void whenCreateBadgeWithNotExistingUser_thenReturnFalse() throws GeneralException {
-        when(badgeService.convertBadgeDTOToBadge(testDTO)).thenReturn(validBadge);
-        when(userServiceMock.findUserByTokenAuth(badToken)).thenReturn(null);
+       when(userServiceMock.findUserByTokenAuth(badToken)).thenReturn(null);
 
-        assertFalse(badgeService.createBadge(testDTO, token));
+        assertFalse(badgeService.createBadge(testDTO, badToken));
     }
 }
 

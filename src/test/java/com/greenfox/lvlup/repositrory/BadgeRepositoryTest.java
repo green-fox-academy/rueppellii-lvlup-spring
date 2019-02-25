@@ -21,6 +21,7 @@ public class BadgeRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
+
     private Badge validBadge1;
     private Badge validBadge2;
     private Badge validBadge3;
