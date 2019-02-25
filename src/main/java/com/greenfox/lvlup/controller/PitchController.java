@@ -15,17 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PitchController {
 
-  private PitchSetDTO pitchSetDTO = new PitchSetDTO();
-
   @Autowired
   PitchServiceImpl service;
-
-  @GetMapping("/pitches")
-  public ResponseEntity getPitches(@RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
-    if (token != null && !token.equals("")) {
-      return new ResponseEntity<>(pitchSetDTO, HttpStatus.OK);
-    } else throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
-  }
 
   @PostMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "userTokenAuth") String token,
@@ -36,7 +27,7 @@ public class PitchController {
     return new ResponseEntity(new SuccessfulQuery("Success"), HttpStatus.CREATED);
   }
 
-  @GetMapping("/pitches-test")
+  @GetMapping("/pitches")
   public ResponseEntity getPitchesTest(@RequestHeader(value = "userTokenAuth", required = false) String token, @RequestParam long id) throws GeneralException {
     if (token != null && !token.equals("")) {
       return new ResponseEntity<>(service.getUserPitchById(id), HttpStatus.OK);
