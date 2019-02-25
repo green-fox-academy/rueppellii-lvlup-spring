@@ -26,7 +26,7 @@ public class UserService {
   }
 
   public User findUserByTokenAuth(String tokenAuth) throws GeneralException {
-    Optional<User> user = repo.findByTokenAuth(tokenAuth);
+    Optional<User> user = repository.findByTokenAuth(tokenAuth);
     if(user.isPresent()) {
       return user.get();
     }
