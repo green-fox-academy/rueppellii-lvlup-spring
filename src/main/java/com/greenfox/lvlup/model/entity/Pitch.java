@@ -1,22 +1,22 @@
 package com.greenfox.lvlup.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pitch {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
+  @CreationTimestamp
   private Date created;
   private int oldLevel;
   private int pitchedLevel;

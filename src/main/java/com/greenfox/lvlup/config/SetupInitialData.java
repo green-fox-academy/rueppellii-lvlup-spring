@@ -105,7 +105,7 @@ public class SetupInitialData implements CommandLineRunner {
         reviewRepository.save(review7);
         reviewRepository.save(review8);
         Pitch pitch1 = new Pitch(new Date(), 2, 3, "I was working abroad for six years, so I can speak english very well. Pls improve my badge level to 3.", user1, badge2);
-        Pitch pitch2 = new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement. I can create improved definition / accountibility / documentation and communicate it to the team", user1, badge1);
+        Pitch pitch2 = new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement. I can create improved definition ", user1, badge1);
         Pitch pitch3 = new Pitch(new Date(), 1, 3, "I proactively seek feedback on projects or my general work and choose how to integrate it.", user2, badge3);
         Pitch pitch4 = new Pitch(new Date(), 4, 5, "When I have a problem, I usually let you know by expressing it clearly instead of keeping to myself", user3, badge4);
         Pitch pitch5 = new Pitch(new Date(), 2, 3, "I improved in React, Redux, basic JS, NodeJS, Express and in LowDB, pls give me more money", user4, badge1);

@@ -2,11 +2,12 @@ package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
-import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
+import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.BadgeRepository;
 import com.greenfox.lvlup.repositrory.PitchRepository;
+import com.greenfox.lvlup.repositrory.ReviewRepository;
 import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,16 @@ public class PitchService {
   private PitchRepository repository;
   private UserRepository userRepository;
   private BadgeRepository badgeRepository;
+  private ReviewRepository reviewRepository;
 
   @Autowired
-  public PitchService(PitchRepository repository, ModelMapper mapper, UserRepository userRepository, BadgeRepository badgeRepository) {
+  public PitchService(PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
+                      BadgeRepository badgeRepository, ReviewRepository reviewRepository) {
     this.mapper = mapper;
     this.repository = repository;
     this.userRepository = userRepository;
     this.badgeRepository = badgeRepository;
+    this.reviewRepository = reviewRepository;
   }
 
   public List<PitchDto> getUserPitchById(long id) {
@@ -58,30 +62,24 @@ public class PitchService {
     repository.save(convertPitchDtoToEntity(pitchDto));
   }
 
-  private PitchDto convertPitchEntityToDto(Pitch pitch){
-    PitchDto pitchDto = new PitchDto();
-    mapper.map(pitch, pitchDto);
-    // not ready!!
-    return pitchDto;
-  }
-
   private Pitch convertPitchDtoToEntity(PitchDto pitchDto) {
     Pitch pitch = new Pitch();
     mapper.map(pitchDto, pitch);
     pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
-    pitch.setCreated(pitchDto.getTimestamp());
     pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
-
-    pitch.setReviews(convertSetToList(pitchDto.getReviews()));
+    pitch.setReviews(convertSetToList(pitchDto, pitch));
     return pitch;
   }
 
-  private List<Review> convertSetToList(Set<ReviewDto> set) {
+  private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) {
     List<Review> list = new ArrayList();
     Review placeholder = new Review();
-    for (ReviewDto dto : set) {
+    for (ReviewDto dto : pitchDto.getReviews()) {
       mapper.map(dto, placeholder);
-      placeholder.setUser(userRepository.findUserByName(dto.getName()));
+      User user =  userRepository.findUserByName(dto.getName());
+      placeholder.setUser(user);
+      placeholder.setPitch(pitch);
+      reviewRepository.save(placeholder);
       list.add(placeholder);
     }
     return list;
