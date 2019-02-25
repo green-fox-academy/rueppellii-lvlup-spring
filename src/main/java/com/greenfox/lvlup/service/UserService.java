@@ -16,10 +16,14 @@ import java.util.Set;
 
 @Service
 public class UserService {
-  @Autowired
-  UserRepository repo;
+  private UserRepository repository;
+  private ModelMapper mapper;
 
-  ModelMapper mapper = new ModelMapper();
+  @Autowired
+  public UserService(UserRepository repository, ModelMapper mapper) {
+    this.repository = repository;
+    this.mapper = mapper;
+  }
 
   public User findUserByTokenAuth(String tokenAuth) throws GeneralException {
     Optional<User> user = repo.findByTokenAuth(tokenAuth);
@@ -30,7 +34,7 @@ public class UserService {
   }
 
   public UserDto getUserDetailsById(long id) {
-    User user = this.repo.findById(id).orElse(null);
+    User user = this.repository.findById(id).orElse(null);
     UserDto dto = mapper.map(user, UserDto.class);
     dto.setBadges(getUserBadgeDTOs(user));
     return dto;
@@ -38,9 +42,9 @@ public class UserService {
 
   public Set<UserBadgeDTO> getUserBadgeDTOs(User user) {
     Set<UserBadgeDTO> badgeSet = new HashSet<>();
-    for (BadgeLevel bl :
-        user.getBadgeLevels()) {
+    for (BadgeLevel bl : user.getBadgeLevels()) {
       UserBadgeDTO dto = mapper.map(bl, UserBadgeDTO.class);
+      dto.setName(bl.getBadge().getName());
       badgeSet.add(dto);
     }
     return badgeSet;

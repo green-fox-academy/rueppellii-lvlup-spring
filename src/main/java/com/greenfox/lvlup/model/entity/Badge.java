@@ -1,7 +1,11 @@
 package com.greenfox.lvlup.model.entity;
 
+<<<<<<< HEAD
 import org.hibernate.annotations.CreationTimestamp;
 
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+>>>>>>> Dev
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,11 +20,18 @@ public class Badge {
     private String version;
     private String name;
     private String tag;
+<<<<<<< HEAD
     @CreationTimestamp
     private Date dateOfCreation;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge")
+=======
+    @OneToMany(mappedBy = "badge")
+    @JsonIgnore
+>>>>>>> Dev
     private List<BadgeLevel> levels;
+    @OneToMany(mappedBy = "badge")
+    private List<Pitch> pitches;
 
     @ManyToOne
     private User user;

@@ -1,12 +1,17 @@
 package com.greenfox.lvlup.model;
 
 import com.greenfox.lvlup.model.mockdto.HolderDTO;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PitchDTO {
-
+  @Id
+  @GeneratedValue
+  private long id;
   @NotNull(message = "Timestamp is required.")
   String timestamp;
   @NotNull(message = "Username is required")
@@ -21,6 +26,7 @@ public class PitchDTO {
   String pitchMessage;
   @NotNull(message = "Holders are required.")
   List<HolderDTO> holders;
+
 
   public PitchDTO(@NotNull(message = "Timestamp is required.") String timestamp, @NotNull(message = "Username is required") String username,
                   @NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,

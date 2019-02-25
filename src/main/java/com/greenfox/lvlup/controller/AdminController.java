@@ -2,10 +2,7 @@ package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
-import com.greenfox.lvlup.model.entity.Badge;
-import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.service.BadgeService;
-import com.greenfox.lvlup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import org.springframework.http.HttpStatus;
