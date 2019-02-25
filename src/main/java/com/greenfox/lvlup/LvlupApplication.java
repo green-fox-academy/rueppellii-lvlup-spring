@@ -9,3 +9,4 @@ public class LvlupApplication {
         SpringApplication.run(LvlupApplication.class, args);
     }
 }
+
