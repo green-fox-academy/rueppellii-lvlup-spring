@@ -67,5 +67,4 @@ public class UserService {
     List<BadgeLevel> badgeLevels = badgeLevelRepository.findAllByHoldersContaining(user);
     return badgeLevels;
   }
-
 }
