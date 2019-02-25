@@ -1,10 +1,11 @@
-package com.greenfox.lvlup.service;
+package com.greenfox.lvlup.service.implementation;
 
 import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserDto;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.UserRepository;
+import com.greenfox.lvlup.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
   private UserRepository repository;
   private ModelMapper mapper;
 
   @Autowired
-  public UserService(UserRepository repository, ModelMapper mapper) {
+  public UserServiceImpl(UserRepository repository, ModelMapper mapper) {
     this.repository = repository;
     this.mapper = mapper;
   }

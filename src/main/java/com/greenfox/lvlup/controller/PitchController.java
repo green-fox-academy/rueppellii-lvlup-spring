@@ -5,7 +5,7 @@ import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
 import javax.validation.Valid;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
-import com.greenfox.lvlup.service.PitchService;
+import com.greenfox.lvlup.service.implementation.PitchServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +18,7 @@ public class PitchController {
   private PitchSetDTO pitchSetDTO = new PitchSetDTO();
 
   @Autowired
-  PitchService service;
+  PitchServiceImpl service;
 
   @GetMapping("/pitches")
   public ResponseEntity getPitches(@RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {

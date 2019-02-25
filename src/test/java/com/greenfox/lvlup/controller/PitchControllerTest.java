@@ -3,7 +3,7 @@ package com.greenfox.lvlup.controller;
 import com.greenfox.lvlup.model.mockdto.MockingElements;
 import com.greenfox.lvlup.model.mockdto.MockingElementsForPitchPutDTO;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
-import com.greenfox.lvlup.service.PitchService;
+import com.greenfox.lvlup.service.implementation.PitchServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PitchControllerTest {
 
   @MockBean
-  PitchService service;
-
+  PitchServiceImpl service;
 
   MockingElements elements = new MockingElements();
   MockingElementsForPitchPutDTO pitchPutDTOElements = new MockingElementsForPitchPutDTO();

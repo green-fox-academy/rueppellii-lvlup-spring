@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.model.dto.user.UserDto;
-import com.greenfox.lvlup.service.UserService;
+import com.greenfox.lvlup.service.implementation.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/user")
 public class UserController {
   @Autowired
-  UserService service;
+  UserServiceImpl service;
 
   @GetMapping
   public ResponseEntity<UserDto> getUserDetails(@RequestParam long id, @RequestHeader String userTokenAuth) {
