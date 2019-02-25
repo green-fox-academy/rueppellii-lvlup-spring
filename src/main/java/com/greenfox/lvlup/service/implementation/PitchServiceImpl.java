@@ -18,7 +18,6 @@ import java.util.Set;
 
 
 @Service
-//@Slf4j
 public class PitchServiceImpl {
   private PitchRepository repository;
   private ModelMapper mapper;
@@ -29,13 +28,11 @@ public class PitchServiceImpl {
     this.mapper = mapper;
   }
 
-
   public List<PitchDto> getUserPitchById(long id) throws GeneralException {
     List<Pitch> pitchesList;
     try {
       pitchesList = repository.findPitchesByUserId(id);
     } catch (Exception ex) {
-      //log.error("Failure in reading Pitch record with message={}", ex.getMessage());
       throw new GeneralException("User not found with that specified id.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
