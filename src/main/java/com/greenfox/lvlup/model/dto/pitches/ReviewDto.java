@@ -2,16 +2,16 @@ package com.greenfox.lvlup.model.dto.pitches;
 
 
 public class ReviewDto {
-  private String name;
+  private String pitcherName;
   private String message;
   private boolean pitchStatus;
 
-  public String getName() {
-    return name;
+  public String getPitcherName() {
+    return pitcherName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setPitcherName(String pitcherName) {
+    this.pitcherName = pitcherName;
   }
 
   public String getMessage() {

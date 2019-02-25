@@ -41,7 +41,7 @@ public class PitchService {
     Set<ReviewDto> reviewSet = new HashSet<>();
     for (Review review: pitch.getReviews()) {
       ReviewDto dto = mapper.map(review, ReviewDto.class);
-      dto.setName(review.getUser().getName());
+      dto.setPitcherName(review.getUser().getName());
       reviewSet.add(dto);
     }
     return reviewSet;
