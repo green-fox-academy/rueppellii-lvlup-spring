@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class Review {
   private boolean pitchStatus;
   @ManyToOne
   private User user;
-  @ManyToOne
+  @ManyToOne (cascade={ALL})
   private Pitch pitch;
 
   public Review(String message, boolean pitchStatus) {
