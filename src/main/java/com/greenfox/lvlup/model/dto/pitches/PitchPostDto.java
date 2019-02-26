@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class PitchPostDto extends PitchDto {
-    @NotEmpty(message = "Username name is required.")
+    @NotEmpty(message = "Username is required.")
     private String userName;
     @NotEmpty(message = "Badge name is required.")
     private String badgeName;
