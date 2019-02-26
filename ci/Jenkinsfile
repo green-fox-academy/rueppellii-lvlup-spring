@@ -1,0 +1,102 @@
+pipeline {
+  agent any
+  environment {
+    registry = "foxyfox/lvlup-spring"
+    registryCredential = 'docker-technical-foxyfox'
+    dockerImage = ''
+    Staging_IP = '13.53.125.238'
+    Production_IP = '13.53.84.143'
+
+  }
+  stages {
+    stage('Build') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'Staging'
+          branch 'Dev'
+        }
+      }
+      steps {
+        sh 'chmod +x ../gradlew'
+        sh '../gradlew bootJar'
+      }
+    }
+    stage('Test') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'Staging'
+          branch 'Dev'
+        }
+      }
+      steps {
+        sh '../gradlew test'
+      }
+    }
+    stage('Build and push docker image / Staging') {
+      when {
+        anyOf {
+          branch 'Staging'
+        }
+      }
+      steps {
+        script {
+          dockerImage = docker.build registry + ":staging"
+        }
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Build and push docker image / Production') {
+      when {
+        anyOf {
+          branch 'master'
+        }
+      }
+      steps {
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+            dockerImage.push('latest')
+          }
+        }
+      }
+    }
+    stage('Deploy Staging') {
+      when {
+        branch 'Staging'
+      }
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
+            sh "sh deploy.sh $KEY_FILE ec2-user@$Staging_IP staging"
+        }
+      }
+    }
+    stage('Deploy Production') {
+      when {
+        branch 'master'
+      }
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
+            sh "sh deploy.sh $KEY_FILE ec2-user@$Production_IP latest"
+        }
+      }
+    }
+  }
+  post {
+      failure {
+        slackSend (
+          channel: '#rueppellii-jenkins',
+          color: 'danger',
+          message: "${currentBuild.fullDisplayName} has died miserably. (<${env.BUILD_URL}|Open>)"
+        )
+      }
+    }
+}
