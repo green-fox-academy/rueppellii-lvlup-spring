@@ -1,13 +1,13 @@
 package com.greenfox.lvlup.model.dto.pitches;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PitchDto {
   private long id;
   private Date timestamp;

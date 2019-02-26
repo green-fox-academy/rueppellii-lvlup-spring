@@ -4,7 +4,7 @@ import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.GeneralMessage;
 import javax.validation.Valid;
 
-import com.greenfox.lvlup.model.dto.pitches.PitchPutDto;
+import com.greenfox.lvlup.model.dto.pitches.PitchPostDto;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import com.greenfox.lvlup.service.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class PitchController {
 
   @PostMapping(value = "/api/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "Authentication") String token,
-      @Valid @RequestBody PitchPutDto pitchDto) {
+      @Valid @RequestBody PitchPostDto pitchDto) {
     service.savePitch(pitchDto);
     return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
   }

@@ -5,10 +5,7 @@ import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
 import com.greenfox.lvlup.model.entity.User;
-import com.greenfox.lvlup.repositrory.BadgeRepository;
-import com.greenfox.lvlup.repositrory.PitchRepository;
-import com.greenfox.lvlup.repositrory.ReviewRepository;
-import com.greenfox.lvlup.repositrory.UserRepository;
+import com.greenfox.lvlup.repositrory.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +22,18 @@ public class PitchService {
   private UserRepository userRepository;
   private BadgeRepository badgeRepository;
   private ReviewRepository reviewRepository;
+  private BadgeLevelRepository badgeLevelRepository;
 
   @Autowired
   public PitchService(PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
-                      BadgeRepository badgeRepository, ReviewRepository reviewRepository) {
+                      BadgeRepository badgeRepository, ReviewRepository reviewRepository,
+                      BadgeLevelRepository badgeLevelRepository) {
     this.mapper = mapper;
     this.repository = repository;
     this.userRepository = userRepository;
     this.badgeRepository = badgeRepository;
     this.reviewRepository = reviewRepository;
+    this.badgeLevelRepository = badgeLevelRepository;
   }
 
   public List<PitchDto> getUserPitchById(long id) {
@@ -68,6 +68,8 @@ public class PitchService {
     pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
     pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setReviews(convertSetToList(pitchDto, pitch));
+    pitch.setBadgeLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
+        (pitchDto.getOldLevel(), badgeRepository.findBadgeByName(pitchDto.getBadgeName())));
     return pitch;
   }
 
@@ -76,8 +78,7 @@ public class PitchService {
     Review placeholder = new Review();
     for (ReviewDto dto : pitchDto.getReviews()) {
       mapper.map(dto, placeholder);
-      User user =  userRepository.findUserByName(dto.getName());
-      placeholder.setUser(user);
+      placeholder.setUser(userRepository.findUserByName(dto.getName()));
       placeholder.setPitch(pitch);
       reviewRepository.save(placeholder);
       list.add(placeholder);

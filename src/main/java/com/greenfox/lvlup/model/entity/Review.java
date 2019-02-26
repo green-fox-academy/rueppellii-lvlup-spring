@@ -1,6 +1,5 @@
 package com.greenfox.lvlup.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,6 @@ public class Review {
   @ManyToOne
   private User user;
   @ManyToOne
-  @JsonIgnore
   private Pitch pitch;
 
   public Review(String message, boolean pitchStatus) {
