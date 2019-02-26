@@ -31,17 +31,19 @@ resource "aws_security_group" "security_group" {
 
 data "template_file" "init_staging" {
   template = "${file("${path.module}/init.tpl")}"
+
   vars = {
     profile = "dev"
-    image = "staging"
+    image   = "staging"
   }
 }
 
 data "template_file" "init_prod" {
   template = "${file("${path.module}/init.tpl")}"
+
   vars = {
     profile = "production"
-    image = "latest"
+    image   = "latest"
   }
 }
 
@@ -70,9 +72,9 @@ resource "aws_instance" "lvlup_prod" {
   }
 
   provisioner "remote-exec" {
-  inline = [
-    "cat <<FILE > /init.sh ${template_file.init_prod.rendered}} FILE"
-    "chmod +x /init.sh",
+    inline = [
+      "cat <<FILE > /init.sh ${data.template_file.init_prod.rendered}} FILE",
+      "chmod +x /init.sh",
     ]
   }
 
@@ -80,8 +82,6 @@ resource "aws_instance" "lvlup_prod" {
     Name = "SpringLvlUp_Prod"
   }
 }
-
-
 
 resource "aws_instance" "lvlup_stage" {
   ami           = "${var.aws_ami}"
@@ -108,9 +108,9 @@ resource "aws_instance" "lvlup_stage" {
   }
 
   provisioner "remote-exec" {
-  inline = [
-    "cat <<FILE > /init.sh ${template_file.init_staging.rendered}} FILE"
-    "chmod +x /init.sh",
+    inline = [
+      "cat <<FILE > /init.sh ${data.template_file.init_staging.rendered}} FILE",
+      "chmod +x /init.sh",
     ]
   }
 
