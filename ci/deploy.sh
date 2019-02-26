@@ -1,3 +1,4 @@
+set -e
 ssh -i $1 $2
 sudo docker stop lvlup
 sudo docker run \

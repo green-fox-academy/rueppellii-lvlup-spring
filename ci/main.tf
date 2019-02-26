@@ -29,6 +29,22 @@ resource "aws_security_group" "security_group" {
   }
 }
 
+data "template_file" "init_staging" {
+  template = "${file("${path.module}/init.tpl")}"
+  vars = {
+    profile = "dev"
+    image = "staging"
+  }
+}
+
+data "template_file" "init_prod" {
+  template = "${file("${path.module}/init.tpl")}"
+  vars = {
+    profile = "production"
+    image = "latest"
+  }
+}
+
 resource "aws_instance" "lvlup_prod" {
   ami           = "${var.aws_ami}"
   instance_type = "${var.aws_instance_type}"
@@ -53,10 +69,19 @@ resource "aws_instance" "lvlup_prod" {
     ]
   }
 
+  provisioner "remote-exec" {
+  inline = [
+    "cat <<FILE > /init.sh ${template_file.init_prod.rendered}} FILE"
+    "chmod +x /init.sh",
+    ]
+  }
+
   tags {
     Name = "SpringLvlUp_Prod"
   }
 }
+
+
 
 resource "aws_instance" "lvlup_stage" {
   ami           = "${var.aws_ami}"
@@ -79,6 +104,13 @@ resource "aws_instance" "lvlup_stage" {
       "sudo yum update -y",
       "sudo yum install docker -y",
       "sudo service docker start",
+    ]
+  }
+
+  provisioner "remote-exec" {
+  inline = [
+    "cat <<FILE > /init.sh ${template_file.init_staging.rendered}} FILE"
+    "chmod +x /init.sh",
     ]
   }
 
