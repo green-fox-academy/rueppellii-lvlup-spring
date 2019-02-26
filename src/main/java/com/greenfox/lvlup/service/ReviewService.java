@@ -22,6 +22,10 @@ public class ReviewService {
         this.mapper = mapper;
     }
 
+    public void saveReview(Review review) {
+        reviewRepository.save(review);
+    }
+
     public void updateReview(ReviewDTO reviewDto) throws GeneralException {
         reviewRepository.save(convertReviewDTOToEntityForPut(reviewDto));
     }
