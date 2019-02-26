@@ -1,8 +1,6 @@
 package com.greenfox.lvlup.model.dto.pitches;
 
 
-import com.greenfox.lvlup.model.entity.Review;
-
 import java.util.Date;
 import java.util.Set;
 
@@ -14,7 +12,7 @@ public class PitchDto {
   private int oldLevel;
   private int pitchedLevel;
   private String pitchedMessage;
-  private Set<ReviewDto> reviews;
+  private Set<ReviewDTO> reviews;
 
   public long getId() {
     return id;
@@ -72,11 +70,11 @@ public class PitchDto {
     this.pitchedMessage = pitchedMessage;
   }
 
-  public Set<ReviewDto> getReviews() {
+  public Set<ReviewDTO> getReviews() {
     return reviews;
   }
 
-  public void setReviews(Set<ReviewDto> reviews) {
+  public void setReviews(Set<ReviewDTO> reviews) {
     this.reviews = reviews;
   }
 }

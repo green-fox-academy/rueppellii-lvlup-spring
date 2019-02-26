@@ -2,7 +2,7 @@ package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.exception.SuccessfulQuery;
-import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
+import com.greenfox.lvlup.model.dto.pitches.ReviewDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import javax.validation.Valid;
 @RestController
 public class ReviewController {
 
-    private ReviewDto reviewDto;
+    private ReviewDTO reviewDto;
 
     @PutMapping(value = "/review", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> amendReview(@RequestHeader(value = "userTokenAuth", required = false) String token,
-                                              @Valid @RequestBody ReviewDto reviewDto) throws Exception {
+                                              @Valid @RequestBody ReviewDTO reviewDto) throws Exception {
         if (token.isEmpty() || token == null) {
             throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
         }

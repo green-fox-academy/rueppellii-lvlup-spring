@@ -1,7 +1,7 @@
 package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.dto.pitches.PitchDto;
-import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
+import com.greenfox.lvlup.model.dto.pitches.ReviewDTO;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
 import com.greenfox.lvlup.repositrory.PitchRepository;
@@ -37,10 +37,10 @@ public class PitchService {
     return dtoList;
   }
 
-  private Set<ReviewDto> setReviews(Pitch pitch) {
-    Set<ReviewDto> reviewSet = new HashSet<>();
+  private Set<ReviewDTO> setReviews(Pitch pitch) {
+    Set<ReviewDTO> reviewSet = new HashSet<>();
     for (Review review: pitch.getReviews()) {
-      ReviewDto dto = mapper.map(review, ReviewDto.class);
+      ReviewDTO dto = mapper.map(review, ReviewDTO.class);
       dto.setPitcherName(review.getUser().getName());
       reviewSet.add(dto);
     }
