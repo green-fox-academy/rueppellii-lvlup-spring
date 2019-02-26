@@ -6,7 +6,9 @@ pipeline {
     dockerImage = ''
     Staging_IP = '13.53.125.238'
     Production_IP = '13.53.84.143'
-
+    DEV_DB_USERNAME = 'sa'
+    DEV_DB_PASSWORD = ''
+    DEV_DB_URL = 'jdbc:h2:mem:testdb'
   }
   stages {
     stage('Build') {
