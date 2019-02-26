@@ -13,7 +13,7 @@ public class ReviewDTO {
   private String badgeName;
   @NotEmpty(message = "ReviewDTO message is required")
   private String message;
-  @NotEmpty(message = "ReviewDTO pitchStatus is required")
+  @NotNull(message = "ReviewDTO pitchStatus is required")
   private boolean pitchStatus;
 
   public ReviewDTO() {
