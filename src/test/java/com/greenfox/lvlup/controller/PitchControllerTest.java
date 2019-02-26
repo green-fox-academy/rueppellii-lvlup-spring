@@ -38,7 +38,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getValidPitchPostDTO())))
@@ -59,7 +59,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeValidHeaderAndBodyCheckMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getValidPitchPostDTO())))
@@ -83,7 +83,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getValidPitchPostDTO())))
         .andExpect(status().isUnsupportedMediaType());
@@ -109,7 +109,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidTokenCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
         .content(stringify(elements.getValidPitchPostDTO())))
@@ -129,7 +129,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidTokenCheckErrorMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", "")
         .content(stringify(elements.getValidPitchPostDTO())))
@@ -149,7 +149,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidRequestBodyCheckStatus2() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getInvalidPitchPostDTO2())))
@@ -199,7 +199,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getInvalidPitchPostDTO5())))
@@ -219,7 +219,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage2() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getInvalidPitchPostDTO2())))
@@ -239,7 +239,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeEmptyRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getEmptyPitchPostDTO5())))
@@ -259,7 +259,7 @@ public class PitchControllerTest {
 
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage1() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getInvalidPitchPostDTO1())))
