@@ -78,8 +78,10 @@ pipeline {
     }
     stage('Deploy Staging') {
       when {
-        branch 'Staging'
-        branch 'jenskins'
+        anyOf {
+          branch 'Staging'
+          branch 'jenskins'
+        }
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
