@@ -5,6 +5,7 @@ import com.greenfox.lvlup.exception.GeneralMessage;
 import javax.validation.Valid;
 
 import com.greenfox.lvlup.model.dto.pitches.PitchPostDto;
+import com.greenfox.lvlup.model.mockdto.PitchPutDTO;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import com.greenfox.lvlup.service.PitchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class PitchController {
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "Authentication") String token,
       @Valid @RequestBody PitchPostDto pitchDto) {
     service.savePitch(pitchDto);
+    return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
+  }
+
+  @PutMapping(value = "/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<Object> modifyPitch(@RequestHeader(value = "userTokenAuth", required = false) String token,
+                                            @Valid @RequestBody PitchPutDTO pitchPutDTO) throws Exception {
+    if (token.isEmpty() || token == null) {
+      throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
+    }
     return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
   }
 
