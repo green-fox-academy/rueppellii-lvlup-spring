@@ -263,7 +263,7 @@ public class PitchControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
         .content(stringify(elements.getInvalidPitchPostDTO1())))
-        .andExpect(jsonPath("$.errors").value("PitchDto name is required."))
+        .andExpect(jsonPath("$.errors").value("PitchPostDTO name is required."))
         .andReturn();
   }
 

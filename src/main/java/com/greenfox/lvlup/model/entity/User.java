@@ -12,69 +12,90 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
-  private String name;
-  private String tokenAuth;
-  private String pic;
-  @ManyToMany(mappedBy = "holders")
-  @JsonIgnore
-  private Set<BadgeLevel> badgeLevels = new HashSet<>();
-  @OneToMany (mappedBy = "user")
-  @JsonIgnore
-  private List<Pitch> pitches;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private String name;
+    private String tokenAuth;
+    private String pic;
 
-  public User() {
-  }
+    @ManyToMany(mappedBy = "holders")
+    @JsonIgnore
+    private Set<BadgeLevel> badgeLevels = new HashSet<>();
 
-  public User(String name, String tokenAuth, String pic) {
-    this.name = name;
-    this.tokenAuth = tokenAuth;
-    this.pic = pic;
-  }
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Pitch> pitches;
 
-  public User(String name) {
-    this.name = name;
-  }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Badge> createdBadges;
 
-  public long getId() {
-    return id;
-  }
+    public User() {
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public User(String name, String tokenAuth, String pic) {
+        this.name = name;
+        this.tokenAuth = tokenAuth;
+        this.pic = pic;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public User(String name) {
+        this.name = name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public String getTokenAuth() {
-    return tokenAuth;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public void setTokenAuth(String tokenAuth) {
-    this.tokenAuth = tokenAuth;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getPic() {
-    return pic;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setPic(String pic) {
-    this.pic = pic;
-  }
+    public String getTokenAuth() {
+        return tokenAuth;
+    }
 
-  public Set<BadgeLevel> getBadgeLevels() {
-    return badgeLevels;
-  }
+    public void setTokenAuth(String tokenAuth) {
+        this.tokenAuth = tokenAuth;
+    }
 
-  public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
-    this.badgeLevels = badgeLevels;
-  }
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public Set<BadgeLevel> getBadgeLevels() {
+        return badgeLevels;
+    }
+
+    public void setBadgeLevels(Set<BadgeLevel> badgeLevels) {
+        this.badgeLevels = badgeLevels;
+    }
+
+    public List<Badge> getCreatedBadges() {
+        return createdBadges;
+    }
+
+    public void setCreatedBadges(List<Badge> createdBadges) {
+        this.createdBadges = createdBadges;
+    }
+
+    public List<Pitch> getPitches() {
+        return pitches;
+    }
+
+    public void setPitches(List<Pitch> pitches) {
+        this.pitches = pitches;
+    }
 }
