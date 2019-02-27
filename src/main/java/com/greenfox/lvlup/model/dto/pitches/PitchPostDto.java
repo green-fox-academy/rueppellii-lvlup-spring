@@ -16,9 +16,9 @@ public class PitchPostDto extends PitchDto {
     @NotEmpty(message = "Badge name is required.")
     private String badgeName;
     @NotNull(message = "Old level is required.")
-    private int oldLevel;
+    private Integer oldLevel;
     @NotNull(message = "Pitched level is required.")
-    private int pitchedLevel;
+    private Integer pitchedLevel;
     @NotEmpty(message = "Pitch message is required.")
     private String pitchedMessage;
     @NotEmpty(message = "Reviewers are required.")

@@ -13,8 +13,8 @@ public class PitchDto {
   private Date timestamp;
   private String userName;
   private String badgeName;
-  private int oldLevel;
-  private int pitchedLevel;
+  private Integer oldLevel;
+  private Integer pitchedLevel;
   private String pitchedMessage;
   private Set<ReviewDto> reviews;
 }

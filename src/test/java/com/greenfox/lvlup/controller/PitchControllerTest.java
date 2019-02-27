@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.controller;
 
-import com.greenfox.lvlup.model.dto.pitches.PitchPostDto;
-import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
 import com.greenfox.lvlup.model.mockdto.MockingElements;
 import com.greenfox.lvlup.model.mockdto.MockingElementsForPitchPutDTO;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
@@ -14,9 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.greenfox.lvlup.util.Converter.stringify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -156,7 +151,8 @@ public class PitchControllerTest {
         .andExpect(jsonPath("$.error").value("Unauthorized"))
         .andReturn();
   }
-//not working
+
+//passes
   @Test
   public void pitchBadgeInvalidRequestBodyCheckStatus2() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
@@ -226,7 +222,7 @@ public class PitchControllerTest {
         .andExpect(jsonPath("$.errors").value("Name of pitcher is required."))
         .andReturn();
   }
-//does not act as should
+//passes
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage2() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
