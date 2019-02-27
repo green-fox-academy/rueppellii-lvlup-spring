@@ -33,8 +33,11 @@ data "template_file" "init_staging" {
   template = "${file("${path.module}/init.tpl")}"
 
   vars = {
-    profile = "dev"
-    image   = "staging"
+    profile          = "dev"
+    image            = "staging"
+    prod_db_url      = ""
+    prod_db_user     = ""
+    prod_db_password = ""
   }
 }
 
@@ -42,8 +45,11 @@ data "template_file" "init_prod" {
   template = "${file("${path.module}/init.tpl")}"
 
   vars = {
-    profile = "production"
-    image   = "latest"
+    profile          = "production"
+    image            = "latest"
+    prod_db_url      = "${var.prod_db_url}"
+    prod_db_user     = "${var.prod_db_user}"
+    prod_db_password = "${var.prod_db_password}"
   }
 }
 
@@ -73,7 +79,7 @@ resource "aws_instance" "lvlup_prod" {
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<FILE > /init.sh ${data.template_file.init_prod.rendered}} FILE",
+      "echo ${data.template_file.init_prod.rendered} > ~/init.sh",
       "chmod +x /init.sh",
     ]
   }

@@ -21,3 +21,15 @@ variable "aws_instance_type" {
 variable "aws_security_group_name" {
   default = "terraform-lvlup-sg"
 }
+
+variable "prod_db_url" {}
+
+variable "prod_db_user" {}
+
+variable "prod_db_password" {}
+
+variable "client_id" {}
+
+variable "client_secret" {}
+
+variable "secret" {}
