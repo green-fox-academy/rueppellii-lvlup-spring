@@ -46,7 +46,7 @@ pipeline {
         }
       }
       steps {
-        sh 'cp /build/libs/lvlup-0.0.1-SNAPSHOT.jar /ci/app.jar'
+        sh 'cp build/libs/lvlup-0.0.1-SNAPSHOT.jar ci/app.jar'
         script {
           dockerImage = docker.build(registry + ":staging", "./ci")
         }
