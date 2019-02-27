@@ -1,3 +1,4 @@
 echo yes > ssh -tt -i $1 $2
-sh ~/init.sh
+chmod 700 ./init.sh
+sudo sh ./init.sh
 exit
