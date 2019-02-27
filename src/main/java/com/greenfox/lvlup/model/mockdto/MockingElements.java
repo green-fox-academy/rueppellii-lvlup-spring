@@ -14,7 +14,6 @@ public class MockingElements {
   private String badgeName = "English speaker";
   private String pitchMessage = "Hello World! My English is bloody gorgeous.";
 
-
   private PitchPostDto dto;
 
   public PitchPostDto getFullPostPitchDto() {
@@ -46,7 +45,6 @@ public class MockingElements {
     return dto2;
   }
 
-
   public PitchPostDto getPitchPostDtoWithoutBadgeName() {
     dto = new PitchPostDto();
 
@@ -62,9 +60,6 @@ public class MockingElements {
     return dto;
   }
 
-
-
-  ///not used for post pitch anymore (by me)
   private PitchPostDTO validPitchPostDTO = new PitchPostDTO(badgeName,
       2,
       3,

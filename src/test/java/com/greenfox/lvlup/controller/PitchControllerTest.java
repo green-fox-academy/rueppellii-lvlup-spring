@@ -28,7 +28,6 @@ public class PitchControllerTest {
   @MockBean
   PitchService service;
 
-
   MockingElements elements = new MockingElements();
   MockingElementsForPitchPutDTO pitchPutDTOElements = new MockingElementsForPitchPutDTO();
   String token = "testToken";
@@ -36,7 +35,6 @@ public class PitchControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-//passes
   @Test
   public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
@@ -58,7 +56,6 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-  //passes
   @Test
   public void pitchBadgeValidHeaderAndBodyCheckMessage() throws Exception {
 
@@ -84,11 +81,10 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-  //passes
   @Test
   public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
-        .header("userTokenAuth", elements.getValidToken())
+        .header("Authentication", elements.getValidToken())
         .content(stringify(elements.getFullPostPitchDto())))
         .andExpect(status().isUnsupportedMediaType());
   }
@@ -104,21 +100,10 @@ public class PitchControllerTest {
   @Test
   public void getPitchesWithCorrectHeader() throws Exception {
     mockMvc.perform(get("/pitches")
-        .header("userTokenAuth", token)
+        .header("Authentication", token)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().string(stringify(pitchSetDTO)))
-        .andReturn();
-  }
-
-// milegyen??
-  @Test
-  public void pitchBadgeInvalidTokenCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/api/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("Authentication", "")
-        .content(stringify(elements.getFullPostPitchDto())))
-        .andExpect(status().isUnauthorized())
         .andReturn();
   }
 
@@ -129,16 +114,6 @@ public class PitchControllerTest {
         .header("userTokenAuth", "")
         .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
         .andExpect(status().isUnauthorized())
-        .andReturn();
-  }
-//ua mint elobb
-  @Test
-  public void pitchBadgeInvalidTokenCheckErrorMessage() throws Exception {
-    this.mockMvc.perform(post("/api/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(jsonPath("$.error").value("Unauthorized"))
         .andReturn();
   }
 
@@ -152,7 +127,6 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-//passes
   @Test
   public void pitchBadgeInvalidRequestBodyCheckStatus2() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
@@ -202,16 +176,6 @@ public class PitchControllerTest {
         .andExpect(status().isBadRequest())
         .andReturn();
   }
-/* I dont think we need this, there is not even Holder field anymore anywhere
-  @Test
-  public void pitchBadgeInvalidRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/api/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchPostDTO5())))
-        .andExpect(jsonPath("$.errors").value("Holders are required."))
-        .andReturn();
-  }*/
 
   @Test
   public void pitchPutWithoutPitcherNameTestMessage() throws Exception {
@@ -222,7 +186,7 @@ public class PitchControllerTest {
         .andExpect(jsonPath("$.errors").value("Name of pitcher is required."))
         .andReturn();
   }
-//passes
+
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage2() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
@@ -243,17 +207,6 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-  /* holders again, we dont have them
-  @Test
-  public void pitchBadgeEmptyRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/api/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getEmptyPitchPostDTO5())))
-        .andExpect(jsonPath("$.errors").value("Holders are required."))
-        .andReturn();
-  }*/
-
   @Test
   public void pitchPutWithoutNewStatusTestMessage() throws Exception {
     this.mockMvc.perform(put("/pitch")
@@ -264,8 +217,6 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-
-// passes
   @Test
   public void pitchBadgeInvalidRequestBodyCheckMessage1() throws Exception {
     this.mockMvc.perform(post("/api/pitch")
