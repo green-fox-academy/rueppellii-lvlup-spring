@@ -80,9 +80,11 @@ public class BadgeServiceTest {
     @Test
     public void saveBadgeIntoDatabase() throws Exception {
         when(badgeService.findBadgeByNameAndVersion(validBadge2)).thenReturn(null);
+        System.out.println(validBadge2.getUser());
         badgeService.saveBadgeIntoDatabase(validBadge2, badgeCreator);
 
         assertEquals("Test Elek", validBadge2.getUser().getName());
+        assertNotNull(validBadge2.getUser());
     }
 
     @Test(expected = GeneralException.class)
