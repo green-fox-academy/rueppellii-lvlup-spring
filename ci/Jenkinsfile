@@ -32,7 +32,6 @@ pipeline {
           branch 'master'
           branch 'Staging'
           branch 'Dev'
-          branch 'jenskins'
         }
       }
       steps {
@@ -43,11 +42,12 @@ pipeline {
       when {
         anyOf {
           branch 'Staging'
+          branch 'jenskins'
         }
       }
       steps {
         script {
-          dockerImage = docker.build registry + ":staging"
+          dockerImage = docker.build(registry + ":staging", "./ci")
         }
         script {
           docker.withRegistry( '', registryCredential ) {
@@ -80,7 +80,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "sh deploy.sh $KEY_FILE ec2-user@$Staging_IP staging"
+            sh "sh deploy.sh $KEY_FILE ec2-user@$Staging_IP"
         }
       }
     }
@@ -90,7 +90,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "sh deploy.sh $KEY_FILE ec2-user@$Production_IP latest"
+            sh "sh deploy.sh $KEY_FILE ec2-user@$Production_IP"
         }
       }
     }
