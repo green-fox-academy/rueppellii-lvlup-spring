@@ -42,7 +42,6 @@ pipeline {
       when {
         anyOf {
           branch 'Staging'
-          branch 'jenskins'
         }
       }
       steps {
@@ -85,7 +84,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "sh deploy.sh $KEY_FILE ec2-user@$Staging_IP"
+            sh "sh ci/deploy.sh $KEY_FILE ec2-user@$Staging_IP"
         }
       }
     }
