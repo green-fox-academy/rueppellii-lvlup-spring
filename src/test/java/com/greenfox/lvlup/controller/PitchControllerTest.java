@@ -100,7 +100,7 @@ public class PitchControllerTest {
   @Test
   public void getPitchesWithCorrectHeader() throws Exception {
     mockMvc.perform(get("/pitches")
-        .header("Authentication", token)
+        .header("userTokenAuth", token)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().string(stringify(pitchSetDTO)))
