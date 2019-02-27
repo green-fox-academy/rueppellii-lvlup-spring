@@ -1,11 +1,12 @@
 package com.greenfox.lvlup.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Data
@@ -19,8 +20,7 @@ public class Review {
   private boolean pitchStatus;
   @ManyToOne
   private User user;
-  @ManyToOne
-  @JsonIgnore
+  @ManyToOne (cascade={ALL})
   private Pitch pitch;
 
   public Review(String message, boolean pitchStatus) {
