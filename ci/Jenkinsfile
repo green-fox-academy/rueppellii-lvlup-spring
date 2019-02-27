@@ -18,7 +18,6 @@ pipeline {
           branch 'master'
           branch 'Staging'
           branch 'Dev'
-          branch 'jenskins'
         }
       }
       steps {
@@ -84,7 +83,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "ssh -i $KEY_FILE ec2-user@$Staging_IP"
+            sh "ssh -tt -i $KEY_FILE ec2-user@$Staging_IP"
             sh "sh ~/init.sh"
         }
       }
