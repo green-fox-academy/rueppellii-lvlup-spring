@@ -64,8 +64,9 @@ pipeline {
         }
       }
       steps {
+        sh 'cp build/libs/lvlup-0.0.1-SNAPSHOT.jar ci/app.jar'
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build( registry + ":$BUILD_NUMBER", "./ci")
         }
         script {
           docker.withRegistry( '', registryCredential ) {
@@ -78,6 +79,7 @@ pipeline {
     stage('Deploy Staging') {
       when {
         branch 'Staging'
+        branch 'jenskins'
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
