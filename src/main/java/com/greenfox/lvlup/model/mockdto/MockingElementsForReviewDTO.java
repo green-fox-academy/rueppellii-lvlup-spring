@@ -7,50 +7,55 @@ public class MockingElementsForReviewDTO {
     private Long id = 123L;
     private String pitcherName = "Test Name";
     private String badgeName = "Test Badge Name";
-    private boolean newStatus = false;
-    private String newMessage = "Test Message";
+    private boolean pitchStatus = false;
+    private String message = "Test Message";
 
     public ReviewDTO generateValidReviewDTO() {
-        return new ReviewDTO(id, pitcherName, badgeName, newMessage, newStatus);
+        return new ReviewDTO(id, pitcherName, badgeName, message, pitchStatus);
     }
 
     public ReviewDTO generateReviewDTOWithoutId() {
         ReviewDTO reviewDTOWithoutId = new ReviewDTO();
+        reviewDTOWithoutId.setPitcherName(pitcherName);
         reviewDTOWithoutId.setBadgeName(badgeName);
-        reviewDTOWithoutId.setPitchStatus(newStatus);
-        reviewDTOWithoutId.setMessage(newMessage);
+        reviewDTOWithoutId.setPitchStatus(pitchStatus);
+        reviewDTOWithoutId.setMessage(message);
         return reviewDTOWithoutId;
     }
 
     public ReviewDTO generateReviewDTOWithoutPitcherName() {
         ReviewDTO reviewDTOWithoutPitcherName = new ReviewDTO();
+        reviewDTOWithoutPitcherName.setId(id);
         reviewDTOWithoutPitcherName.setBadgeName(badgeName);
-        reviewDTOWithoutPitcherName.setPitchStatus(newStatus);
-        reviewDTOWithoutPitcherName.setMessage(newMessage);
+        reviewDTOWithoutPitcherName.setPitchStatus(pitchStatus);
+        reviewDTOWithoutPitcherName.setMessage(message);
         return reviewDTOWithoutPitcherName;
     }
 
     public ReviewDTO generateReviewPutDTOWithoutBadgeName() {
         ReviewDTO reviewDTOWithoutBadgeName = new ReviewDTO();
+        reviewDTOWithoutBadgeName.setId(id);
         reviewDTOWithoutBadgeName.setPitcherName(pitcherName);
-        reviewDTOWithoutBadgeName.setPitchStatus(newStatus);
-        reviewDTOWithoutBadgeName.setMessage(newMessage);
+        reviewDTOWithoutBadgeName.setPitchStatus(pitchStatus);
+        reviewDTOWithoutBadgeName.setMessage(message);
         return reviewDTOWithoutBadgeName;
     }
 
-    public ReviewDTO generateReviewDTOWithoutNewStatus() {
+    public ReviewDTO generateReviewDTOWithoutPitchStatus() {
         ReviewDTO reviewDTOWithoutNewStatus = new ReviewDTO();
+        reviewDTOWithoutNewStatus.setId(id);
         reviewDTOWithoutNewStatus.setPitcherName(pitcherName);
         reviewDTOWithoutNewStatus.setBadgeName(badgeName);
-        reviewDTOWithoutNewStatus.setMessage(newMessage);
+        reviewDTOWithoutNewStatus.setMessage(message);
         return reviewDTOWithoutNewStatus;
     }
 
-    public ReviewDTO generateReviewDTOWithoutNewMessage() {
+    public ReviewDTO generateReviewDTOWithoutMessage() {
         ReviewDTO reviewDTOWithoutNewMessage = new ReviewDTO();
+        reviewDTOWithoutNewMessage.setId(id);
         reviewDTOWithoutNewMessage.setPitcherName(pitcherName);
         reviewDTOWithoutNewMessage.setBadgeName(badgeName);
-        reviewDTOWithoutNewMessage.setPitchStatus(newStatus);
+        reviewDTOWithoutNewMessage.setPitchStatus(pitchStatus);
         return reviewDTOWithoutNewMessage;
     }
 
