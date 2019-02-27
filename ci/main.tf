@@ -79,8 +79,7 @@ resource "aws_instance" "lvlup_prod" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo ${data.template_file.init_prod.rendered} > ~/init.sh",
-      "chmod +x /init.sh",
+      "echo \"${data.template_file.init_prod.rendered}\" > ~/init.sh",
     ]
   }
 
@@ -115,8 +114,7 @@ resource "aws_instance" "lvlup_stage" {
 
   provisioner "remote-exec" {
     inline = [
-      "cat <<FILE > /init.sh ${data.template_file.init_staging.rendered}} FILE",
-      "chmod +x /init.sh",
+      "echo \"${data.template_file.init_staging.rendered}\" > ~/init.sh",
     ]
   }
 
