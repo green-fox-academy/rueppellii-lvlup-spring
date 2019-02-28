@@ -1,6 +1,4 @@
-package com.greenfox.lvlup.model;
-
-import com.greenfox.lvlup.model.mockdto.HolderDTO;
+package com.greenfox.lvlup.model.mockdto;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
