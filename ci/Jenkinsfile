@@ -18,6 +18,7 @@ pipeline {
           branch 'master'
           branch 'Staging'
           branch 'Dev'
+          branch 'jenskins'
         }
       }
       steps {
@@ -31,6 +32,7 @@ pipeline {
           branch 'master'
           branch 'Staging'
           branch 'Dev'
+          branch 'jenskins'
         }
       }
       steps {
@@ -41,6 +43,7 @@ pipeline {
       when {
         anyOf {
           branch 'Staging'
+          branch 'jenskins'
         }
       }
       steps {
@@ -78,7 +81,6 @@ pipeline {
       when {
         anyOf {
           branch 'Staging'
-          branch 'jenskins'
         }
       }
       steps {
