@@ -83,7 +83,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "sh ci/deploy.sh $KEY_FILE ec2-user@$Staging_IP"
+            sh "ssh -i $KEY_FILE ec2-user@$Staging_IP -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
         }
       }
     }
@@ -93,8 +93,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "echo Starting Deploy Script"
-            sh "ssh -tt -i $KEY_FILE ec2-user@$Production_IP 'bash -s' < deploy.sh"
+            sh "ssh -i $KEY_FILE ec2-user@$Production_IP -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
         }
       }
     }
