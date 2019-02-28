@@ -9,7 +9,7 @@ pipeline {
     DEV_DB_USERNAME = 'sa'
     DEV_DB_PASSWORD = ''
     DEV_DB_URL = 'jdbc:h2:mem:testdb'
-    ACTIVE_PROFILE = 'dev'
+    ACTIVE_PROFILE = 'test'
   }
   stages {
     stage('Build') {
