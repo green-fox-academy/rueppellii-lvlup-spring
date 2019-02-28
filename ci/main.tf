@@ -122,3 +122,10 @@ resource "aws_instance" "lvlup_stage" {
     Name = "SpringLvlUp_Stage"
   }
 }
+
+resource "null_resource" "write-ip-to-file" {
+  provisioner "local-exec" {
+    command = "echo \"Staging_IP = '${aws_instance.lvlup_stage.public_ip}'\" > ipaddr"
+    command = "echo \"Production_IP = '${aws_instance.lvlup_prod.public_ip}'\" > ipaddr"
+  }
+}
