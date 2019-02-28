@@ -94,7 +94,7 @@ pipeline {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
             sh "echo Starting Deploy Script"
-            sh "ssh -tt -i $KEY_FILE ec2-user@$Production_IP < deploy.sh"
+            sh "ssh -tt -i $KEY_FILE ec2-user@$Production_IP << deploy.sh"
         }
       }
     }
