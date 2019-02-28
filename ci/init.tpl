@@ -1,10 +1,10 @@
 #!/bin/bash
 sudo docker stop lvlup
+sudo docker rm lvlup
 sudo docker run \
 --name lvlup \
 --restart=always \
 -d \
---rm \
 -e PROD_DB_URL=${prod_db_url} \
 -e PROD_DB_USER=${prod_db_user} \
 -e PROD_DB_PASSWORD=${prod_db_password} \

@@ -39,9 +39,7 @@ pipeline {
     }
     stage('Build and push docker image / Staging') {
       when {
-        anyOf {
-          branch 'Staging'
-        }
+        branch 'Staging'
       }
       steps {
         sh 'cp build/libs/lvlup-0.0.1-SNAPSHOT.jar ci/app.jar'
@@ -57,9 +55,7 @@ pipeline {
     }
     stage('Build and push docker image / Production') {
       when {
-        anyOf {
-          branch 'master'
-        }
+        branch 'master'
       }
       steps {
         sh 'cp build/libs/lvlup-0.0.1-SNAPSHOT.jar ci/app.jar'
@@ -76,10 +72,7 @@ pipeline {
     }
     stage('Deploy Staging') {
       when {
-        anyOf {
-          branch 'Staging'
-          branch 'jenskins'
-        }
+        branch 'Staging'
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {

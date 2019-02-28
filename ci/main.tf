@@ -125,7 +125,6 @@ resource "aws_instance" "lvlup_stage" {
 
 resource "null_resource" "write-ip-to-file" {
   provisioner "local-exec" {
-    command = "echo \"Staging_IP = '${aws_instance.lvlup_stage.public_ip}'\" > ipaddr"
-    command = "echo \"Production_IP = '${aws_instance.lvlup_prod.public_ip}'\" > ipaddr"
+    command = "echo -e \"Staging_IP = '${aws_instance.lvlup_stage.public_ip}'\nProduction_IP = '${aws_instance.lvlup_prod.public_ip}'\" > ipaddr"
   }
 }
