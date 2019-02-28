@@ -1,5 +1,12 @@
 package com.greenfox.lvlup.config;
-
+import com.greenfox.lvlup.model.entity.Archetype;
+import com.greenfox.lvlup.model.entity.Badge;
+import com.greenfox.lvlup.model.entity.BadgeLevel;
+import com.greenfox.lvlup.model.entity.User;
+import com.greenfox.lvlup.repositrory.ArchetypeRepository;
+import com.greenfox.lvlup.repositrory.BadgeLevelRepository;
+import com.greenfox.lvlup.repositrory.BadgeRepository;
+import com.greenfox.lvlup.repositrory.UserRepository;
 import com.greenfox.lvlup.model.entity.*;
 import com.greenfox.lvlup.repositrory.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Profile(value = "dev")
+@Profile(value = {"dev", "test"})
 public class SetupInitialData implements CommandLineRunner {
     private BadgeRepository badgeRepository;
     private BadgeLevelRepository levelRepository;
@@ -25,6 +32,7 @@ public class SetupInitialData implements CommandLineRunner {
 
     @Value("${spring.datasource.url}")
     private String dbname;
+
     private List<Badge> badges;
     private List<User> users;
     private List<Archetype> archetypes;
@@ -49,6 +57,7 @@ public class SetupInitialData implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
         System.out.println("****************************" + dbname);
+
 
         generateBadges();
         generateUsers();

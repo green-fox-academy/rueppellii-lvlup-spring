@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.model.mockdto;
 
-import com.greenfox.lvlup.model.PitchDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
