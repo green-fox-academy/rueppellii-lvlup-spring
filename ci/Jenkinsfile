@@ -32,7 +32,6 @@ pipeline {
           branch 'master'
           branch 'Staging'
           branch 'Dev'
-          branch 'jenskins'
         }
       }
       steps {
