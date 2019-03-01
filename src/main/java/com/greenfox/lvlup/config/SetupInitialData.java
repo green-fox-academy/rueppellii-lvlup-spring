@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Profile(value = {"dev", "test"})
+//prod should not be there, remove before PUSH, these data only for testing purposes
+@Profile(value = {"dev", "test", "prod"})
 public class SetupInitialData implements CommandLineRunner {
     private BadgeRepository badgeRepository;
     private BadgeLevelRepository levelRepository;
