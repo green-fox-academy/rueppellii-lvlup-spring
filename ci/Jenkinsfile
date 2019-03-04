@@ -4,8 +4,8 @@ pipeline {
     registry = "foxyfox/lvlup-spring"
     registryCredential = 'docker-technical-foxyfox'
     dockerImage = ''
-    Staging_IP = '13.53.207.51'
-    Production_IP = '13.53.65.221'
+    Staging_URL = 'staging.lvlup.greenfox.academy'
+    Production_URL = 'lvlup.greenfox.academy'
     DEV_DB_USERNAME = 'sa'
     DEV_DB_PASSWORD = ''
     DEV_DB_URL = 'jdbc:h2:mem:testdb'
@@ -76,7 +76,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "ssh -i $KEY_FILE ec2-user@$Staging_IP -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
+            sh "ssh -i $KEY_FILE ec2-user@$Staging_URL -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
         }
       }
     }
@@ -86,7 +86,7 @@ pipeline {
       }
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'devops-lvlup-spring', keyFileVariable: 'KEY_FILE', passphraseVariable: '', usernameVariable: '')]) {
-            sh "ssh -i $KEY_FILE ec2-user@$Production_IP -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
+            sh "ssh -i $KEY_FILE ec2-user@$Production_URL -o StrictHostKeyChecking=no \"bash -s\" < ci/deploy.sh"
         }
       }
     }

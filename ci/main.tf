@@ -123,8 +123,18 @@ resource "aws_instance" "lvlup_stage" {
   }
 }
 
-resource "null_resource" "write-ip-to-file" {
-  provisioner "local-exec" {
-    command = "echo -e \"Staging_IP = '${aws_instance.lvlup_stage.public_ip}'\nProduction_IP = '${aws_instance.lvlup_prod.public_ip}'\" > ipaddr"
-  }
+resource "aws_route53_record" "r53-stage" {
+  zone_id = "Z18S7GTXOJBK1"
+  name    = "staging.lvlup.greenfox.academy"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.lvlup_stage.public_ip}"]
+}
+
+resource "aws_route53_record" "r53-prod" {
+  zone_id = "Z18S7GTXOJBK1"
+  name    = "lvlup.greenfox.academy"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.lvlup_prod.public_ip}"]
 }
