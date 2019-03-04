@@ -29,19 +29,18 @@ repositories {
 dependencies {
     compile group: 'org.sonarsource.sonarqube', name: 'sonar-plugin-api', version: '7.5'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    //testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile("com.h2database:h2")
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
-    compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
     compileOnly 'org.projectlombok:lombok'
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
-    //compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '1.0.0.RELEASE'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '1.0.0.RELEASE'
     testCompile "org.mockito:mockito-core:1.+"
 }
 

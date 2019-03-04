@@ -135,5 +135,4 @@ public class MockingElements {
   public void setInvalidPitchPostDTO2(PitchPostDTO invalidPitchPostDTO2) {
     this.invalidPitchPostDTO2 = invalidPitchPostDTO2;
   }
-
 }

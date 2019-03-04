@@ -14,8 +14,6 @@ public interface PitchRepository extends JpaRepository<Pitch, Long> {
       value = "SELECT * FROM Pitch p WHERE p.user_id = ?1",
       nativeQuery = true)
   List<Pitch> findPitchesByUserId(long id);
-<<<<<<< HEAD
-=======
+
   Pitch save(Pitch pitch);
->>>>>>> 8e7fb9d2a269c5f81215e683c9aad057086c29ad
 }

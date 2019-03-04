@@ -52,7 +52,3 @@ public class HeartbeatControllerTest {
                 .andExpect(jsonPath("$.error").value("Unauthorized"));
     }
 }
-
-
-
-
