@@ -2,6 +2,8 @@ package com.greenfox.lvlup.model.dto.pitches;
 
 import lombok.*;
 
+@Getter
+@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
