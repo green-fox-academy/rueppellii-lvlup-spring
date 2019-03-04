@@ -1,7 +1,5 @@
 package com.greenfox.lvlup.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,6 +43,10 @@ public class BadgeLevel {
         this.level = level;
         this.description = description;
         this.badge = badge;
+    }
+
+    public BadgeLevel(int level) {
+      this.level = level;
     }
 
     public BadgeLevel(int level, String description, Badge badge, Archetype... archetypes) {

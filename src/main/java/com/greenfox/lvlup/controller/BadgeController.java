@@ -1,12 +1,8 @@
 package com.greenfox.lvlup.controller;
 
 import com.greenfox.lvlup.exception.GeneralException;
-import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
-import com.greenfox.lvlup.model.dto.user.UserDto;
-import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
-import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.model.mockdto.UserBadgeSetDTO;
 import com.greenfox.lvlup.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +25,13 @@ public class BadgeController {
     this.userService = userService;
   }
 
-  /*@GetMapping(value = "/badges", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/mockBadges", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> showBadges(@RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {
     if (token == null || token.equals("")) {
       throw new GeneralException("Unauthorized", HttpStatus.UNAUTHORIZED);
     }
     return new ResponseEntity<>(testUserBadges, HttpStatus.OK);
-  }*/
+  }
 
   @GetMapping("/badges")
   public ResponseEntity<Object> getUserBadges(@RequestParam (required = false) Long id, @RequestHeader(value = "userTokenAuth", required = false) String token) throws GeneralException {

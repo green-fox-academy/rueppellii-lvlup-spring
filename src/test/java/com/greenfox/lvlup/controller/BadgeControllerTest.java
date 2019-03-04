@@ -1,15 +1,15 @@
 package com.greenfox.lvlup.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
+import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,7 +34,7 @@ public class BadgeControllerTest {
   @Autowired
   public MockMvc mvc;
 
-  @Mock
+  @InjectMocks
   private BadgeController badgeController;
 
   @MockBean
@@ -41,23 +42,29 @@ public class BadgeControllerTest {
 
   @Before
   public void setup() {
-    JacksonTester.initFields(this,new ObjectMapper());
+    MockitoAnnotations.initMocks(this);
   }
 
   @Test
   public void showBadgesTestWithCorrectHeader() throws Exception {
 
-    ResponseEntity<Object> result = badgeController.getUserBadges(1L, "userTokenAuth");
-
-    List<UserBadgeDTO> userBadgeDTOS = new ArrayList<>();
     UserBadgeDTO userBadgeDTO1 = new UserBadgeDTO("Process improver", 1);
     UserBadgeDTO userBadgeDTO2 = new UserBadgeDTO("English speaker", 2);
-    userBadgeDTOS.add(userBadgeDTO1);
-    userBadgeDTOS.add(userBadgeDTO2);
-    when(badgeController.getUserBadges(1L, "userTokenAuth")).thenReturn(result);
+    List<UserBadgeDTO> userBadgeDTOList = new ArrayList<>();
+    userBadgeDTOList.add(userBadgeDTO1);
+    userBadgeDTOList.add(userBadgeDTO2);
 
-    verify(badgeController, times(1)).getUserBadges(1L, "userTokenAuth");
-    assert true;
+    List<BadgeLevel> badgeLevelsMock = new ArrayList<>();
+    badgeLevelsMock.add(0, new BadgeLevel(1));
+    badgeLevelsMock.add(1, new BadgeLevel(2));
+
+    when(userService.getBadges(anyLong())).thenReturn(badgeLevelsMock);
+    when(userService.convertBadgeToDTO(badgeLevelsMock)).thenReturn(userBadgeDTOList);
+
+    ResponseEntity testResult = badgeController.getUserBadges(1L, "testToken");
+
+    assertNotNull(testResult);
+    assertEquals(userBadgeDTOList, testResult.getBody());
   }
 
   @Test

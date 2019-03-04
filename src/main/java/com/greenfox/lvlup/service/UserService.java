@@ -1,9 +1,7 @@
 package com.greenfox.lvlup.service;
 
-import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserBadgeDTO;
 import com.greenfox.lvlup.model.dto.user.UserDto;
-import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.BadgeLevel;
 import com.greenfox.lvlup.model.entity.User;
 import com.greenfox.lvlup.repositrory.BadgeLevelRepository;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
