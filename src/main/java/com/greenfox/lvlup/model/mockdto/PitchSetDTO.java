@@ -1,14 +1,12 @@
-package com.greenfox.lvlup.model.dto;
-
-import com.greenfox.lvlup.model.PitchDTO;
+package com.greenfox.lvlup.model.mockdto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PitchSetDTO {
 
-  private List<PitchDTO> myPitches = new ArrayList<PitchDTO>();
-  private List<PitchDTO> pitchesToReview = new ArrayList<PitchDTO>();
+  private List<PitchDTO> myPitches;
+  private List<PitchDTO> pitchesToReview;
 
   public PitchSetDTO() {
     List<PitchDTO> pitchList = new ArrayList<>();

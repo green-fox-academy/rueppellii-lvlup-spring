@@ -1,13 +1,13 @@
 package com.greenfox.lvlup.exception;
 
-public class SuccessfulQuery {
+public class GeneralMessage {
   String message;
 
-  public SuccessfulQuery(String message) {
+  public GeneralMessage(String message) {
     this.message = message;
   }
 
-  public SuccessfulQuery() {
+  public GeneralMessage() {
   }
 
   public String getMessage() {
