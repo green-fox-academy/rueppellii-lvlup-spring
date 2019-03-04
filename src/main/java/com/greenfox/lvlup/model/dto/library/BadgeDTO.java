@@ -1,22 +1,16 @@
 package com.greenfox.lvlup.model.dto.library;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonSerialize
 public class BadgeDTO {
     @NotBlank(message = "Badge version must not be blank!")
-    public String version;
+    private String version;
     @NotBlank(message = "Badge name must not be blank!")
-    public String name;
+    private String name;
     @NotBlank(message = "Badge tag must not be blank!")
-    public String tag;
-    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    public List<BadgeLevelDTO> levels;
+    private String tag;
+    private List<BadgeLevelDTO> levels;
 
     public BadgeDTO() {
         levels = new ArrayList<>();
