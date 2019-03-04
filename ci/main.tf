@@ -124,7 +124,7 @@ resource "aws_instance" "lvlup_stage" {
 }
 
 resource "aws_route53_record" "r53-stage" {
-  zone_id = "Z18S7GTXOJBK1"
+  zone_id = "${var.hosted_zone_id}"
   name    = "staging.lvlup.greenfox.academy"
   type    = "A"
   ttl     = "300"
@@ -132,7 +132,7 @@ resource "aws_route53_record" "r53-stage" {
 }
 
 resource "aws_route53_record" "r53-prod" {
-  zone_id = "Z18S7GTXOJBK1"
+  zone_id = "${var.hosted_zone_id}"
   name    = "lvlup.greenfox.academy"
   type    = "A"
   ttl     = "300"

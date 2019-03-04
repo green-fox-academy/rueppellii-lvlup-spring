@@ -33,3 +33,5 @@ variable "client_id" {}
 variable "client_secret" {}
 
 variable "secret" {}
+
+variable "hosted_zone_id" {}
