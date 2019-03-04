@@ -1,4 +1,4 @@
-package com.greenfox.lvlup.repositrory;
+package com.greenfox.lvlup.repository;
 
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.BadgeLevel;

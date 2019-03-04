@@ -2,7 +2,7 @@ package com.greenfox.lvlup.service;
 
 import com.greenfox.lvlup.model.dto.archetype.ArchetypeDTO;
 import com.greenfox.lvlup.model.entity.Archetype;
-import com.greenfox.lvlup.repositrory.ArchetypeRepository;
+import com.greenfox.lvlup.repository.ArchetypeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

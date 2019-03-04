@@ -4,7 +4,7 @@ import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.library.BadgeDTO;
 import com.greenfox.lvlup.model.entity.Badge;
 import com.greenfox.lvlup.model.entity.User;
-import com.greenfox.lvlup.repositrory.BadgeRepository;
+import com.greenfox.lvlup.repository.BadgeRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

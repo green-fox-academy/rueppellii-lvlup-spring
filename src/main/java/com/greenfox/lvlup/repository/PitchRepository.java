@@ -1,7 +1,6 @@
-package com.greenfox.lvlup.repositrory;
+package com.greenfox.lvlup.repository;
 
 import com.greenfox.lvlup.model.entity.Pitch;
-import com.greenfox.lvlup.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

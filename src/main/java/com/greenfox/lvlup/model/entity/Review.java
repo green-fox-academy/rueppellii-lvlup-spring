@@ -21,7 +21,6 @@ public class Review {
   @ManyToOne
   private User user;
 
-  @JsonIgnore
   @ManyToOne (cascade={ALL})
   private Pitch pitch;
 

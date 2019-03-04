@@ -4,7 +4,7 @@ import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
-import com.greenfox.lvlup.repositrory.*;
+import com.greenfox.lvlup.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,7 +67,7 @@ public class PitchService {
     pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
     pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setReviews(convertSetToList(pitchDto, pitch));
-    pitch.setLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
+    pitch.setBadgeLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
         (pitchDto.getOldLevel(), badgeRepository.findBadgeByName(pitchDto.getBadgeName())));
     return pitch;
   }
