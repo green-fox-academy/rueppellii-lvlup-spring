@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,12 +54,8 @@ public class BadgeControllerTest {
     userBadgeDTOList.add(userBadgeDTO1);
     userBadgeDTOList.add(userBadgeDTO2);
 
-    List<BadgeLevel> badgeLevelsMock = new ArrayList<>();
-    badgeLevelsMock.add(0, new BadgeLevel(1));
-    badgeLevelsMock.add(1, new BadgeLevel(2));
-
-    when(userService.getBadges(anyLong())).thenReturn(badgeLevelsMock);
-    when(userService.convertBadgeToDTO(badgeLevelsMock)).thenReturn(userBadgeDTOList);
+    when(userService.getBadges(anyLong())).thenReturn(new ArrayList<>());
+    when(userService.convertBadgeToDTO(anyList())).thenReturn(userBadgeDTOList);
 
     ResponseEntity testResult = badgeController.getUserBadges(1L, "testToken");
 
