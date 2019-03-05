@@ -16,12 +16,10 @@ import org.springframework.test.context.junit4.SpringRunner;
     OauthSecurityConfig.class,
     SecurityAutoConfiguration.class})
 @ActiveProfiles("test")
-
 public class LvlupApplicationTests {
 
   @Test
   public void contextLoads() {
   }
-
 }
 
