@@ -33,6 +33,14 @@ public class UserService {
     throw new GeneralException("User was not found.", HttpStatus.NOT_FOUND);
   }
 
+  public User findUserByName(String name) throws GeneralException {
+    User user = repository.findUserByName(name);
+    if(user!=null) {
+      return user;
+    }
+    throw new GeneralException("User was not found.", HttpStatus.NOT_FOUND);
+  }
+
   public UserDto getUserDetailsById(long id) {
     User user = this.repository.findById(id).orElse(null);
     UserDto dto = mapper.map(user, UserDto.class);

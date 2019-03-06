@@ -31,7 +31,7 @@ public class PitchController {
 
   @PostMapping(value = "/api/pitch", consumes = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Object> addPitch(@RequestHeader(value = "Authentication") String token,
-      @Valid @RequestBody PitchPostDto pitchDto) {
+      @Valid @RequestBody PitchPostDto pitchDto) throws GeneralException {
     service.savePitch(pitchDto);
     return new ResponseEntity<>(new GeneralMessage("Success"), HttpStatus.CREATED);
   }

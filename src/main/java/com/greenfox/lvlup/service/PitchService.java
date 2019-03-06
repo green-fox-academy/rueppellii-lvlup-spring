@@ -1,5 +1,6 @@
 package com.greenfox.lvlup.service;
 
+import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
 import com.greenfox.lvlup.model.entity.Pitch;
@@ -20,14 +21,16 @@ public class PitchService {
   private ModelMapper mapper;
   private PitchRepository repository;
   private UserRepository userRepository;
+  private UserService userService;
   private BadgeRepository badgeRepository;
   private ReviewRepository reviewRepository;
   private BadgeLevelRepository badgeLevelRepository;
 
   @Autowired
-  public PitchService(PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
+  public PitchService(UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
                       BadgeRepository badgeRepository, ReviewRepository reviewRepository,
                       BadgeLevelRepository badgeLevelRepository) {
+    this.userService = userService;
     this.mapper = mapper;
     this.repository = repository;
     this.userRepository = userRepository;
@@ -58,14 +61,17 @@ public class PitchService {
     return reviewSet;
   }
 
-  public void savePitch(PitchDto pitchDto) {
+  public void savePitch(PitchDto pitchDto) throws GeneralException {
     repository.save(convertPitchDtoToEntity(pitchDto));
   }
 
-  private Pitch convertPitchDtoToEntity(PitchDto pitchDto) {
+  private Pitch convertPitchDtoToEntity(PitchDto pitchDto) throws GeneralException {
     Pitch pitch = new Pitch();
     mapper.map(pitchDto, pitch);
-    pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
+
+    //pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
+
+    pitch.setUser(userService.findUserByName(pitchDto.getUserName()));
     pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setReviews(convertSetToList(pitchDto, pitch));
     pitch.setBadgeLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
