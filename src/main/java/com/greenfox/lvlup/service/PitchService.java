@@ -85,7 +85,9 @@ public class PitchService {
         (pitchDto.getOldLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setUser(userToSet);
     pitch.setBadge(badgeToSet);
-    pitch.setReviews(convertSetToList(pitchDto, pitch));
+    List<Review> reviewsToSaveAndSet = convertSetToList(pitchDto, pitch);
+    // ---------------Itt kellene meghívni a review save függvényét!
+    pitch.setReviews(reviewsToSaveAndSet);
     pitch.setBadgeLevel(badgeLevelToSet);
     //controls whether user has the given level of the badge:
     userService.findUserBadgeWithGivelLevel(userToSet.getId(), badgeToSet.getId(), badgeLevelToSet.getId());
@@ -101,6 +103,7 @@ public class PitchService {
       if(pitch.getUser().getId() == reviewer.getId()) throw new GeneralException("User and reviewer cannot be the same person. Please modify reviewer.", HttpStatus.BAD_REQUEST);
       placeholder.setUser(reviewer);
       placeholder.setPitch(pitch);
+      //ez itt most nem ment!! valószínűleg a főfüggvénybe kell tenni
       reviewRepository.save(placeholder);
       list.add(placeholder);
     }
