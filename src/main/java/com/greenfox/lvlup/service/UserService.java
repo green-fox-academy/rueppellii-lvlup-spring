@@ -66,7 +66,7 @@ public class UserService {
     return badgeSet;
   }
 
-  public User findUserBadgeWithGivelLevel(long userId, long badgeId, long badgeLevelId) throws GeneralException {
+  public User findUserBadgeWithGivenLevel(long userId, long badgeId, long badgeLevelId) throws GeneralException {
     User user = repository.findUserBadgeWithOldLevel(userId, badgeId, badgeLevelId);
     if (user== null) throw new GeneralException("The user does not have the badge with the given level. " +
         "Please modify old level", HttpStatus.BAD_REQUEST);

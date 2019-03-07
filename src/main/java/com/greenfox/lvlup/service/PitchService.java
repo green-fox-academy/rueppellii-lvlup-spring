@@ -30,7 +30,7 @@ public class PitchService {
 
 
   @Autowired
-  public PitchService(ReviewService reviewService, BadgeLevelService badgeLevelService, BadgeService badgeService, UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
+  public PitchService(ReviewService reviewService, BadgeLevelService badgeLevelService, BadgeService badgeService, UserService userService, PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
                       BadgeRepository badgeRepository, ReviewRepository reviewRepository,
                       BadgeLevelRepository badgeLevelRepository) {
     this.reviewService = reviewService;
@@ -59,7 +59,7 @@ public class PitchService {
 
   private Set<ReviewDto> addReviewsAsSet(Pitch pitch) {
     Set<ReviewDto> reviewSet = new HashSet<>();
-    for (Review review: pitch.getReviews()) {
+    for (Review review : pitch.getReviews()) {
       ReviewDto dto = mapper.map(review, ReviewDto.class);
       dto.setName(review.getUser().getName());
       reviewSet.add(dto);
@@ -68,11 +68,19 @@ public class PitchService {
   }
 
   public void savePitch(PitchDto pitchDto) throws GeneralException {
-    repository.save(convertPitchDtoToEntity(pitchDto));
+    Pitch pitchToSave = convertPitchDtoToEntity(pitchDto);
+    Pitch pitchExisting = findDuplicatePitch(pitchToSave.getOldLevel(), pitchToSave.getBadge().getId(), pitchToSave.getUser().getId());
+    if (pitchExisting != null) {
+      throw new GeneralException("You have already pitched your level for this badge.", HttpStatus.BAD_REQUEST);
+    } else {
+      reviewService.saveReviews(pitchToSave.getReviews());
+      repository.save(pitchToSave);
+    }
   }
 
   private Pitch convertPitchDtoToEntity(PitchDto pitchDto) throws GeneralException {
-    if(pitchDto.getOldLevel()>= pitchDto.getPitchedLevel()) throw new GeneralException("Pitched level must be higher than old level.", HttpStatus.BAD_REQUEST);
+    if (pitchDto.getOldLevel() >= pitchDto.getPitchedLevel())
+      throw new GeneralException("Pitched level must be higher than old level.", HttpStatus.BAD_REQUEST);
     //controls whether pitched level exists
     badgeLevelService.findBadgeLevelByPitchedLevelAndBadge(pitchDto.getPitchedLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
     Pitch pitch = new Pitch();
@@ -88,30 +96,14 @@ public class PitchService {
         (pitchDto.getOldLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setUser(userToSet);
     pitch.setBadge(badgeToSet);
-   // List<Review> reviewsToSaveAndSet = reviewService.convertSetToList(pitchDto, pitch);
-    //reviewService.saveAllReviews(reviewService.convertSetToList(pitchDto, pitch));
-    // ---------------Itt kellene meghívni a review save függvényét!
     pitch.setReviews(reviewService.convertSetToList(pitchDto, pitch));
     pitch.setBadgeLevel(badgeLevelToSet);
     //controls whether user has the given level of the badge:
-    userService.findUserBadgeWithGivelLevel(userToSet.getId(), badgeToSet.getId(), badgeLevelToSet.getId());
+    userService.findUserBadgeWithGivenLevel(userToSet.getId(), badgeToSet.getId(), badgeLevelToSet.getId());
     return pitch;
   }
 
-  /* private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) throws GeneralException {
-    List<Review> list = new ArrayList();
-    Review placeholder = new Review();
-    System.out.println(pitchDto.getReviews().size());
-    for (ReviewDto dto : pitchDto.getReviews()) {
-      mapper.map(dto, placeholder);
-      User reviewer = userService.findReviewerByName(dto.getName());
-      if(pitch.getUser().getId() == reviewer.getId()) throw new GeneralException("User and reviewer cannot be the same person. Please modify reviewer.", HttpStatus.BAD_REQUEST);
-      placeholder.setUser(reviewer);
-      placeholder.setPitch(pitch);
-      //ez itt most nem ment!! valószínűleg a főfüggvénybe kell tenni
-      //reviewRepository.save(placeholder);
-      list.add(placeholder);
-    }
-    return list;
-  }*/
+  public Pitch findDuplicatePitch(int oldlevel, long badgeId, long userId) throws GeneralException {
+    return repository.findDuplicatePitch(oldlevel, badgeId, userId);
+  }
 }

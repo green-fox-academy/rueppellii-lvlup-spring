@@ -27,12 +27,6 @@ public class ReviewService {
     this.mapper = mapper;
     this.userService = userService;
   }
-/*
-  public void saveAllReviews(List<Review> reviews) {
-    for (int i = 0; i < reviews.size() ; i++) {
-      reviewRepository.save(reviews.get(i));
-    }
-  }*/
 
   public List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) throws GeneralException {
     List<Review> list = new ArrayList();
@@ -43,25 +37,20 @@ public class ReviewService {
       Review placeholder = new Review();
       mapper.map(dto, placeholder);
       User reviewer = userService.findReviewerByName(dto.getName());
-      if(pitch.getUser().getId() == reviewer.getId()) throw new GeneralException("User and reviewer cannot be the same person. Please modify reviewer.", HttpStatus.BAD_REQUEST);
+      if (pitch.getUser().getId() == reviewer.getId())
+        throw new GeneralException("User and reviewer cannot be the same person. Please modify reviewer.", HttpStatus.BAD_REQUEST);
       placeholder.setUser(reviewer);
       placeholder.setPitch(pitch);
-      //ez itt most nem ment!! valószínűleg a főfüggvénybe kell tenni
-      reviewRepository.save(placeholder);
+      //reviewRepository.save(placeholder);
       list.add(placeholder);
     }
-   // list.add(placeholder);
     return list;
   }
-}
-/*
-  private Set<ReviewDto> addReviewsAsSet(Pitch pitch) {
-    Set<ReviewDto> reviewSet = new HashSet<>();
-    for (Review review: pitch.getReviews()) {
-      ReviewDto dto = mapper.map(review, ReviewDto.class);
-      dto.setName(review.getUser().getName());
-      reviewSet.add(dto);
+
+  public void saveReviews(List<Review> reviews) throws GeneralException {
+    if(reviews.size()!= 3 ) throw new GeneralException("You must have 3 reviewers for your pitch.", HttpStatus.BAD_REQUEST);
+    for (Review item : reviews) {
+      reviewRepository.save(item);
     }
-    return reviewSet;
   }
- */
+}
