@@ -24,13 +24,16 @@ public class PitchService {
   private BadgeRepository badgeRepository;
   private BadgeService badgeService;
   private ReviewRepository reviewRepository;
+  private ReviewService reviewService;
   private BadgeLevelRepository badgeLevelRepository;
   private BadgeLevelService badgeLevelService;
 
+
   @Autowired
-  public PitchService(BadgeLevelService badgeLevelService, BadgeService badgeService, UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
+  public PitchService(ReviewService reviewService, BadgeLevelService badgeLevelService, BadgeService badgeService, UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
                       BadgeRepository badgeRepository, ReviewRepository reviewRepository,
                       BadgeLevelRepository badgeLevelRepository) {
+    this.reviewService = reviewService;
     this.badgeLevelService = badgeLevelService;
     this.badgeService = badgeService;
     this.userService = userService;
@@ -85,18 +88,20 @@ public class PitchService {
         (pitchDto.getOldLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
     pitch.setUser(userToSet);
     pitch.setBadge(badgeToSet);
-    List<Review> reviewsToSaveAndSet = convertSetToList(pitchDto, pitch);
+   // List<Review> reviewsToSaveAndSet = reviewService.convertSetToList(pitchDto, pitch);
+    //reviewService.saveAllReviews(reviewService.convertSetToList(pitchDto, pitch));
     // ---------------Itt kellene meghívni a review save függvényét!
-    pitch.setReviews(reviewsToSaveAndSet);
+    pitch.setReviews(reviewService.convertSetToList(pitchDto, pitch));
     pitch.setBadgeLevel(badgeLevelToSet);
     //controls whether user has the given level of the badge:
     userService.findUserBadgeWithGivelLevel(userToSet.getId(), badgeToSet.getId(), badgeLevelToSet.getId());
     return pitch;
   }
 
-  private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) throws GeneralException {
+  /* private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) throws GeneralException {
     List<Review> list = new ArrayList();
     Review placeholder = new Review();
+    System.out.println(pitchDto.getReviews().size());
     for (ReviewDto dto : pitchDto.getReviews()) {
       mapper.map(dto, placeholder);
       User reviewer = userService.findReviewerByName(dto.getName());
@@ -104,9 +109,9 @@ public class PitchService {
       placeholder.setUser(reviewer);
       placeholder.setPitch(pitch);
       //ez itt most nem ment!! valószínűleg a főfüggvénybe kell tenni
-      reviewRepository.save(placeholder);
+      //reviewRepository.save(placeholder);
       list.add(placeholder);
     }
     return list;
-  }
+  }*/
 }
