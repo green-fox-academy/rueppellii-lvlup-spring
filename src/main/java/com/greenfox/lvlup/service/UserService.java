@@ -41,6 +41,14 @@ public class UserService {
     throw new GeneralException("User was not found.", HttpStatus.NOT_FOUND);
   }
 
+  public User findReviewerByName(String name) throws GeneralException {
+    User user = repository.findUserByName(name);
+    if(user!=null) {
+      return user;
+    }
+    throw new GeneralException("Reviewer " + name + " was not found.", HttpStatus.NOT_FOUND);
+  }
+
   public UserDto getUserDetailsById(long id) {
     User user = this.repository.findById(id).orElse(null);
     UserDto dto = mapper.map(user, UserDto.class);
@@ -56,6 +64,13 @@ public class UserService {
       badgeSet.add(dto);
     }
     return badgeSet;
+  }
+
+  public User findUserBadgeWithGivelLevel(long userId, long badgeId, long badgeLevelId) throws GeneralException {
+    User user = repository.findUserBadgeWithOldLevel(userId, badgeId, badgeLevelId);
+    if (user== null) throw new GeneralException("The user does not have the badge with the given level. " +
+        "Please modify old level", HttpStatus.BAD_REQUEST);
+    return user;
   }
 
 }

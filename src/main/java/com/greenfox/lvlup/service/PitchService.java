@@ -3,12 +3,11 @@ package com.greenfox.lvlup.service;
 import com.greenfox.lvlup.exception.GeneralException;
 import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
-import com.greenfox.lvlup.model.entity.Pitch;
-import com.greenfox.lvlup.model.entity.Review;
-import com.greenfox.lvlup.model.entity.User;
+import com.greenfox.lvlup.model.entity.*;
 import com.greenfox.lvlup.repositrory.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,13 +22,17 @@ public class PitchService {
   private UserRepository userRepository;
   private UserService userService;
   private BadgeRepository badgeRepository;
+  private BadgeService badgeService;
   private ReviewRepository reviewRepository;
   private BadgeLevelRepository badgeLevelRepository;
+  private BadgeLevelService badgeLevelService;
 
   @Autowired
-  public PitchService(UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
+  public PitchService(BadgeLevelService badgeLevelService, BadgeService badgeService, UserService userService,PitchRepository repository, ModelMapper mapper, UserRepository userRepository,
                       BadgeRepository badgeRepository, ReviewRepository reviewRepository,
                       BadgeLevelRepository badgeLevelRepository) {
+    this.badgeLevelService = badgeLevelService;
+    this.badgeService = badgeService;
     this.userService = userService;
     this.mapper = mapper;
     this.repository = repository;
@@ -66,25 +69,37 @@ public class PitchService {
   }
 
   private Pitch convertPitchDtoToEntity(PitchDto pitchDto) throws GeneralException {
+    if(pitchDto.getOldLevel()>= pitchDto.getPitchedLevel()) throw new GeneralException("Pitched level must be higher than old level.", HttpStatus.BAD_REQUEST);
+    //controls whether pitched level exists
+    badgeLevelService.findBadgeLevelByPitchedLevelAndBadge(pitchDto.getPitchedLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
     Pitch pitch = new Pitch();
     mapper.map(pitchDto, pitch);
 
     //pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
-
-    pitch.setUser(userService.findUserByName(pitchDto.getUserName()));
-    pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
+    //pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
+    //pitch.setBadgeLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
+    //    (pitchDto.getOldLevel(), badgeRepository.findBadgeByName(pitchDto.getBadgeName())));
+    User userToSet = userService.findUserByName(pitchDto.getUserName());
+    Badge badgeToSet = badgeService.findBadgeByName(pitchDto.getBadgeName());
+    BadgeLevel badgeLevelToSet = badgeLevelService.findBadgeLevelByLevelAndBadge
+        (pitchDto.getOldLevel(), badgeService.findBadgeByName(pitchDto.getBadgeName()));
+    pitch.setUser(userToSet);
+    pitch.setBadge(badgeToSet);
     pitch.setReviews(convertSetToList(pitchDto, pitch));
-    pitch.setBadgeLevel(badgeLevelRepository.findBadgeLevelByLevelAndBadge
-        (pitchDto.getOldLevel(), badgeRepository.findBadgeByName(pitchDto.getBadgeName())));
+    pitch.setBadgeLevel(badgeLevelToSet);
+    //controls whether user has the given level of the badge:
+    userService.findUserBadgeWithGivelLevel(userToSet.getId(), badgeToSet.getId(), badgeLevelToSet.getId());
     return pitch;
   }
 
-  private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) {
+  private List<Review> convertSetToList(PitchDto pitchDto, Pitch pitch) throws GeneralException {
     List<Review> list = new ArrayList();
     Review placeholder = new Review();
     for (ReviewDto dto : pitchDto.getReviews()) {
       mapper.map(dto, placeholder);
-      placeholder.setUser(userRepository.findUserByName(dto.getName()));
+      User reviewer = userService.findReviewerByName(dto.getName());
+      if(pitch.getUser().getId() == reviewer.getId()) throw new GeneralException("User and reviewer cannot be the same person. Please modify reviewer.", HttpStatus.BAD_REQUEST);
+      placeholder.setUser(reviewer);
       placeholder.setPitch(pitch);
       reviewRepository.save(placeholder);
       list.add(placeholder);

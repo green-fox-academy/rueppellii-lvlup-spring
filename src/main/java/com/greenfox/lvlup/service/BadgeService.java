@@ -63,4 +63,10 @@ public class BadgeService {
         Badge badgeExisting = badgeRepository.findBadgeByNameAndVersion(badge.getName(), badge.getVersion());
         return badgeExisting;
     }
+
+    public Badge findBadgeByName (String name) throws GeneralException {
+        Badge badge = badgeRepository.findBadgeByName(name);
+        if(badge == null)throw new GeneralException("Badge with this name was not found.", HttpStatus.NOT_FOUND);
+        return badge;
+    }
 }
