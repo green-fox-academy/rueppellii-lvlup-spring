@@ -10,9 +10,9 @@ import java.util.List;
 public class PitchPostDTO {
   @NotEmpty(message = "PitchPostDTO name is required.")
   String badgeName;
-  @NotNull(message = "Old level is required.")
+  @NotNull(message = "Old badgeLevel is required.")
   Integer oldLVL;
-  @NotNull(message = "Pitched level is required.")
+  @NotNull(message = "Pitched badgeLevel is required.")
   Integer pitchedLVL;
   @NotEmpty(message = "PitchPostDTO message is required.")
   String pitchMessage;
