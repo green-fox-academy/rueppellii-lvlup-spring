@@ -21,7 +21,6 @@ public class Review {
   @ManyToOne
   private User user;
   @ManyToOne
-  @JsonIgnore
   private Pitch pitch;
 
   public Review(String message, boolean pitchStatus) {

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class PitchPutDTO {
     @NotEmpty(message = "Name of pitcher is required.")
     String pitcherName;
-    @NotEmpty(message = "Badge level is required.")
+    @NotEmpty(message = "Badge badgeLevel is required.")
     String badgeName;
     @NotEmpty(message = "New status is required.")
     String newStatus;

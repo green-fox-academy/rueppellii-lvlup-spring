@@ -18,9 +18,9 @@ public class PitchDTO {
   String username;
   @NotNull(message = "PitchDTO name is required.")
   String badgeName;
-  @NotNull(message = "Old level is required.")
+  @NotNull(message = "Old badgeLevel is required.")
   int oldLVL;
-  @NotNull(message = "Pitched level is required.")
+  @NotNull(message = "Pitched badgeLevel is required.")
   int pitchedLVL;
   @NotNull(message = "PitchDTO message is required.")
   String pitchMessage;
@@ -29,8 +29,8 @@ public class PitchDTO {
 
 
   public PitchDTO(@NotNull(message = "Timestamp is required.") String timestamp, @NotNull(message = "Username is required") String username,
-                  @NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
-                  @NotNull(message = "Pitched level is required.") int pitchedLVL,
+                  @NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old badgeLevel is required.") int oldLVL,
+                  @NotNull(message = "Pitched badgeLevel is required.") int pitchedLVL,
                   @NotNull(message = "PitchDTO message is required.") String pitchMessage, @NotNull(message = "Holders are required.") List<HolderDTO> holders) {
     this.timestamp = timestamp;
     this.username = username;
@@ -42,8 +42,8 @@ public class PitchDTO {
   }
 
   public PitchDTO(@NotNull(message = "Timestamp is required.") String timestamp, @NotNull(message = "Username is required") String username,
-                  @NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
-                  @NotNull(message = "Pitched level is required.") int pitchedLVL,
+                  @NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old badgeLevel is required.") int oldLVL,
+                  @NotNull(message = "Pitched badgeLevel is required.") int pitchedLVL,
                   @NotNull(message = "PitchDTO message is required.") String pitchMessage) {
     this.timestamp = timestamp;
     this.username = username;
@@ -56,8 +56,8 @@ public class PitchDTO {
     holders.add(holderDTO1);
   }
 
-  public PitchDTO(@NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old level is required.") int oldLVL,
-                  @NotNull(message = "Pitched level is required.") int pitchedLVL, @NotNull(message = "PitchDTO message is required.") String pitchMessage) {
+  public PitchDTO(@NotNull(message = "PitchDTO name is required.") String badgeName, @NotNull(message = "Old badgeLevel is required.") int oldLVL,
+                  @NotNull(message = "Pitched badgeLevel is required.") int pitchedLVL, @NotNull(message = "PitchDTO message is required.") String pitchMessage) {
     this.badgeName = badgeName;
     this.oldLVL = oldLVL;
     this.pitchedLVL = pitchedLVL;

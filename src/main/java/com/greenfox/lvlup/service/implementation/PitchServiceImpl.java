@@ -5,7 +5,9 @@ import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.dto.pitches.ReviewDto;
 import com.greenfox.lvlup.model.entity.Pitch;
 import com.greenfox.lvlup.model.entity.Review;
+import com.greenfox.lvlup.repositrory.BadgeRepository;
 import com.greenfox.lvlup.repositrory.PitchRepository;
+import com.greenfox.lvlup.repositrory.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +18,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @Service
 public class PitchServiceImpl {
   private PitchRepository repository;
   private ModelMapper mapper;
+  private UserRepository userRepository;
+  private BadgeRepository badgeRepository;
 
   @Autowired
   public PitchServiceImpl(PitchRepository repository, ModelMapper mapper) {
@@ -28,7 +31,7 @@ public class PitchServiceImpl {
     this.mapper = mapper;
   }
 
-  public List<PitchDto> getUserPitchById(long id) throws GeneralException {
+  public List<PitchDto> getPitchesByUserId(long id) throws GeneralException {
     List<Pitch> pitchesList;
     try {
       pitchesList = repository.findPitchesByUserId(id);
@@ -54,5 +57,24 @@ public class PitchServiceImpl {
       reviewSet.add(dto);
     }
     return reviewSet;
+  }
+
+  public void savePitch(PitchDto pitchDto) {
+    repository.save(convertPitchDtoToEntity(pitchDto));
+  }
+
+  private PitchDto convertPitchEntityToDto(Pitch pitch) {
+    PitchDto pitchDto = new PitchDto();
+    mapper.map(pitch, pitchDto);
+    return pitchDto;
+  }
+
+  private Pitch convertPitchDtoToEntity(PitchDto pitchDto) {
+    Pitch pitch = new Pitch();
+    mapper.map(pitchDto, pitch);
+    pitch.setUser(userRepository.findUserByName(pitchDto.getUserName()));
+    pitch.setCreated(pitchDto.getTimestamp());
+    pitch.setBadge(badgeRepository.findBadgeByName(pitchDto.getBadgeName()));
+    return pitch;
   }
 }

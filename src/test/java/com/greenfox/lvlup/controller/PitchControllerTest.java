@@ -1,17 +1,30 @@
 package com.greenfox.lvlup.controller;
 
+import com.greenfox.lvlup.LvlupApplication;
+import com.greenfox.lvlup.model.dto.pitches.PitchDto;
 import com.greenfox.lvlup.model.mockdto.MockingElements;
 import com.greenfox.lvlup.model.mockdto.MockingElementsForPitchPutDTO;
 import com.greenfox.lvlup.model.mockdto.PitchSetDTO;
 import com.greenfox.lvlup.service.implementation.PitchServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.greenfox.lvlup.util.Converter.stringify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,12 +34,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(PitchController.class)
+@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest(classes = LvlupApplication.class)
+@ActiveProfiles("test")
+@AutoConfigureMockMvc
 public class PitchControllerTest {
 
-  @MockBean
-  PitchServiceImpl service;
+//  @MockBean
+//  PitchServiceImpl service;
+
 
   MockingElements elements = new MockingElements();
   MockingElementsForPitchPutDTO pitchPutDTOElements = new MockingElementsForPitchPutDTO();
@@ -36,132 +52,80 @@ public class PitchControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  public void pitchBadgeValidHeaderAndBodyCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(status().isCreated())
-        .andReturn();
+  public void pitchesGetCheckIfTokenIsProvided() throws Exception {
+    mockMvc.perform(get("/pitches?id=1")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.error").value("Unauthorized"));
   }
 
   @Test
-  public void pitchPutValidHeaderAndBodyTestStatus() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
-        .andDo(print())
-        .andExpect(status().isCreated())
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeValidHeaderAndBodyCheckMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.message").value("Success"))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchPutValidHeaderAndBodyTestMessage() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.message").value("Success"))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeMissingContentTypeCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(status().isUnsupportedMediaType());
-  }
-
-  @Test
-  public void pitchPutMissingContentTypeTestStatus() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
-        .andExpect(status().isUnsupportedMediaType());
-  }
-
-  @Test
-  public void getPitchesWithCorrectHeader() throws Exception {
-    mockMvc.perform(get("/pitches")
+  public void pitchesGetWithCorrectHeader() throws Exception {
+    //Mockito.when(service.getPitchesByUserId(1)).thenReturn(pitchSetDTO.getMyPitches())
+    mockMvc.perform(get("/pitches?id=1")
         .header("userTokenAuth", token)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(content().string(stringify(pitchSetDTO)))
+        .andExpect(content().string(stringify(pitchSetDTO.getMyPitches())))
         .andReturn();
   }
 
   @Test
-  public void pitchBadgeInvalidTokenCheckStatus() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(status().isUnauthorized())
-        .andReturn();
-  }
-
-  @Test
-  public void pitchPutInvalidTokenTestStatus() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
-        .andExpect(status().isUnauthorized())
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidTokenCheckErrorMessage() throws Exception {
-    this.mockMvc.perform(post("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(elements.getValidPitchPostDTO())))
-        .andExpect(jsonPath("$.error").value("Unauthorized"))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchPutInvalidTokenTestErrorMessage() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", "")
-        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
-        .andExpect(jsonPath("$.error").value("Unauthorized"))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidRequestBodyCheckStatus2() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+  public void pitchPostValidHeaderAndBodyCheckStatus() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchPostDTO2())))
-        .andExpect(status().isBadRequest())
+        .content(stringify(elements.getValidPitchDto())))
+        .andExpect(status().isCreated())
         .andReturn();
   }
 
   @Test
-  public void pitchPutWithoutPitcherNameTestStatus() throws Exception {
-    this.mockMvc.perform(put("/pitch")
+  public void pitchPostValidHeaderAndBodyCheckMessage() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutPitcherName())))
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getValidPitchDto())))
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.message").value("Success"))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPostMissingContentTypeCheckStatus() throws Exception {
+    this.mockMvc.perform(post("/pitch")
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getValidPitchDto())))
+        .andExpect(status().isUnsupportedMediaType());
+  }
+
+  @Test
+  public void pitchPostInvalidTokenCheckStatus() throws Exception {
+    this.mockMvc.perform(post("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", "")
+        .content(stringify(elements.getValidPitchDto())))
+        .andExpect(status().isUnauthorized())
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPostInvalidTokenCheckErrorMessage() throws Exception {
+    this.mockMvc.perform(post("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", "")
+        .content(stringify(elements.getValidPitchDto())))
+        .andExpect(jsonPath("$.error").value("Unauthorized"))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPostInvalidRequestBodyCheckStatus2() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getInvalidPitchDto2())))
         .andExpect(status().isBadRequest())
         .andReturn();
   }
@@ -187,62 +151,42 @@ public class PitchControllerTest {
   }
 
   @Test
-  public void pitchPutWithoutNewMessageTestStatus() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutNewMessage())))
-        .andExpect(status().isBadRequest())
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+  public void pitchPostInvalidRequestBodyCheckMessage5() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchPostDTO5())))
+        .content(stringify(elements.getInvalidPitchDto5())))
         .andExpect(jsonPath("$.errors").value("Holders are required."))
         .andReturn();
   }
 
   @Test
-  public void pitchPutWithoutPitcherNameTestMessage() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutPitcherName())))
-        .andExpect(jsonPath("$.errors").value("Name of pitcher is required."))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeInvalidRequestBodyCheckMessage2() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+  public void pitchPostInvalidRequestBodyCheckMessage2() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchPostDTO2())))
-        .andExpect(jsonPath("$.errors").value("Old level is required."))
+        .content(stringify(elements.getInvalidPitchDto2())))
+        .andExpect(jsonPath("$.errors").value("Old badgeLevel is required."))
         .andReturn();
   }
 
   @Test
-  public void pitchPutWithoutBadgeNameTestMessage() throws Exception {
-    this.mockMvc.perform(put("/pitch")
-        .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
-        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutBadgeName())))
-        .andExpect(jsonPath("$.errors").value("Badge level is required."))
-        .andReturn();
-  }
-
-  @Test
-  public void pitchBadgeEmptyRequestBodyCheckMessage5() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+  public void pitchPostEmptyRequestBodyCheckMessage5() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
         .contentType(MediaType.APPLICATION_JSON)
         .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getEmptyPitchPostDTO5())))
+        .content(stringify(elements.getEmptyPitchDto5())))
         .andExpect(jsonPath("$.errors").value("Holders are required."))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPostInvalidRequestBodyCheckMessage1() throws Exception {
+    this.mockMvc.perform(post("/api/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", elements.getValidToken())
+        .content(stringify(elements.getInvalidPitchDto1())))
+        .andExpect(jsonPath("$.errors").value("PitchDto name is required."))
         .andReturn();
   }
 
@@ -257,12 +201,42 @@ public class PitchControllerTest {
   }
 
   @Test
-  public void pitchBadgeInvalidRequestBodyCheckMessage1() throws Exception {
-    this.mockMvc.perform(post("/pitch")
+  public void pitchPutInvalidTokenTestErrorMessage() throws Exception {
+    this.mockMvc.perform(put("/pitch")
         .contentType(MediaType.APPLICATION_JSON)
-        .header("userTokenAuth", elements.getValidToken())
-        .content(stringify(elements.getInvalidPitchPostDTO1())))
-        .andExpect(jsonPath("$.errors").value("PitchDto name is required."))
+        .header("userTokenAuth", "")
+        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
+        .andExpect(jsonPath("$.error").value("Unauthorized"))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutWithoutBadgeNameTestMessage() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutBadgeName())))
+        .andExpect(jsonPath("$.errors").value("Badge badgeLevel is required."))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutWithoutPitcherNameTestMessage() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutPitcherName())))
+        .andExpect(jsonPath("$.errors").value("Name of pitcher is required."))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutWithoutNewMessageTestStatus() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutNewMessage())))
+        .andExpect(status().isBadRequest())
         .andReturn();
   }
 
@@ -276,10 +250,54 @@ public class PitchControllerTest {
         .andReturn();
   }
 
-  public void checkIfTokenIsProvided() throws Exception {
-    mockMvc.perform(get("/pitches")
-        .contentType(MediaType.APPLICATION_JSON))
+  @Test
+  public void pitchPutWithoutPitcherNameTestStatus() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generatePitchPutDTOWithoutPitcherName())))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutInvalidTokenTestStatus() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", "")
+        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
         .andExpect(status().isUnauthorized())
-        .andExpect(jsonPath("$.error").value("unauthorized"));
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutMissingContentTypeTestStatus() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
+        .andExpect(status().isUnsupportedMediaType());
+  }
+
+  @Test
+  public void pitchPutValidHeaderAndBodyTestMessage() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.message").value("Success"))
+        .andReturn();
+  }
+
+  @Test
+  public void pitchPutValidHeaderAndBodyTestStatus() throws Exception {
+    this.mockMvc.perform(put("/pitch")
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("userTokenAuth", pitchPutDTOElements.getValidToken())
+        .content(stringify(pitchPutDTOElements.generateValidPitchPutDTO())))
+        .andDo(print())
+        .andExpect(status().isCreated())
+        .andReturn();
   }
 }

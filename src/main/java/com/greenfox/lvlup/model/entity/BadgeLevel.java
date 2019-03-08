@@ -21,7 +21,7 @@ public class BadgeLevel {
       joinColumns = @JoinColumn(name = "badgelevel_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
   private Set<User> holders;
-  @OneToMany(mappedBy = "level")
+  @OneToMany(mappedBy = "badgeLevel")
   private List<Pitch> pitches;
   @ManyToMany
   @JoinTable(name = "badgelevel_archetype",

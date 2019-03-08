@@ -10,10 +10,5 @@ import java.util.List;
 
 @Repository
 public interface PitchRepository extends JpaRepository<Pitch, Long> {
-  //public Pitch getPitchByUser(User user);
-
-  @Query(
-      value = "SELECT * FROM Pitches p WHERE p.user_id = ?1",
-      nativeQuery = true)
   List<Pitch> findPitchesByUserId(long id);
 }

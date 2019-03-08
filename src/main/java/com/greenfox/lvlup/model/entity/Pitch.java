@@ -25,7 +25,7 @@ public class Pitch {
   @ManyToOne
   private User user;
   @ManyToOne
-  private BadgeLevel level;
+  private BadgeLevel badgeLevel;
   @ManyToOne
   private Badge badge;
   @OneToMany (mappedBy = "pitch")

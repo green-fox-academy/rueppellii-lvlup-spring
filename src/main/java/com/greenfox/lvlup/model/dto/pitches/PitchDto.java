@@ -3,18 +3,61 @@ package com.greenfox.lvlup.model.dto.pitches;
 
 import com.greenfox.lvlup.model.entity.Review;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 public class PitchDto {
   private long id;
   private Date timestamp;
   private String userName;
+  @NotEmpty(message = "PitchDto name is required.")
   private String badgeName;
+  @NotNull(message = "Old badgeLevel is required.")
   private int oldLevel;
+  @NotNull(message = "Pitched badgeLevel is required.")
   private int pitchedLevel;
+  @NotEmpty(message = "PitchDto message is required.")
   private String pitchedMessage;
   private Set<ReviewDto> reviews;
+  @NotEmpty(message = "Holders are required.")
+  List<String> holders;
+
+
+  public PitchDto(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
+    this.badgeName = badgeName;
+    this.oldLevel = oldLVL;
+    this.pitchedLevel = pitchedLVL;
+    this.pitchedMessage = pitchMessage;
+    this.holders = holders;
+  }
+
+  public PitchDto(String badgeName, int oldLVL, int pitchedLVL, String pitchMessage) {
+    this.badgeName = badgeName;
+    this.oldLevel = oldLVL;
+    this.pitchedLevel = pitchedLVL;
+    this.pitchedMessage = pitchMessage;
+  }
+
+  public PitchDto(String badgeName, int pitchedLVL, String pitchMessage, List<String> holders) {
+    this.badgeName = badgeName;
+    this.pitchedLevel = pitchedLVL;
+    this.pitchedMessage = pitchMessage;
+    this.holders = holders;
+  }
+
+  public PitchDto(int oldLVL, int pitchedLVL, String pitchMessage, List<String> holders) {
+    this.oldLevel = oldLVL;
+    this.pitchedLevel = pitchedLVL;
+    this.pitchedMessage = pitchMessage;
+    this.holders = holders;
+  }
+
+  public PitchDto() {
+  }
+
 
   public long getId() {
     return id;

@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-@Profile(value = "dev")
+@Profile(value = {"dev", "prod", "test"})
 public class SetupInitialData implements CommandLineRunner {
   private BadgeRepository badgeRepository;
   private BadgeLevelRepository levelRepository;
@@ -137,7 +137,7 @@ public class SetupInitialData implements CommandLineRunner {
   public void generatePitches() {
     pitches = Arrays.asList(
         new Pitch(new Date(), 2, 3, "I was working abroad for six years, so I can speak english very well. " +
-            "Pls improve my badge level to 3.", users.get(0), badges.get(1)),
+            "Pls improve my badge badgeLevel to 3.", users.get(0), badges.get(1)),
         new Pitch(new Date(), 1, 5, "I can see through processes and propose relevant and doable ideas for improvement." +
             " I can create improved definition / accountibility / documentation and communicate it to the team", users.get(0), badges.get(0)),
         new Pitch(new Date(), 1, 3, "I proactively seek feedback on projects or my general work and choose how " +
